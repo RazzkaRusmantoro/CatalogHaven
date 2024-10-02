@@ -1,0 +1,299 @@
+
+
+@keyframes slideUp {
+    from {
+        transform: translateY(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideUp2 {
+    from {
+        transform: translateY(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 0.8;
+    }
+}
+
+.content-wrapper {
+    position: relative;
+    min-height: 100vh; /* Ensure it takes full screen height */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; /* Push elements up */
+    align-items: center;
+}
+
+.container-display-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 95%;
+    height: 400px;
+    background: linear-gradient(135deg, #fd575c, #aa6267);
+    border-radius: 10px;
+    position: relative;
+    overflow: hidden;
+    animation: slideUp 0.65s ease-out forwards;
+    border-style: double;
+    border-width: 10px;
+    border-color: white;
+    top: 50px; /* Push it down by 30px */
+    margin-top: 20px; /* Fine-tune the space */
+    transition: all 0.3s ease; /* Smooth transition when zooming */
+}
+
+.container-display-box p {
+    color: white;
+    position: absolute;
+    top: 70px;
+    left: 95px;
+    font-size: 60px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    z-index: 5;
+}
+
+.container-display-box img {
+    height: 390px;
+    position: absolute;
+    top: 10px;
+    right: 0px;
+    z-index: 2;
+}
+
+#what {
+    right: 0px;
+    height: 400px;
+    width: 750px;
+    z-index: 0;
+}
+
+#pattern {
+    right: 0px;
+    height: 500px;
+    top: -19px;
+    width: 500px;
+    z-index: 0;
+    clip-path: inset(2.5% 0 15% 0);
+}
+
+#pattern2 {
+    right: 485.9px;
+    height: 500px;
+    top: -19px;
+    width: 500px;
+    z-index: 0;
+    clip-path: inset(2.5% 0 15% 0);
+}
+
+#pattern3 {
+    right: 971.8px;
+    height: 500px;
+    top: -19px;
+    width: 500px;
+    z-index: 0;
+    clip-path: inset(2.5% 0 15% 0);
+}
+
+#pattern4 {
+    right: 1943.6px;
+    height: 500px;
+    top: -19px;
+    width: 500px;
+    z-index: 0;
+    clip-path: inset(2.5% 0 15% 0);
+}
+
+#pattern5 {
+    right: 2429.5px;
+    height: 500px;
+    top: -19px;
+    width: 500px;
+    z-index: 0;
+    clip-path: inset(2.5% 0 15% 0%);
+}
+
+#pattern6 {
+    right: 1457.7px;
+    height: 500px;
+    top: -19px;
+    width: 500px;
+    z-index: 0;
+    clip-path: inset(2.5% 0% 15% 0%);
+}
+
+#bg {
+    left: 0px;
+    height: 400px;
+    top: 0px;
+    z-index: 1;
+    width: calc(65vw + 20px);
+}
+
+#bag {
+    z-index: 1;
+    height: 400px;
+    right: 250px;
+    position: absolute;
+}
+
+.container-display-box .subtext {
+    font-size: 15px;
+    position: absolute;
+    bottom: 94.5px;
+    left: 100px;
+    z-index: 1;
+}
+
+.container-display-box .button {
+    z-index: 1;
+    position: absolute;
+    left: 100px;
+    bottom: 60px;
+    background-color: #fd575c;
+    color: white;
+    border: solid;
+    border-color: #fd575c;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.products-box {
+    top: 500px;
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    height: 600px;
+    width: 97.5%;
+    border-radius: 10px;
+    background-color: rgb(253, 245, 245);
+    border-color: rgb(255, 226, 226);
+    border-width: 5px;
+    border-style:solid;
+}
+
+.products-box-2 {
+    position: relative; /* Allow it to stay in the document flow and adjust on zoom */
+    top: 100px; /* Adjust this value to fine-tune its position */
+    display: flex;
+    justify-content: center;
+    height: 90vh; /* Ensure it covers the rest of the page */
+    width: 100%;
+    background-color: rgb(255, 249, 249);
+    opacity: 0.8;
+    z-index: 10;
+    animation: slideUp2 0.95s ease-out forwards;
+    z-index: 0;
+
+}
+
+.featured-container {
+    display: inline-block;
+}
+
+#featured {
+    display: flex;
+    margin-top: 50px;
+    font-size: 30px;
+    border-right: 5px solid;
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    opacity: 1; /* Initially hidden */
+    left: 42.5%; /* Position at the center */
+}
+
+#featured.animate {
+    opacity: 1;
+    animation: 
+        typing 2s forwards,
+        cursor-hide 0.25s ease-out 2s forwards;
+}
+
+
+@keyframes cursor-hide {
+    100% {
+        border-color: transparent;
+    }
+}
+
+@keyframes typing {
+    from {
+        width: 0;
+    }
+    to {
+        width: 100%;
+    }
+}
+
+#hr {
+    position: absolute;
+    left: 50%; /* Position at the center */
+    transform: translateX(-50%); /* Center it */
+    justify-content: center; /* This property is not applicable here, remove it */
+    top: 100px;
+
+    background-color: red;
+    height: 2px;
+    width: 7.5%;
+    border: none;
+}
+
+.products {
+    display: flex;                             
+    justify-content: center; /* Center the items horizontally */
+    align-items: flex-start; /* Align items at the start of the container vertically */
+    margin: 20px 0;              
+    position: absolute;           
+    top: 130px;                  
+    left: 50%;                    
+    transform: translateX(-50%);  
+    gap: 20px;                    /* Set the gap between items */
+}
+
+.product-item {
+    display: flex;                   /* Use flexbox for the product item */
+    flex-direction: column;         /* Stack child elements vertically */
+    justify-content: space-between; /* Space elements evenly in the container */
+    width: 170px;                   /* Fixed width for items */
+    height: 290px;                 /* Fixed height for all items */
+    text-align: center;
+    border: 1px solid #ddd;
+    padding: 10px;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    transition: transform 0.3s ease;
+    cursor: pointer;
+}
+
+.product-item img {
+    width: 70%;                   
+    max-width: 200px;
+    height: auto;        
+    max-height: 200px;     
+    object-fit: cover;        
+    margin: 0 auto;               
+}
+
+.product-item h6 {
+    font-size: 14px;
+    margin: 5px 0;
+    color: red;
+}
+
+.product-item p {
+    font-size: 15px;
+    color: #000000;
+    font-weight: bold;
+}
+
+.product-item:hover {
+    transform: scale(1.05);
+}

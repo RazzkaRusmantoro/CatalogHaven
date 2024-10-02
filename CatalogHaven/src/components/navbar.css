@@ -1,0 +1,127 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+
+@keyframes slideDown1 {
+    0% {
+        top: -100px;
+    }
+    100% {
+        top: 0;
+    }
+}
+
+@keyframes slideDown2 {
+    0% {
+        top: -55px;
+    }
+    100% {
+        top: 55px;
+    }
+}
+
+.Navbar {
+    position: fixed;
+    top: -100;
+    width: 100%;
+    padding: 10px 20px;
+    background-color: white;
+    z-index: 2;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+    animation: slideDown1 0.5s ease forwards;
+}
+
+.Navbar .logo {
+    width: 200px;
+    margin-left: 10px;
+    padding-right: 100px;
+    cursor: pointer;
+    
+}
+
+.searchBar {
+    font-size: 12px;
+    padding: 10px;
+    padding-left: 20px;
+    border: 1px solid #949494;
+    border-radius: 10px;
+    width: 50%;
+    margin-left: 0px;
+}
+
+.iconSection {
+    margin-right: 75px;
+    display: flex;
+    align-items: center;
+}
+
+.navButton {
+    display: flex;
+    align-items: center;
+    margin-left: 30px;
+}
+
+.icons {
+    width: 30px;
+    margin-left: 10px;
+}
+
+p {
+    margin: 0;
+    font-size: 14.5px;
+    color: red;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+.Navbar2 {
+
+    position: relative;
+    top: -100px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 10px 30px;
+    background-color: white;
+    z-index: 1;
+    animation: slideDown2 0.5s ease forwards;
+
+
+}
+
+.category {
+    display: flex;
+    align-items: center;
+    margin-left: -50px;
+
+}
+
+.category img {
+    width: 15px;
+    margin-right: 10px;
+}
+
+#categoryArrow {
+    display: flex;
+    width: 10px;
+    padding-left: 10px;
+}
+
+.navButton img, .navButton p {
+    transition: transform 0.3s ease-in-out;
+}
+
+.navButton:hover img, .navButton:hover p {
+    transform: scale(1.15);
+    
+}
+
+.navButton:hover {
+
+    cursor: pointer;
+}
+

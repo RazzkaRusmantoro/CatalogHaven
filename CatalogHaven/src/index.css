@@ -1,0 +1,35 @@
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light;
+  color: rgba(255, 255, 255, 0.87);
+  /* background: linear-gradient(to right, #fbe6e7, #fecbcb); */
+  background-image: url("./src/assets/red-bg.jpg");
+  background-size: 250vh 200vh;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Custom scrollbar styles for WebKit browsers */
+::-webkit-scrollbar {
+  width: 12px; /* Width of the scrollbar */
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1; /* Background color of the track */
+}
+
+::-webkit-scrollbar-thumb {
+  background: #ffa4a4; /* Color of the scroll thumb */
+  border-radius: 7.5px; /* Rounded corners for the scroll thumb */
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #ff9393; /* Color of the scroll thumb on hover */
+}
+
