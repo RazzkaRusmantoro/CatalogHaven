@@ -1,11 +1,11 @@
 import { useNavigate } from "react-router-dom";
 import "./navbar.css";
-import Logo from "../assets/Logo.png";
-import order from "../assets/order.png";
-import cart from "../assets/cart.png";
-import profile from "../assets/profile.png";
-import categoryMenu from "../assets/3-Lines.png";
-import categoryArrow from "../assets/arrow.png";
+import Logo from "/assets/Logo.png";
+import order from "/assets/order.png";
+import cart from "/assets/cart.png";
+import profile from "/assets/profile.png";
+import categoryMenu from "/assets/3-Lines.png";
+import categoryArrow from "/assets/arrow.png";
 
 function Navbar() {
     const navigate = useNavigate();

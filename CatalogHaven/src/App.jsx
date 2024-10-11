@@ -2,6 +2,7 @@ import React from 'react';
 import Home from "./pages/Home/Home";
 import Login from "./pages/Profile/LoginPage";
 import UserInfo from "./pages/Profile/UserInfo";
+import ProductDetails from './pages/Product/ProductDetails';
 import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Footer from "./components/footer";
@@ -19,7 +20,6 @@ function Layout({ children }) {
     <>
       <Navbar />
       {children}
-      {/* Conditionally render Footer if not on the login page */}
       {location.pathname !== '/sign-in' && <Footer />}
     </>
   );
@@ -42,6 +42,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/sign-in" element={<Login />} />
             <Route path="/dashboard" element={<UserInfo />} />
+            <Route path="/product/:id" element={<ProductDetails />} />
           </Routes>
         </Layout>
       </Router>

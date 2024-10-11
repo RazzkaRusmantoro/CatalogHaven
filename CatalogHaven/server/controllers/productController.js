@@ -3,9 +3,9 @@ const Product = require('../models/product');
 const APIFeatures = require('../utils/apiFeatures');
 
 exports.getFeaturedProducts = async (req, res, next) => {
+    
     try {
         const products = await Product.find().limit(6);
-        console.log('Fetched products:', products); // Log the fetched products
 
         res.status(200).json({
             success: true,
@@ -13,7 +13,7 @@ exports.getFeaturedProducts = async (req, res, next) => {
             products
         });
     } catch (error) {
-        console.error('Error fetching products:', error); // Log the error
+        console.error('Error fetching products:', error);
         res.status(500).json({
             success: false,
             message: 'Unable to fetch products',
@@ -37,7 +37,7 @@ exports.newProduct = async (req, res, next) => {
 
 exports.getProducts = async (req, res, next) => {
 
-    const resPerPage = 9;
+    const resPerPage = 8;
     const productCount = await Product.countDocuments();
     
     const apiFeatures = new APIFeatures(Product.find(), req.query)

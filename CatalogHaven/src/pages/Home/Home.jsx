@@ -1,14 +1,34 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import React, { useEffect } from 'react';
 import "./home.css";
-import sunglasses from "../../assets/sunglasses.png";
-import bg from "../../assets/bg.png";
-import bag from "../../assets/bag.png";
-import pattern from "../../assets/pattern.png";
+
+import sunglasses from "/assets/sunglasses.png";
+import bg from "/assets/bg.png";
+import bag from "/assets/bag.png";
+import pattern from "/assets/pattern.png";
+
+import ProductItem from '../../components/ProductItem';
+import { useDispatch, useSelector } from 'react-redux';
+import { getFeaturedProducts } from '../../actions/productActions';
+import Loader from '../../components/Loader';
+
 
 function Home() {
-    const [featuredProducts, setFeaturedProducts] = useState([]);
 
+    // const alert = useAlert();
+    const dispatch = useDispatch();
+
+    // Get featured products and loading state from Redux
+    const { loading, featuredProducts, error } = useSelector(state => state.products);
+
+    useEffect(() => {
+        dispatch(getFeaturedProducts()); // Dispatch the action to fetch featured products
+
+        if (error) {
+            alert.error(error);
+        }
+    }, [dispatch]);
+
+    // Intersection observer for animation
     useEffect(() => {
         const observer = new IntersectionObserver(entries => {
             entries.forEach(entry => {
@@ -30,29 +50,6 @@ function Home() {
             }
         };
     }, []);
-
-    useEffect(() => {
-        const fetchFeaturedProducts = async () => {
-            try {
-                const response = await axios.get('/products/featured');
-
-                if (response.data.success) {
-                    if (response.data.products.length === 0) {
-                        console.log('No featured products found.'); // Log when no products are found
-                    } else {
-                        setFeaturedProducts(response.data.products); // Set the fetched products to state
-                        console.log('Fetched products:', response.data.products); // Log fetched products
-                    }
-                } else {
-                    console.error('Failed to fetch products:', response.data.message);
-                }
-            } catch (error) {
-                console.error('Error fetching featured products:', error.response.data);
-            }
-        };
-
-        fetchFeaturedProducts(); // Call the function to fetch products
-    }, []); // Empty dependency array ensures this runs once on component mount
 
     return (
         <>
@@ -78,27 +75,23 @@ function Home() {
                 <div className="products-box-2">
                     <div className="featured-container">
                         <div>
-                        <p id="featured"><b>Featured Products</b></p>
-                        <hr id="hr" />
-
+                            <p id="featured"><b>Featured Products</b></p>
+                            <hr id="hr" />
                         </div>
                         <div className="products">
-                            {featuredProducts.length > 0 ? (
+                            {loading ? (
+                                <Loader/>
+                            ) : error ? (
+                                <p>{error}</p>
+                            ) : featuredProducts.length > 0 ? ( // Check featuredProducts instead of products
                                 featuredProducts.map(product => (
-                                    <div key={product._id} className="product-item">
-                                        <img src={product.images[0].url} alt={product.name} />
-                                        <h6>{product.name}</h6>
-                                        <p id = "price">USD ${product.price}</p>
-                                    </div>
+                                    <ProductItem key={product._id} product={product} /> // Use the ProductItem component
                                 ))
                             ) : (
                                 <p>No featured products available.</p>
                             )}
                         </div>
-                        
                     </div>
-                    
-                        
                 </div>
             </div>
         </>

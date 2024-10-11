@@ -5,7 +5,7 @@ const { newProduct, getProducts, getFeaturedProducts, getSingleProduct, updatePr
 
 const { isAuthenticatedUser } = require('../middlewares/auth');
 
-router.route('/products').get(isAuthenticatedUser,getProducts);
+router.route('/products').get(getProducts);
 
 router.route('/products/featured').get(getFeaturedProducts);
 

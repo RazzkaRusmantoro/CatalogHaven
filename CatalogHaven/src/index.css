@@ -1,3 +1,5 @@
+
+
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -6,7 +8,10 @@
   color-scheme: light;
   color: rgba(255, 255, 255, 0.87);
   /* background: linear-gradient(to right, #fbe6e7, #fecbcb); */
-  background-image: url("./src/assets/red-bg.jpg");
+  background-image: url("/assets/red-bg.jpg");
+  background-size: cover; /* Cover the whole area */
+  background-repeat: no-repeat; /* No repetition */ 
+  background-attachment: fixed;
   background-size: 250vh 200vh;
 
   font-synthesis: none;
