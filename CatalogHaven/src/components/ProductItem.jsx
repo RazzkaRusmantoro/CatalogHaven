@@ -24,7 +24,7 @@ const ProductItem = ({ product }) => {
     };
 
     return (
-        <Link to={`/product/${product._id}`}>
+        <a href={`/product/${product._id}`}>
         <div className="product-item">
             <img src={product.images[0].url} alt={product.name} />
             <h6>{product.name}</h6>
@@ -37,7 +37,7 @@ const ProductItem = ({ product }) => {
             </div>
             <p id="price">USD ${product.price}</p>
         </div>
-        </Link>
+        </a>
     );
 };
 
