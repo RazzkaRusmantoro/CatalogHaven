@@ -23,6 +23,7 @@
 }
 
 .content-wrapper {
+    
     position: relative;
     min-height: 100vh; /* Ensure it takes full screen height */
     display: flex;
@@ -207,7 +208,7 @@
     white-space: nowrap;
     overflow: hidden;
     opacity: 1; /* Initially hidden */
-    left: 42.5%; /* Position at the center */
+    left: 50%; /* Position at the center */
 }
 
 #featured.animate {
@@ -242,7 +243,7 @@
 
     background-color: red;
     height: 2px;
-    width: 7.5%;
+    width: 120px;
     border: none;
 }
 
@@ -313,3 +314,5 @@
     font-size: 18px;
     margin-left: 5px;
 }
+
+    

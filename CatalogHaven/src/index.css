@@ -1,26 +1,32 @@
 html, body {
   height: 100%;
   margin: 0;
+  overflow-x: hidden; /* Prevent horizontal scrolling */
+}
+
+@keyframes scroll-background {
+  0% {
+    background-position: 0 0; /* Start position */
+  }
+  100% {
+    background-position: 10000% 0; /* Move to the right across the width of two images */
+  }
 }
 
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: 'Anek Telugu', sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
   color-scheme: light;
   color: rgba(255, 255, 255, 0.87);
-  /* background: linear-gradient(to right, #fbe6e7, #fecbcb); */
-  background-image: url("/assets/red-bg.jpg");
-  background-size: cover; /* Cover the whole area */
-  background-repeat: no-repeat; /* No repetition */ 
-  background-attachment: fixed;
-  background-size: 250vh 200vh;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  
+  /* Layering two background images for seamless horizontal scrolling */
+  background-image: url("/assets/red-bg.png"), url("/assets/red-bg.png");
+  background-repeat: repeat-x; /* Repeat the image horizontally */
+  background-size: auto 100%; /* Adjust height to fill, keep width auto */
+  background-attachment: fixed; /* Keep the background fixed while scrolling */
+  animation: scroll-background 1000s linear infinite; /* Animate the background */
 }
 
 /* Custom scrollbar styles for WebKit browsers */
@@ -40,4 +46,3 @@ html, body {
 ::-webkit-scrollbar-thumb:hover {
   background: #ff9393; /* Color of the scroll thumb on hover */
 }
-

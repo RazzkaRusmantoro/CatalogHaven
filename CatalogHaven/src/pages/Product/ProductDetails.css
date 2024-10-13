@@ -1,14 +1,15 @@
 .product-details {
+    position: relative;
     display: flex; 
     align-items: flex-start; 
     justify-content: center; 
     padding: 30px; 
-    margin: 70px auto -100px; 
-    background-color: rgb(253, 245, 245); 
+    margin: 50px auto -100px; 
+    background-color: rgba(255, 255, 255, 0.725); 
     border: 1px solid rgb(255, 226, 226); 
     border-radius: 10px; 
     max-width: 100%; 
-    height: 600px;
+    height: 100vh;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15); 
 }
 
@@ -36,11 +37,12 @@
     width: 650px; 
     padding: 20px; 
     border-radius: 10px; 
+    top: -20px;
 }
 
 .product-details-info h1 {
     color: #d9534f; 
-    font-size: 2rem; 
+    font-size: 2.5rem; 
     margin-bottom: -15px; 
     font-weight: bold; 
 }
@@ -96,7 +98,7 @@
     border: 1px solid red; 
     border-radius: 20px; 
     padding: 5px; 
-    background-color: transparent; 
+    background-color: rgba(255, 255, 255, 0.615); 
 }
 
 .quantity-button {
@@ -132,14 +134,14 @@
     align-items: center; 
     padding: 10px; 
     background-color: transparent; 
-    border: 1px solid #ddd; 
+    border: 1px solid #d2d2d2; 
     border-left: none; 
     border-right: none; 
     transition: background-color 0.15s ease;
 }
 
 .description-header:hover {
-    background-color: #e9e9e9; 
+    background-color: #9797971d; 
 }
 
 .product-description p {
@@ -149,4 +151,12 @@
     border: 1px solid #ddd; 
     border-radius: 5px; 
     margin-top: 10px; 
+}
+
+.horizontal hr {
+    border: none;               /* Remove the default border */
+    height: 2px;                /* Set the height of the line */
+    background-color: #5a00003b;      /* Set the background color to red */
+    margin: 10px 0;             /* Optional: Adjust the spacing */
+    margin-bottom: 20px;
 }

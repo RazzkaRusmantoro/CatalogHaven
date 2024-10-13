@@ -79,6 +79,9 @@ const ProductDetails = () => {
                         <div className="product-price">
                             <h3>USD ${product.price || '0.00'}</h3>
                         </div>
+                        <div className = "horizontal">
+                            <hr></hr>
+                        </div>
                         <div className="product-seller">
                             <p><b>Seller:</b> {product.user?.username|| product.seller || 'Unknown'}</p>
                         </div>
