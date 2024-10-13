@@ -16,8 +16,8 @@
 }
 
 a {
-    text-decoration: none; /* This removes the underline */
-    color: inherit; /* This keeps the link color the same as surrounding text */
+    text-decoration: none; 
+    color: inherit;
 }
 
 .product-item img {

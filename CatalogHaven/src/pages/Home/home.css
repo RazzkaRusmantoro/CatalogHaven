@@ -25,10 +25,10 @@
 .content-wrapper {
     
     position: relative;
-    min-height: 100vh; /* Ensure it takes full screen height */
+    min-height: 100vh; 
     display: flex;
     flex-direction: column;
-    justify-content: flex-start; /* Push elements up */
+    justify-content: flex-start; 
     align-items: center;
 }
 
@@ -46,9 +46,9 @@
     border-style: double;
     border-width: 10px;
     border-color: white;
-    top: 50px; /* Push it down by 30px */
-    margin-top: 20px; /* Fine-tune the space */
-    transition: all 0.3s ease; /* Smooth transition when zooming */
+    top: 50px;
+    margin-top: 20px; 
+    transition: all 0.3s ease; 
 }
 
 .container-display-box p {
@@ -181,11 +181,11 @@
 }
 
 .products-box-2 {
-    position: relative; /* Allow it to stay in the document flow and adjust on zoom */
-    top: 100px; /* Adjust this value to fine-tune its position */
+    position: relative; 
+    top: 100px; 
     display: flex;
     justify-content: center;
-    height: 90vh; /* Ensure it covers the rest of the page */
+    height: 90vh; 
     width: 100%;
     background-color: rgb(255, 249, 249);
     opacity: 0.8;
@@ -207,8 +207,8 @@
     width: 100%;
     white-space: nowrap;
     overflow: hidden;
-    opacity: 1; /* Initially hidden */
-    left: 50%; /* Position at the center */
+    opacity: 1; 
+    left: 50%;
 }
 
 #featured.animate {
@@ -236,9 +236,9 @@
 
 #hr {
     position: absolute;
-    left: 50%; /* Position at the center */
-    transform: translateX(-50%); /* Center it */
-    justify-content: center; /* This property is not applicable here, remove it */
+    left: 50%; 
+    transform: translateX(-50%);
+    justify-content: center;
     top: 100px;
 
     background-color: red;
@@ -249,22 +249,22 @@
 
 .products {
     display: flex;                             
-    justify-content: center; /* Center the items horizontally */
-    align-items: flex-start; /* Align items at the start of the container vertically */
+    justify-content: center;
+    align-items: flex-start; 
     margin: 20px 0;              
     position: absolute;           
     top: 130px;                  
     left: 50%;                    
     transform: translateX(-50%);  
-    gap: 20px;                    /* Set the gap between items */
+    gap: 20px;                    
 }
 
 .product-item {
-    display: flex;                   /* Use flexbox for the product item */
-    flex-direction: column;         /* Stack child elements vertically */
-    justify-content: space-between; /* Space elements evenly in the container */
-    width: 170px;                   /* Fixed width for items */
-    height: 320px;                 /* Fixed height for all items */
+    display: flex;                  
+    flex-direction: column;         
+    justify-content: space-between; 
+    width: 170px;                   
+    height: 320px;                
     text-align: center;
     border: 1px solid #ddd;
     padding: 10px;

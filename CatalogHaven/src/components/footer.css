@@ -2,7 +2,7 @@
 .footer {
     background-color: #f26767;
     color: #fff;
-    text-align: left; /* Align text to the left */
+    text-align: left;
     padding-top: 40px;
     padding-bottom: 20px;
     position:relative;
@@ -29,12 +29,12 @@
 .footer-links {
     list-style-type: none;
     padding: 0;
-    margin: 10px 0; /* Add margin for spacing */
+    margin: 10px 0;
 }
 
 .footer-links li {
-    display: inline; /* Keep items inline */
-    margin-right: 15px; /* Adjust margin to space items */
+    display: inline;
+    margin-right: 15px;
 }
 
 .footer-links a {

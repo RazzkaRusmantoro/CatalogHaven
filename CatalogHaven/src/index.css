@@ -1,15 +1,15 @@
 html, body {
   height: 100%;
   margin: 0;
-  overflow-x: hidden; /* Prevent horizontal scrolling */
+  overflow-x: hidden;
 }
 
 @keyframes scroll-background {
   0% {
-    background-position: 0 0; /* Start position */
+    background-position: 0 0; 
   }
   100% {
-    background-position: 10000% 0; /* Move to the right across the width of two images */
+    background-position: 10000% 0;
   }
 }
 
@@ -21,28 +21,28 @@ html, body {
   color-scheme: light;
   color: rgba(255, 255, 255, 0.87);
   
-  /* Layering two background images for seamless horizontal scrolling */
+
   background-image: url("/assets/red-bg.png"), url("/assets/red-bg.png");
-  background-repeat: repeat-x; /* Repeat the image horizontally */
-  background-size: auto 100%; /* Adjust height to fill, keep width auto */
-  background-attachment: fixed; /* Keep the background fixed while scrolling */
-  animation: scroll-background 1000s linear infinite; /* Animate the background */
+  background-repeat: repeat-x;
+  background-size: auto 100%;
+  background-attachment: fixed;
+  animation: scroll-background 1000s linear infinite;
 }
 
-/* Custom scrollbar styles for WebKit browsers */
+
 ::-webkit-scrollbar {
-  width: 12px; /* Width of the scrollbar */
+  width: 12px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #f1f1f1; /* Background color of the track */
+  background: #f1f1f1;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #ffa4a4; /* Color of the scroll thumb */
-  border-radius: 7.5px; /* Rounded corners for the scroll thumb */
+  background: #ffa4a4;
+  border-radius: 7.5px; 
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #ff9393; /* Color of the scroll thumb on hover */
+  background: #ff9393; 
 }

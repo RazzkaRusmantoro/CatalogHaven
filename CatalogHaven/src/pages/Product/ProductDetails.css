@@ -154,9 +154,9 @@
 }
 
 .horizontal hr {
-    border: none;               /* Remove the default border */
-    height: 2px;                /* Set the height of the line */
-    background-color: #5a00003b;      /* Set the background color to red */
-    margin: 10px 0;             /* Optional: Adjust the spacing */
+    border: none;         
+    height: 2px;              
+    background-color: #5a00003b;   
+    margin: 10px 0;          
     margin-bottom: 20px;
 }
