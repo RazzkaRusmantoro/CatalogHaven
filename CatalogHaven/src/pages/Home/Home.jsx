@@ -11,10 +11,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getFeaturedProducts } from '../../actions/productActions';
 import Loader from '../../components/Loader';
 
-
 function Home() {
-
-    // const alert = useAlert();
     const dispatch = useDispatch();
 
     // Get featured products and loading state from Redux
@@ -22,10 +19,7 @@ function Home() {
 
     useEffect(() => {
         dispatch(getFeaturedProducts()); // Dispatch the action to fetch featured products
-
-        if (error) {
-            alert.error(error);
-        }
+        // Add alert logic here if using alert library
     }, [dispatch]);
 
     // Intersection observer for animation
@@ -51,12 +45,21 @@ function Home() {
         };
     }, []);
 
-    
-
-    
-
     return (
         <>
+
+            <div className="slider" style={{ '--width': '100px', '--height': '50px', '--quantity': '6', }}>
+                <div className="list">
+                    <div className="item" style={{ '--position': 1 }}><p>30% OFF!</p></div>
+                    <div className="item" style={{ '--position': 2 }}><p>GET IT NOW!</p></div>
+                    <div className="item" style={{ '--position': 3 }}><p>FREE SHIPPING!</p></div>
+                    <div className="item" style={{ '--position': 4 }}><p>LIMITED TIME!</p></div>
+                    <div className="item" style={{ '--position': 5 }}><p>SHOP THE SALE!</p></div>
+                    <div className="item" style={{ '--position': 6 }}><p>NEW ARRIVALS!</p></div>
+                    
+                    
+                </div>
+            </div>
             <div className="content-wrapper">
                 <div className="container-display-box">
                     <p> WE HAVE <br /> <b>YOUR WANTS.</b></p>
@@ -76,6 +79,8 @@ function Home() {
 
                 <div className="container-under-box"></div>
 
+                
+
                 <div className="products-box-2">
                     <div className="featured-container">
                         <div>
@@ -84,12 +89,12 @@ function Home() {
                         </div>
                         <div className="products">
                             {loading ? (
-                                <Loader/>
+                                <Loader />
                             ) : error ? (
                                 <p>{error}</p>
-                            ) : featuredProducts.length > 0 ? ( // Check featuredProducts instead of products
+                            ) : featuredProducts.length > 0 ? (
                                 featuredProducts.map(product => (
-                                    <ProductItem key={product._id} product={product} /> // Use the ProductItem component
+                                    <ProductItem key={product._id} product={product} />
                                 ))
                             ) : (
                                 <p>No featured products available.</p>

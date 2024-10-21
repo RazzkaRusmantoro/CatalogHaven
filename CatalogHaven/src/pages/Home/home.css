@@ -166,19 +166,6 @@
     border-radius: 5px;
 }
 
-.products-box {
-    top: 500px;
-    display: flex;
-    justify-content: center;
-    position: absolute;
-    height: 600px;
-    width: 97.5%;
-    border-radius: 10px;
-    background-color: rgb(253, 245, 245);
-    border-color: rgb(255, 226, 226);
-    border-width: 5px;
-    border-style:solid;
-}
 
 .products-box-2 {
     position: relative; 
@@ -256,7 +243,8 @@
     top: 130px;                  
     left: 50%;                    
     transform: translateX(-50%);  
-    gap: 20px;                    
+    gap: 20px;              
+    opacity: 1;      
 }
 
 .product-item {
@@ -269,10 +257,10 @@
     border: 1px solid #ddd;
     padding: 10px;
     border-radius: 8px;
-    background-color: #f9f9f9;
     transition: transform 0.3s ease;
     cursor: pointer;
     background-color: white;
+    opacity: 1;
 }
 
 .product-item img {
@@ -283,6 +271,7 @@
     object-fit:contain;        
     margin: 0 auto;    
     flex-grow: 1;           
+    opacity: 1;
 }
 
 .product-item h6 {
@@ -315,4 +304,79 @@
     margin-left: 5px;
 }
 
-    
+.slider {
+    display: flex;
+    position: relative;
+    margin-top: 65px;
+    margin-bottom: -60px;
+    width: 100%;
+    height: var(--height);
+    overflow: hidden;
+    mask-image: linear-gradient(
+        to right,
+        transparent,
+        #000 10% 90%,
+        transparent
+    );
+    background-color: rgb(255, 100, 100);
+    animation: slideUp 0.65s ease-out forwards;
+}
+
+.slider .list {
+    display: flex;
+    width: 100%;
+    min-width: calc(var(--width) * var(--quantity) + (var(--quantity) - 1) * 20px); 
+    position: relative;
+}
+
+.slider .list .item {
+    display: flex;
+    align-items: center;
+    width: var(--width);
+    height: var(--height);
+    position: absolute;
+    left: 100%;
+    animation: autoRun 10s linear infinite;
+    transition: filter 0.5s;
+    animation-delay: calc((10s / var(--quantity)) * (var(--position) - 1) - 10s)!important;
+    margin-right: 20px; 
+}
+
+.slider .list .item img {
+    width: 100%;
+}
+
+.item p {
+    color: white;
+}
+
+@keyframes autoRun {
+    from {
+        left: 100%;
+    }
+    to {
+        left: calc(var(--width) * -1);
+    }
+}
+
+.slider:hover .item {
+    animation-play-state: paused!important;
+    filter: grayscale(1);
+}
+
+.slider .item:hover {
+    filter: grayscale(0);
+}
+
+.slider[reverse="true"] .item {
+    animation: reversePlay 10s linear infinite;
+}
+
+@keyframes reversePlay {
+    from {
+        left: calc(var(--width) * -1);
+    }
+    to {
+        left: 100%;
+    }
+}
