@@ -20,7 +20,8 @@ function Layout({ children }) {
     <>
       <Navbar />
       {children}
-      {location.pathname !== '/sign-in' && <Footer />}
+      { location.pathname !== '/sign-in' // <Footer />}
+      }
     </>
   );
 }

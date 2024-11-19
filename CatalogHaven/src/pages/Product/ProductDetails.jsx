@@ -59,6 +59,7 @@ const ProductDetails = () => {
 
     return (
         <>
+            <div className="background-layer"></div>
             {loading ? (
 
                 <Loader />
@@ -107,12 +108,13 @@ const ProductDetails = () => {
                         <div className="product-description">
                             <div className="description-header" onClick={toggleDescription}>
                                 <h4>Description</h4>
-                                <span>{isDescriptionVisible ? '▲' : '▼'}</span> {/* Toggle icon */}
+                                <span className={isDescriptionVisible ? 'rotated' : ''}>{isDescriptionVisible ? '▲' : '▼'}</span>
+                                <div className={`product-description-content ${isDescriptionVisible ? 'expanded' : ''}`}>
+                                    <p>{product.description || 'No description available'}</p>
+                                </div>
                             </div>
-                            {isDescriptionVisible && (
-                                <p>{product.description || 'No description available'}</p>
-                            )}
                         </div>
+
                     </div>
                 </div>
             )}
