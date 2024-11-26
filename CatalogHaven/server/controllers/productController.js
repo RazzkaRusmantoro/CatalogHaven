@@ -36,25 +36,49 @@ exports.newProduct = async (req, res, next) => {
 }
 
 exports.getProducts = async (req, res, next) => {
+    try {
+        const resPerPage = Number(req.query.limit) || 8;
+        const productCount = await Product.countDocuments();
 
-    const resPerPage = 8;
-    const productCount = await Product.countDocuments();
-    
-    const apiFeatures = new APIFeatures(Product.find(), req.query)
-                        .search()
-                        .filter()
-                        .pagination(resPerPage)
-    const products = await apiFeatures.query;
-    
+        const { keyword, minPrice, maxPrice } = req.query;
 
-    res.status(200).json({
-        success: true,
-        count: products.length,
-        productCount,
-        message: 'This route will show all products in the database.',
-        products
-    })
-}
+        let searchQuery = {};
+        if (keyword) {
+            searchQuery = {
+                name: {
+                    $regex: keyword,
+                    $options: 'i',
+                },
+            };
+        }
+
+        if (minPrice || maxPrice) {
+            searchQuery.price = {};
+            if (minPrice) searchQuery.price.$gte = Number(minPrice);
+            if (maxPrice) searchQuery.price.$lte = Number(maxPrice);
+        }
+
+        const apiFeatures = new APIFeatures(Product.find(searchQuery), req.query)
+            .filter()
+            .pagination(resPerPage);
+
+        const products = await apiFeatures.query;
+
+        res.status(200).json({
+            success: true,
+            count: products.length,
+            productCount,
+            products,
+        });
+    } catch (error) {
+        console.error('Error fetching products:', error);
+        res.status(500).json({
+            success: false,
+            message: 'Unable to fetch products',
+            error: error.message,
+        });
+    }
+};
 
 exports.getSingleProduct = async (req, res, next) => {
 

@@ -2,6 +2,7 @@ import React from 'react';
 import Home from "./pages/Home/Home";
 import Login from "./pages/Profile/LoginPage";
 import UserInfo from "./pages/Profile/UserInfo";
+import Search from "./pages/Search/Search";
 import ProductDetails from './pages/Product/ProductDetails';
 import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
 import Navbar from "./components/Navbar";
@@ -44,6 +45,7 @@ function App() {
             <Route path="/sign-in" element={<Login />} />
             <Route path="/dashboard" element={<UserInfo />} />
             <Route path="/product/:id" element={<ProductDetails />} />
+            <Route path="/search" element={<Search />} />
           </Routes>
         </Layout>
       </Router>

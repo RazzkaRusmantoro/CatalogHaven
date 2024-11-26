@@ -108,7 +108,7 @@ const ProductDetails = () => {
                         <div className="product-description">
                             <div className="description-header" onClick={toggleDescription}>
                                 <h4>Description</h4>
-                                <span className={isDescriptionVisible ? 'rotated' : ''}>{isDescriptionVisible ? '▲' : '▼'}</span>
+                                <span className="arrow">{isDescriptionVisible ? '▲' : '▼'}</span>
                                 <div className={`product-description-content ${isDescriptionVisible ? 'expanded' : ''}`}>
                                     <p>{product.description || 'No description available'}</p>
                                 </div>

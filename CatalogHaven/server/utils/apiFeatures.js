@@ -12,16 +12,14 @@ class APIFeatures {
             }
         } : {};
 
-        console.log(keyword);
-
-        this.query = this.query.find({...keyword});
+        this.query = this.query.find({ ...keyword });
         return this;
     }
-
+    
     filter() {
         const queryCopy = { ...this.queryString };
     
-        // Removing fields from the query
+        // Removing fields like 'keyword', 'limit', and 'page' for filtering
         const removeFields = ['keyword', 'limit', 'page'];
         removeFields.forEach(elem => delete queryCopy[elem]);
     
@@ -29,7 +27,7 @@ class APIFeatures {
         let queryString = JSON.stringify(queryCopy);
         queryString = queryString.replace(/\b(gt|gte|lt|lte)\b/g, match => `$${match}`);
     
-        // Now, queryString contains the correct string to parse
+        // Apply the filtered query
         this.query = this.query.find(JSON.parse(queryString));
         return this;
     }

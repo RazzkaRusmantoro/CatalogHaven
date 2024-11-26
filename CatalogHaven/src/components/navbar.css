@@ -40,7 +40,6 @@ body {
     margin-left: 10px;
     padding-right: 100px;
     cursor: pointer;
-    
 }
 
 .searchBar {
@@ -79,7 +78,6 @@ p {
 }
 
 .Navbar2 {
-
     position: relative;
     top: -100px;
     display: flex;
@@ -90,15 +88,12 @@ p {
     background-color: white;
     z-index: 2;
     animation: slideDown2 0.5s ease forwards;
-
-
 }
 
 .category {
     display: flex;
     align-items: center;
     margin-left: -50px;
-
 }
 
 .category img {
@@ -118,11 +113,92 @@ p {
 
 .navButton:hover img, .navButton:hover p {
     transform: scale(1.15);
-    
 }
 
 .navButton:hover {
-
     cursor: pointer;
 }
 
+/* Mobile responsive */
+@media (max-width: 768px) {
+    .Navbar {
+        flex-direction: column;
+        align-items: center;
+        padding: 10px;
+    }
+
+    .Navbar .logo {
+        margin-left: 0;
+        padding-right: 0;
+        width: 150px;
+    }
+
+    .searchBar {
+        width: 80%;
+        margin: 10px 0;
+    }
+
+    .iconSection {
+        margin-right: 0;
+        margin-top: 10px;
+    }
+
+    .navButton {
+        margin-left: 15px;
+        margin-bottom: 10px;
+    }
+
+    .Navbar2 {
+        flex-direction: column;
+        align-items: center;
+        padding: 10px 20px;
+    }
+
+    .category {
+        margin-left: 0;
+    }
+
+    .category img {
+        width: 20px;
+        margin-right: 8px;
+    }
+
+    #categoryArrow {
+        display: none;
+    }
+
+    .navButton img {
+        width: 25px;
+    }
+
+    .icons {
+        width: 25px;
+    }
+
+    .Navbar .logo {
+        width: 120px;
+    }
+}
+
+/* Smaller mobile devices */
+@media (max-width: 480px) {
+    .Navbar .logo {
+        width: 100px;
+    }
+
+    .searchBar {
+        width: 90%;
+    }
+
+    .navButton {
+        margin-left: 10px;
+    }
+
+    .category img {
+        width: 12px;
+    }
+
+    .iconSection {
+        margin-right: 0;
+    }
+}

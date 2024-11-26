@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";  // Import useState for handling the search query
 import "./navbar.css";
 import Logo from "/assets/Logo.png";
 import order from "/assets/order.png";
@@ -9,7 +10,8 @@ import categoryArrow from "/assets/arrow.png";
 
 function Navbar() {
     const navigate = useNavigate();
-    
+    const [searchQuery, setSearchQuery] = useState("");  // State to hold the search query
+
     const handleHomeClick = () => {
         navigate("/");
     };
@@ -18,11 +20,29 @@ function Navbar() {
         navigate("/sign-in");
     };
 
+    const handleSearchChange = (event) => {
+        setSearchQuery(event.target.value);  // Update the search query when the user types
+    };
+
+    const handleSearchKeyDown = (event) => {
+        if (event.key === "Enter" && searchQuery.trim()) {
+            navigate(`/search?keyword=${searchQuery}`);  // Update the route to /search
+        }
+    };
+    
+
     return (
         <div className="fullNavbar">
             <div className="Navbar">
                 <img src={Logo} alt="Logo" className="logo" onClick={handleHomeClick}/>
-                <input type="text" placeholder="Search for a product..." className="searchBar" />
+                <input 
+                    type="text" 
+                    placeholder="Search for a product..." 
+                    className="searchBar" 
+                    value={searchQuery} 
+                    onChange={handleSearchChange}
+                    onKeyDown={handleSearchKeyDown}  
+                />
                 <div className="iconSection">
                     <div className="navButton" id="cart">
                         <p>Cart</p>

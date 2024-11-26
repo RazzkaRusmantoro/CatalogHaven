@@ -1,4 +1,7 @@
-
+html, body {
+    height: 100%; /* Ensure the root elements fill the viewport */
+    margin: 0; /* Reset default margin */
+}
 
 @keyframes slideUp {
     from {
@@ -24,7 +27,7 @@
 
 .content-wrapper {
     position: relative;
-    min-height: 100vh; 
+    height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: flex-start; 
@@ -171,7 +174,8 @@
     top: 100px; 
     display: flex;
     justify-content: center;
-    min-height: 100vh;
+    height: 100vh;
+    min-height: 100%;
     width: 100%;
     background-color: rgb(255, 249, 249);
     opacity: 0.8;

@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getFeaturedProducts } from '../../actions/productActions';
 import Loader from '../../components/Loader';
 
+
 function Home() {
     const dispatch = useDispatch();
 
@@ -19,7 +20,6 @@ function Home() {
 
     useEffect(() => {
         dispatch(getFeaturedProducts()); // Dispatch the action to fetch featured products
-        // Add alert logic here if using alert library
     }, [dispatch]);
 
     // Intersection observer for animation
@@ -103,6 +103,8 @@ function Home() {
                     </div>
                 </div>
             </div>
+
+
         </>
     );
 }

@@ -24,7 +24,7 @@ a {
     width: 70%;                   
     max-width: 200px;
     height: auto;        
-    max-height: 200px;     
+    max-height: 180px;     
     object-fit:contain;        
     margin: 0 auto;    
     flex-grow: 1;      
