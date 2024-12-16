@@ -42,6 +42,9 @@ exports.getProducts = async (req, res, next) => {
 
         const { keyword, minPrice, maxPrice } = req.query;
 
+        const min = minPrice ? Number(minPrice) : undefined;
+        const max = maxPrice ? Number(maxPrice) : undefined;
+
         let searchQuery = {};
         if (keyword) {
             searchQuery = {
@@ -52,17 +55,23 @@ exports.getProducts = async (req, res, next) => {
             };
         }
 
-        if (minPrice || maxPrice) {
+        if (min || max) {
             searchQuery.price = {};
-            if (minPrice) searchQuery.price.$gte = Number(minPrice);
-            if (maxPrice) searchQuery.price.$lte = Number(maxPrice);
+            if (min) searchQuery.price.$gte = min;
+            if (max) searchQuery.price.$lte = max;
         }
+
+        console.log("Min Price:", min, "Max Price:", max); 
+
+        console.log("Search Query:", searchQuery);
+
 
         const apiFeatures = new APIFeatures(Product.find(searchQuery), req.query)
             .filter()
             .pagination(resPerPage);
 
         const products = await apiFeatures.query;
+        console.log("Fetched Products:", products); // Add this line
 
         res.status(200).json({
             success: true,

@@ -230,6 +230,7 @@ const getProfile = async (req, res, next) => {
     });
 }
 
+
 const updatePassword = async (req, res, next) => {
     try {
         const user = await User.findById(req.user.id).select('+password');

@@ -5,6 +5,7 @@ import './ProductDetails.css';
 import Loader from '../../components/Loader';
 import { useDispatch, useSelector } from 'react-redux';
 import { getProductDetails, clearErrors } from '../../actions/productActions';
+import { addItemToCart } from '../../actions/cartActions';
 
 const ProductDetails = () => {
     const dispatch = useDispatch();
@@ -16,22 +17,21 @@ const ProductDetails = () => {
             alert(error);
             dispatch(clearErrors());
         }
-        // Fetch product details
         dispatch(getProductDetails(productId));
     }, [dispatch, error, productId]);
 
-    // Logging for debug
+
     useEffect(() => {
         if (!loading && product) {
             console.log('Product Image URL:', product.images && product.images.length > 0 ? product.images[0].url : 'No image available');
         }
     }, [loading, product]);
 
-    const [quantity, setQuantity] = useState(1); // Initial quantity state
+    const [quantity, setQuantity] = useState(1); 
     const [isDescriptionVisible, setDescriptionVisible] = useState(false);
 
     const increaseQuantity = () => {
-        setQuantity(quantity + 1); // Increase quantity
+        setQuantity(quantity + 1); 
     };
 
     const decreaseQuantity = () => {
@@ -56,6 +56,11 @@ const ProductDetails = () => {
     const toggleDescription = () => {
         setDescriptionVisible(!isDescriptionVisible); // Toggle description visibility
     };
+
+    const addToCart = () => {
+        dispatch(addItemToCart(productId, quantity));
+        alert('Product added to cart successfully.');
+    }
 
     return (
         <>
@@ -103,7 +108,7 @@ const ProductDetails = () => {
                             </div>
                         </div>
                         <div className="product-buy">
-                            <button><b>Add to Cart</b></button>
+                            <button disabled = {product.stock === 0 } onClick = {addToCart}><b>Add to Cart</b></button>
                         </div>
                         <div className="product-description">
                             <div className="description-header" onClick={toggleDescription}>

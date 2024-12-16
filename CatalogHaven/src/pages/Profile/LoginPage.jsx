@@ -3,12 +3,19 @@ import './login.css';
 import axios from 'axios';
 import { toast } from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { login, clearErrors } from '../../actions/userActions';
+import { register } from '../../actions/userActions';
+
 
 "use client";
 
 function LoginPage() {
 
     const navigate = useNavigate();
+    const dispatch = useDispatch();
+
+    const { isAuthenticated, error, successMessage  } = useSelector((state) => state.user);
 
     const [loginData, setLoginData] = useState({
         email: '',
@@ -23,59 +30,39 @@ function LoginPage() {
         password: '',
     });
 
-    const loginUser = async (e) => {
-        e.preventDefault();
-        const {email, password} = loginData;
-
-        try {
-            const {data} = await axios.post('login', {
-                email, password});
-
-            if (data.error) {
-                toast.error(data.error);
-            } else {
-                toast.success('Login successful!');
-                setTimeout(() => {
-                    navigate('/');
-                }, 1000);
-            }
-        } catch (error) {
-            
-        }
-    } 
-    const registerUser = async (e) => {
-        e.preventDefault();
-        const {fname, lname, email, username, password} = registerData;
-        try {
-            const {data} = await axios.post('/register', {
-                fname, lname, email, username, password
-            });
-
-            if (data.error) {
-                toast.error(data.error);
-            } else {
-                toast.success('Registration successful!');
-                setTimeout(() => {
-                    window.location.reload();
-                }, 1000);
-                
-
-            }
-        } catch (error) {
-
-        }
-    } 
-
-    
     const [isActive, setIsActive] = useState(false);
 
-    const handleRegisterClick = () => {
-        setIsActive(true);
+    React.useEffect(() => {
+        if (isAuthenticated) {
+            if (successMessage === 'Registration successful') {
+                toast.success('Registration successful!');
+            } else if (successMessage === 'Login successful') {
+                toast.success('Login successful!');
+            }
+            setTimeout(() => {
+                navigate('/');
+            }, 1000);
+        }
+    
+        if (error) {
+            toast.error(error);
+            dispatch(clearErrors());
+        }
+    }, [dispatch, error, isAuthenticated, navigate, successMessage]);
+
+    const loginUser = (e) => {
+        e.preventDefault();
+        dispatch(login(loginData.email, loginData.password));
+
     };
 
-    const handleLoginClick = () => {
-        setIsActive(false);
+    const registerUser = (e) => {
+        e.preventDefault();
+        dispatch(register(registerData));
     };
+
+    const handleRegisterClick = () => setIsActive(true);
+    const handleLoginClick = () => setIsActive(false);
 
     return (
         <>

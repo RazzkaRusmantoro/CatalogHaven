@@ -1,21 +1,28 @@
 import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import ProductItem from "../../components/ProductItem";
 import ReactPaginate from "react-paginate";
+import Loader from '../../components/Loader';
+import 'rc-slider/assets/index.css';
 import "./Search.css";
+
 
 function Search() {
     const location = useLocation();
+    const navigate = useNavigate();
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const [selectedCategory, setSelectedCategory] = useState("");
-    const [pageCount, setPageCount] = useState(0); // Number of total pages
-    const [currentPage, setCurrentPage] = useState(1); // Current page
+    const [price, setPrice] = useState([1, 10000])
+    const [pageCount, setPageCount] = useState(0);
     const resPerPage = 8; // Results per page
 
-    const searchQuery = new URLSearchParams(location.search).get("keyword");
+    // Extract query parameters from the URL
+    const searchParams = new URLSearchParams(location.search);
+    const searchQuery = searchParams.get("keyword") || "";
+    const selectedCategory = searchParams.get("category") || "";
+    const currentPage = parseInt(searchParams.get("page")) || 1;
 
     const categories = [
         "Automotive",
@@ -51,18 +58,27 @@ function Search() {
             }
         };
 
-        if (searchQuery) {
-            fetchProducts();
-        }
+        fetchProducts();
     }, [searchQuery, selectedCategory, currentPage]);
 
     const handleCategoryChange = (category) => {
-        setSelectedCategory(category);
-        setCurrentPage(1);
+        const params = new URLSearchParams(location.search);
+
+        // Toggle category in URL
+        if (selectedCategory === category) {
+            params.delete("category"); // Remove category
+        } else {
+            params.set("category", category); // Set new category
+        }
+
+        params.set("page", 1); // Reset to the first page
+        navigate(`?${params.toString()}`); // Update the URL
     };
 
     const handlePageClick = (event) => {
-        setCurrentPage(event.selected + 1);
+        const params = new URLSearchParams(location.search);
+        params.set("page", event.selected + 1); // Update page parameter
+        navigate(`?${params.toString()}`); // Update the URL
     };
 
     return (
@@ -90,7 +106,8 @@ function Search() {
                     {error ? (
                         <p>{error}</p>
                     ) : loading ? (
-                        <p>Loading...</p>
+                        
+                        <Loader/>
                     ) : (
                         <div className="productsGrid">
                             {products.length > 0 ? (
@@ -119,7 +136,6 @@ function Search() {
             </div>
         </div>
     );
-    
 }
 
 export default Search;

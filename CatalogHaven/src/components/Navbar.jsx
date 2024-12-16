@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";  // Import useState for handling the search query
+import { useState } from "react"; 
 import "./navbar.css";
 import Logo from "/assets/Logo.png";
 import order from "/assets/order.png";
@@ -8,9 +8,23 @@ import profile from "/assets/profile.png";
 import categoryMenu from "/assets/3-Lines.png";
 import categoryArrow from "/assets/arrow.png";
 
+import { useDispatch, useSelector } from "react-redux";
+
 function Navbar() {
     const navigate = useNavigate();
-    const [searchQuery, setSearchQuery] = useState("");  // State to hold the search query
+    const dispatch = useDispatch();
+
+    const [searchQuery, setSearchQuery] = useState("");
+
+    const { user, loading } = useSelector(state => state.user);
+
+    const handleProfileClick = () => {
+        if (user) {
+            navigate("/profile"); // Navigate to the profile page if user is logged in
+        } else {
+            navigate("/sign-in"); // Navigate to the login page if not logged in
+        }
+    };
 
     const handleHomeClick = () => {
         navigate("/");
@@ -21,12 +35,12 @@ function Navbar() {
     };
 
     const handleSearchChange = (event) => {
-        setSearchQuery(event.target.value);  // Update the search query when the user types
+        setSearchQuery(event.target.value);
     };
 
     const handleSearchKeyDown = (event) => {
         if (event.key === "Enter" && searchQuery.trim()) {
-            navigate(`/search?keyword=${searchQuery}`);  // Update the route to /search
+            navigate(`/search?keyword=${searchQuery}`);
         }
     };
     
@@ -52,8 +66,8 @@ function Navbar() {
                         <p>Orders</p>
                         <img src={order} alt="order" className="icons" />
                     </div>
-                    <div className="navButton" id="profile" onClick={handleLoginClick}>
-                        <p>Login</p>
+                    <div className="navButton" id="profile" onClick={handleProfileClick}>
+                        <p>{user ? "Profile" : "Login"}</p>
                         <img src={profile} alt="Profile" className="icons" />
                     </div>
                 </div>

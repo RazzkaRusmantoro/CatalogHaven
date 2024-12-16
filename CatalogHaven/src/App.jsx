@@ -1,4 +1,6 @@
 import React from 'react';
+import { useEffect } from 'react';
+
 import Home from "./pages/Home/Home";
 import Login from "./pages/Profile/LoginPage";
 import UserInfo from "./pages/Profile/UserInfo";
@@ -10,6 +12,9 @@ import Footer from "./components/footer";
 import axios from 'axios';
 import { Toaster } from 'react-hot-toast';
 import { UserContextProvider } from '../context/userContext';
+
+import { loadUser } from './actions/userActions';
+import store from './store';
 
 axios.defaults.baseURL = 'http://localhost:8000';
 axios.defaults.withCredentials = true;
@@ -28,6 +33,12 @@ function Layout({ children }) {
 }
 
 function App() {
+
+  useEffect(() => {
+    store.dispatch(loadUser());
+  }, []);
+
+  
   return (  
     <UserContextProvider>
       <Router>
@@ -43,7 +54,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/sign-in" element={<Login />} />
-            <Route path="/dashboard" element={<UserInfo />} />
+            <Route path="/profile" element={<UserInfo />} />
             <Route path="/product/:id" element={<ProductDetails />} />
             <Route path="/search" element={<Search />} />
           </Routes>

@@ -40,6 +40,13 @@ class APIFeatures {
         this.query = this.query.limit(resPerPage).skip(skip);
         return this;
     }
+
+
+    sort(sortBy) {
+        this.query = this.query.sort(sortBy);
+        return this;
+    }
 }
+
 
 module.exports = APIFeatures;
