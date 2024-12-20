@@ -34,9 +34,7 @@ function Layout({ children }) {
 
 function App() {
 
-  useEffect(() => {
-    store.dispatch(loadUser());
-  }, []);
+  
 
   
   return (  

@@ -17,78 +17,58 @@ import axios from 'axios';
 // Login user
 export const login = (email, password) => async (dispatch) => {
     try {
-        dispatch({ 
-            type: LOGIN_REQUEST 
-        });
-
-        dispatch({
-            type: 'SET_SUCCESS_MESSAGE',
-            payload: 'Login successful', 
-        });
-
+        dispatch({ type: LOGIN_REQUEST });
         const config = {
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json', // Use JSON as content type
             }
         };
 
         const { data } = await axios.post('/login', { email, password }, config);
-        console.log('Login Response:', data);
 
-        dispatch({
-            type: LOGIN_SUCCESS,
-            payload: data.user
-        });
-        
+        if (data && data.user) {
+            dispatch({
+                type: LOGIN_SUCCESS,
+                payload: data.user, // Assuming 'user' is the object returned from the backend
+            });
+        } else {
+            // Dispatch LOGIN_FAIL if the user data is invalid
+            dispatch({
+                type: LOGIN_FAIL,
+                payload: 'Invalid email or password',
+            });
+        }
     } catch (error) {
-        console.error('Login Error:', error.response || error);
-
         dispatch({
             type: LOGIN_FAIL,
-            payload: error.response?.data?.message || error.message || 'Something went wrong'
+            payload: error.response?.data?.message || 'An error occurred during login',
         });
     }
-};
-
+};  
 
 // Register user
-export const register = (userData) => async (dispatch) => {
+export const register = (fname, lname, email, username, password) => async (dispatch) => {
     try {
-        dispatch({ 
-            type: REGISTER_REQUEST 
-        });
-
-        dispatch({
-            type: 'SET_SUCCESS_MESSAGE',
-            payload: 'Registration successful', 
-        });
-
+        dispatch({ type: REGISTER_REQUEST });
         const config = {
             headers: {
-                'Content-Type': 'multipart/form-data'
-            }
+                'Content-Type': 'application/json',
+            },
         };
 
-        const { data } = await axios.post('/register', userData, config);
-        console.log('Register Response:', data); 
-        console.log('User:', data.user);
+        const { data } = await axios.post('/register', { fname, lname, email, username, password }, config);
 
         dispatch({
             type: REGISTER_SUCCESS,
-            payload: data,
+            payload: data.user, // Assuming 'user' is the object returned after registration
         });
-        
     } catch (error) {
-        console.error('Register Error:', error.response || error);
-
         dispatch({
             type: REGISTER_FAIL,
-            payload: error.response?.data?.message || error.message || 'Something went wrong'
+            payload: error.response?.data?.message || 'An error occurred during registration',
         });
     }
 };
-
-
 
 // Load user details
 export const loadUser = () => async (dispatch) => {
@@ -113,12 +93,13 @@ export const loadUser = () => async (dispatch) => {
 export const logout = () => async (dispatch) => {
     try {
         await axios.get('/logout');
+        localStorage.clear();
         dispatch({
             type: LOGOUT_SUCCESS,
         });
     } catch (error) {
         dispatch({
-            type: LOGOUT_FAIL,
+            type: LOGOUT_FAIL, 
             payload: error.response?.data?.message || 'Failed to logout',
         });
     }

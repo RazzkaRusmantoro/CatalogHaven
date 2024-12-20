@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { useState } from "react"; 
+import { useState, useEffect } from "react"; 
 import "./navbar.css";
 import Logo from "/assets/Logo.png";
 import order from "/assets/order.png";
@@ -24,6 +24,7 @@ function Navbar() {
         } else {
             navigate("/sign-in"); // Navigate to the login page if not logged in
         }
+        
     };
 
     const handleHomeClick = () => {
@@ -43,20 +44,31 @@ function Navbar() {
             navigate(`/search?keyword=${searchQuery}`);
         }
     };
+
+    useEffect(() => {
+        if (searchQuery === "") {
+            setSearchQuery("");
+        }
+    }, [searchQuery]);
+
+    console.log(user);
     
 
     return (
         <div className="fullNavbar">
             <div className="Navbar">
                 <img src={Logo} alt="Logo" className="logo" onClick={handleHomeClick}/>
-                <input 
-                    type="text" 
-                    placeholder="Search for a product..." 
-                    className="searchBar" 
-                    value={searchQuery} 
-                    onChange={handleSearchChange}
-                    onKeyDown={handleSearchKeyDown}  
-                />
+                <form autocomplete="off" style={{ width: "50%" }}> 
+                    <input 
+                        type="text" 
+                        placeholder="Search for a product..." 
+                        className="searchBar" 
+                        value={searchQuery} 
+                        onChange={handleSearchChange}
+                        onKeyDown={handleSearchKeyDown}
+                        autoComplete="none"  
+                    />
+                </form>
                 <div className="iconSection">
                     <div className="navButton" id="cart">
                         <p>Cart</p>

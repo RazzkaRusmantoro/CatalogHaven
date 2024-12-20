@@ -290,24 +290,49 @@ const updatePassword = async (req, res, next) => {
 };
 
 const updateProfile = async (req, res, next) => {
-    const newUserData = {
-        fname: req.body.fname,
-        lname: req.body.lname,
-        email: req.body.email,
-        username: req.body.username
+    try {
+        // Destructure the new data sent from the request body
+        const newUserData = {
+            fname: req.body.fname,
+            lname: req.body.lname,
+            email: req.body.email,
+            username: req.body.username,
+        };
+
+        // Check if the email is already taken by another user
+        const existingEmailUser = await User.findOne({ email: newUserData.email });
+        if (existingEmailUser && existingEmailUser._id.toString() !== req.user.id) {
+            return res.json({
+                error: 'Email is already taken by another user.',
+            });
+        }
+
+        // Check if the username is already taken by another user
+        const existingUsernameUser = await User.findOne({ username: newUserData.username });
+        if (existingUsernameUser && existingUsernameUser._id.toString() !== req.user.id) {
+            return res.json({
+                error: 'Username is already taken by another user.',
+            });
+        }
+
+        // Update the user profile with the new data
+        const updatedUser = await User.findByIdAndUpdate(req.user.id, newUserData, {
+            new: true,  // Return the updated user
+            runValidators: true,  // Validate the updated data based on the model
+            useFindAndModify: false,  // Use the native findOneAndUpdate() method
+        });
+
+        // Return the updated user data in the response
+        res.status(200).json({
+            success: true,
+            user: updatedUser,
+        });
+    } catch (error) {
+        console.log('Error caught: ', error);
+        res.json({
+            error: 'An error occurred while updating the profile.',
+        });
     }
-
-    // Update Avatar (complete later)
-
-    const user = await User.findByIdAndUpdate(req.user.id, newUserData, {
-        new: true,
-        runValidators: true,
-        useFindAndModify: false
-    })
-
-    res.status(200).json({
-        success: true
-    })
 
 }
 

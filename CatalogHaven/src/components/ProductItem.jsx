@@ -1,8 +1,7 @@
 // src/components/ProductItem.js
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
+
 
 
 import './ProductItem.css'; // Optional: create a CSS file for styling

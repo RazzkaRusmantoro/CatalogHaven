@@ -3,19 +3,14 @@ import './login.css';
 import axios from 'axios';
 import { toast } from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { login, clearErrors } from '../../actions/userActions';
-import { register } from '../../actions/userActions';
-
+import { useDispatch } from 'react-redux';
+import { login, register } from '../../actions/userActions';
+import { useSelector } from 'react-redux';
 
 "use client";
-
 function LoginPage() {
-
-    const navigate = useNavigate();
     const dispatch = useDispatch();
-
-    const { isAuthenticated, error, successMessage  } = useSelector((state) => state.user);
+    const navigate = useNavigate();
 
     const [loginData, setLoginData] = useState({
         email: '',
@@ -30,45 +25,62 @@ function LoginPage() {
         password: '',
     });
 
-    const [isActive, setIsActive] = useState(false);
+    const { user, error, loading } = useSelector((state) => state.user);
 
+    const loginUser = async (e) => {
+        e.preventDefault();
+        const { email, password } = loginData;
+        dispatch(login(email, password)); // Dispatch login action
+    };
+
+    const registerUser = async (e) => {
+        e.preventDefault();
+        const { fname, lname, email, username, password } = registerData;
+        dispatch(register(fname, lname, email, username, password)); // Dispatch register action
+    };
+
+    // Check for login success or failure based on Redux state
     React.useEffect(() => {
-        if (isAuthenticated) {
-            if (successMessage === 'Registration successful') {
-                toast.success('Registration successful!');
-            } else if (successMessage === 'Login successful') {
-                toast.success('Login successful!');
-            }
+        if (user) {
+            toast.success('Login successful!');
             setTimeout(() => {
                 navigate('/');
             }, 1000);
+        } else if (error) {
+            if (error.toLowerCase().includes('invalid email or password')) {
+                toast.error('Invalid email or password. \nPlease try again.');
+                console.log(error);
+            } else {
+                toast.error(error); // Display other errors
+            }
         }
+        
+    }, [user, error, navigate]);
+
+    React.useEffect(() => {
+        // Handle registration success or failure
+        if (user) {
+            toast.success('Registration successful!');
+            setTimeout(() => {
+                navigate('/');
+            }, 1000);
+        } else if (error) {
+            toast.error(error); // Show error message
+        }
+    }, [user, error, navigate]);
+
     
-        if (error) {
-            toast.error(error);
-            dispatch(clearErrors());
-        }
-    }, [dispatch, error, isAuthenticated, navigate, successMessage]);
-
-    const loginUser = (e) => {
-        e.preventDefault();
-        dispatch(login(loginData.email, loginData.password));
-
+    const [isActive, setIsActive] = useState(false);
+    const handleRegisterClick = () => {
+        setIsActive(true);
     };
-
-    const registerUser = (e) => {
-        e.preventDefault();
-        dispatch(register(registerData));
+    const handleLoginClick = () => {
+        setIsActive(false);
     };
-
-    const handleRegisterClick = () => setIsActive(true);
-    const handleLoginClick = () => setIsActive(false);
-
     return (
         <>
             <div className={`container ${isActive ? 'active' : ''}`}>
                 <div className="curved-shape"></div>
-
                 {/* Login Form */}
                 <div className="login-box">
                     <h2 id="login-title">LOGIN</h2>
@@ -103,7 +115,6 @@ function LoginPage() {
                         </div>
                     </form>
                 </div>
-
                 {/* Register Form */}
                 <div className="register-box">
                     <h2 className="register-title">SIGN UP</h2>
@@ -164,5 +175,4 @@ function LoginPage() {
         </>
     );
 }
-
 export default LoginPage;
