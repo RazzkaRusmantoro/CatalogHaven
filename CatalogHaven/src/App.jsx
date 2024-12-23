@@ -1,5 +1,6 @@
 import React from 'react';
-import { useEffect } from 'react';
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
 
 import Home from "./pages/Home/Home";
 import Login from "./pages/Profile/LoginPage";
@@ -12,6 +13,7 @@ import Footer from "./components/footer";
 import axios from 'axios';
 import { Toaster } from 'react-hot-toast';
 import { UserContextProvider } from '../context/userContext';
+import ProtectedRoute from './components/route/ProtectedRoute';
 
 import { loadUser } from './actions/userActions';
 import store from './store';
@@ -34,6 +36,12 @@ function Layout({ children }) {
 
 function App() {
 
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(loadUser());
+  }, [dispatch]);
+
   
 
   
@@ -52,7 +60,9 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/sign-in" element={<Login />} />
-            <Route path="/profile" element={<UserInfo />} />
+            <Route element={<ProtectedRoute />}>
+                <Route path="/profile" element={<UserInfo />} />
+            </Route>
             <Route path="/product/:id" element={<ProductDetails />} />
             <Route path="/search" element={<Search />} />
           </Routes>

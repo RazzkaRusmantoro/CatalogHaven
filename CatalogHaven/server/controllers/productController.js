@@ -239,3 +239,97 @@ exports.deleteReview = async (req, res, next) => {
         reviews
     });
 };
+
+exports.addToCart = async (req, res, next) => {
+    try {
+        const userId = req.user._id;
+        const { productId, quantity } = req.body;
+
+
+        if (!productId || quantity < 1) {
+            return res.status(400).json({
+                success: false,
+                message: 'Invalid product ID or quantity',
+            });
+        }
+
+        const product = await Product.findById(productId);
+        if (!product) {
+            return res.status(404).json({
+                success: false,
+                message: 'Product not found',
+            });
+        }
+
+        const user = await User.findById(userId);
+
+
+        const cartItem = user.cart.find((item) => item.product.toString() === productId);
+
+        if (cartItem) {
+
+            cartItem.quantity += quantity;
+        } else {
+
+            user.cart.push({ product: productId, quantity });
+        }
+
+        await user.save();
+
+        res.status(200).json({
+            success: true,
+            message: 'Item added to cart',
+            cart: user.cart,
+        });
+    } catch (error) {
+        console.error('Error adding to cart:', error);
+        res.status(500).json({
+            success: false,
+            message: 'Error adding item to cart',
+            error: error.message,
+        });
+    }
+};
+
+// Remove item from cart
+exports.removeFromCart = async (req, res, next) => {
+    try {
+        const userId = req.user._id; 
+        const { productId } = req.body;
+
+        if (!productId) {
+            return res.status(400).json({
+                success: false,
+                message: 'Product ID is required',
+            });
+        }
+
+        const user = await User.findById(userId);
+
+
+        const cartLengthBefore = user.cart.length;
+        user.cart = user.cart.filter((item) => item.product.toString() !== productId);
+
+        if (user.cart.length === cartLengthBefore) {
+            return res.status(404).json({
+                success: false,
+                message: 'Product not found in cart',
+            });
+        }
+
+        await user.save();
+
+        res.status(200).json({
+            success: true,
+            message: 'Item removed from cart',
+            cart: user.cart,
+        });
+    } catch (error) {
+        console.error('Error removing from cart:', error);
+        res.status(500).json({
+            success: false,
+            message: 'Error removing item from cart',
+            error: error.message,
+        });
+    }
+};

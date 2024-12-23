@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const cors = require("cors");   
-const { newProduct, getProducts, getFeaturedProducts, getSingleProduct, updateProduct, deleteProduct, createProductReview, getProductReviews, deleteReview } = require('../controllers/productController');
+const { newProduct, getProducts, getFeaturedProducts, getSingleProduct, updateProduct, deleteProduct, createProductReview, getProductReviews, deleteReview, addToCart } = require('../controllers/productController');
 
 const { isAuthenticatedUser } = require('../middlewares/auth');
 
@@ -20,5 +20,8 @@ router.route('/review').put(isAuthenticatedUser, createProductReview);
 router.route('/reviews').get(isAuthenticatedUser, getProductReviews);
 
 router.route('/reviews').delete(isAuthenticatedUser, deleteReview);
+
+router.route('/cart/add', isAuthenticatedUser, addToCart);
+
 
 module.exports = router;

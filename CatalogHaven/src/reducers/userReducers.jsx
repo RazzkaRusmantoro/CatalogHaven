@@ -24,6 +24,7 @@ const initialState = {
       return null;
     }
   })(),
+  isAuthenticated: !!localStorage.getItem('user'),
   error: null,
   loading: false,
 };

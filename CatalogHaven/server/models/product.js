@@ -117,7 +117,9 @@ const productSchema = new Schema({
     creationDate: {
         type: Date,
         default: Date.now
-    }
+    },
+
+    
 
 });
 

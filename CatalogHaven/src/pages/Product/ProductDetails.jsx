@@ -1,16 +1,24 @@
-
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import './ProductDetails.css';
 import Loader from '../../components/Loader';
 import { useDispatch, useSelector } from 'react-redux';
 import { getProductDetails, clearErrors } from '../../actions/productActions';
 import { addItemToCart } from '../../actions/cartActions';
+import CartDropdown from '../../components/Cart/CartDropdown';
 
 const ProductDetails = () => {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const { id: productId } = useParams();
     const { loading = false, error = null, product = {} } = useSelector(state => state.productDetails || {});
+    const { isAuthenticated } = useSelector(state => state.user);
+    const [quantity, setQuantity] = useState(1);
+    const [recentCartItem, setRecentCartItem] = useState(null);
+    const [isDropdownVisible, setDropdownVisible] = useState(false);
+    const [isDescriptionVisible, setDescriptionVisible] = useState(false);
+    const cartItems = useSelector(state => state.cart.cartItems);
 
     useEffect(() => {
         if (error) {
@@ -20,23 +28,19 @@ const ProductDetails = () => {
         dispatch(getProductDetails(productId));
     }, [dispatch, error, productId]);
 
-
     useEffect(() => {
         if (!loading && product) {
             console.log('Product Image URL:', product.images && product.images.length > 0 ? product.images[0].url : 'No image available');
         }
     }, [loading, product]);
 
-    const [quantity, setQuantity] = useState(1); 
-    const [isDescriptionVisible, setDescriptionVisible] = useState(false);
-
     const increaseQuantity = () => {
-        setQuantity(quantity + 1); 
+        setQuantity(quantity + 1);
     };
 
     const decreaseQuantity = () => {
         if (quantity > 1) {
-            setQuantity(quantity - 1); // Decrease quantity
+            setQuantity(quantity - 1);
         }
     };
 
@@ -54,27 +58,50 @@ const ProductDetails = () => {
     };
 
     const toggleDescription = () => {
-        setDescriptionVisible(!isDescriptionVisible); // Toggle description visibility
+        setDescriptionVisible(!isDescriptionVisible);
     };
 
     const addToCart = () => {
-        dispatch(addItemToCart(productId, quantity));
-        alert('Product added to cart successfully.');
-    }
+        if (!isAuthenticated) {
+            navigate('/sign-in');
+            return; 
+        }
+
+        const cartItem = {
+            id: productId,
+            name: product.name,
+            price: product.price,
+            quantity,
+            image: product.images && product.images[0]?.url,
+        };
+
+        dispatch(addItemToCart(productId, quantity)); 
+        setRecentCartItem(cartItem); 
+        setDropdownVisible(true); 
+
+
+        setTimeout(() => {
+            setDropdownVisible(false);
+        }, 3000);
+
+        console.log('Current cart items:', cartItems);
+        console.log('Added to cart:', cartItem);
+    };
 
     return (
         <>
             <div className="background-layer"></div>
             {loading ? (
-
                 <Loader />
-
             ) : (
                 <div className="product-details">
                     {/* Left */}
                     <div className="product-image-container">
                         <div className="product-image">
-                            <img src={product.images && product.images.length > 0 ? product.images[0].url : ''} alt={product.name || 'Product Image'} />
+                            <img
+                                src={product.images && product.images.length > 0 ? product.images[0].url : ''}
+                                alt={product.name || 'Product Image'}
+                            />
                         </div>
                     </div>
                     {/* Right */}
@@ -85,17 +112,16 @@ const ProductDetails = () => {
                         <div className="product-price">
                             <h3>USD ${product.price || '0.00'}</h3>
                         </div>
-                        <div className = "horizontal">
+                        <div className="horizontal">
                             <hr></hr>
                         </div>
                         <div className="product-seller">
-                            <p><b>Seller:</b> {product.user?.username|| product.seller || 'Unknown'}</p>
+                            <p><b>Seller:</b> {product.user?.username || product.seller || 'Unknown'}</p>
                         </div>
-                        
+
                         <div className="product-rating">
                             <span className="star-rating">
                                 {renderStarRating(product.rating)}
-
                             </span>
                             <span id="reviews">({product.numReviews})</span>
                         </div>
@@ -108,7 +134,7 @@ const ProductDetails = () => {
                             </div>
                         </div>
                         <div className="product-buy">
-                            <button disabled = {product.stock === 0 } onClick = {addToCart}><b>Add to Cart</b></button>
+                            <button disabled={product.stock === 0 || isDropdownVisible} onClick={addToCart}><b>Add to Cart</b></button>
                         </div>
                         <div className="product-description">
                             <div className="description-header" onClick={toggleDescription}>
@@ -119,9 +145,13 @@ const ProductDetails = () => {
                                 </div>
                             </div>
                         </div>
-
                     </div>
                 </div>
+            )}
+
+            {/* Render Cart Dropdown if visible */}
+            {isDropdownVisible && recentCartItem && (
+                <CartDropdown cartItems={[recentCartItem]} />
             )}
         </>
     );
