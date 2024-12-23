@@ -1,30 +1,26 @@
-import { ADD_TO_CART } from '../constants/cartConstants';
+import { ADD_TO_CART } from "../constants/cartConstants";
 
-const initialState = {
-    cartItems: JSON.parse(localStorage.getItem('cartItems')) || [],
-};
-
-export const cartReducer = (state = initialState, action) => {
+export const cartReducer = (state = { cartItems: [] }, action) => {
     switch (action.type) {
         case ADD_TO_CART:
-            // Check if the item already exists in the cart
-            const itemExists = state.cartItems.find(item => item.id === action.payload.id);
+            const item = action.payload;
 
-            if (itemExists) {
-                // If item exists, update the quantity of that item
+            // Check if the product already exists in the cart based on the product ID
+            const isItemExist = state.cartItems.find(i => i.id === item.id);
+
+            if (isItemExist) {
+                // If the item exists, update the quantity
                 return {
                     ...state,
-                    cartItems: state.cartItems.map(item =>
-                        item.id === action.payload.id
-                            ? { ...item, quantity: item.quantity + action.payload.quantity }
-                            : item
-                    ),
+                    cartItems: state.cartItems.map(i =>
+                        i.id === isItemExist.id ? { ...i, quantity: i.quantity + item.quantity } : i
+                    )
                 };
             } else {
                 // If item doesn't exist, add it to the cart
                 return {
                     ...state,
-                    cartItems: [...state.cartItems, action.payload],
+                    cartItems: [...state.cartItems, item]
                 };
             }
 
@@ -32,3 +28,4 @@ export const cartReducer = (state = initialState, action) => {
             return state;
     }
 };
+

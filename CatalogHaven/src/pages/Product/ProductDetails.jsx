@@ -15,7 +15,7 @@ const ProductDetails = () => {
     const { loading = false, error = null, product = {} } = useSelector(state => state.productDetails || {});
     const { isAuthenticated } = useSelector(state => state.user);
     const [quantity, setQuantity] = useState(1);
-    const [recentCartItem, setRecentCartItem] = useState(null);
+    const [recentCartItem, setRecentCartItem] = useState(null); // Store only the most recently added item
     const [isDropdownVisible, setDropdownVisible] = useState(false);
     const [isDescriptionVisible, setDescriptionVisible] = useState(false);
     const cartItems = useSelector(state => state.cart.cartItems);
@@ -63,8 +63,9 @@ const ProductDetails = () => {
 
     const addToCart = () => {
         if (!isAuthenticated) {
+            // If the user is not logged in, redirect to the login page
             navigate('/sign-in');
-            return; 
+            return; // Stop further execution
         }
 
         const cartItem = {
@@ -75,9 +76,9 @@ const ProductDetails = () => {
             image: product.images && product.images[0]?.url,
         };
 
-        dispatch(addItemToCart(productId, quantity)); 
-        setRecentCartItem(cartItem); 
-        setDropdownVisible(true); 
+        dispatch(addItemToCart(productId, quantity)); // Add to global cart (Redux)
+        setRecentCartItem(cartItem); // Update the most recent cart item for dropdown
+        setDropdownVisible(true); // Show the dropdown
 
 
         setTimeout(() => {

@@ -240,37 +240,31 @@ exports.deleteReview = async (req, res, next) => {
     });
 };
 
-exports.addToCart = async (req, res, next) => {
+exports.addToCart = async (req, res) => {
     try {
-        const userId = req.user._id;
+        const userId = req.user._id; // Assuming you're using JWT for authentication
         const { productId, quantity } = req.body;
 
-
         if (!productId || quantity < 1) {
-            return res.status(400).json({
-                success: false,
-                message: 'Invalid product ID or quantity',
-            });
+            return res.status(400).json({ success: false, message: 'Invalid input' });
         }
 
-        const product = await Product.findById(productId);
-        if (!product) {
-            return res.status(404).json({
-                success: false,
-                message: 'Product not found',
-            });
-        }
-
+        // Find the user and the product
         const user = await User.findById(userId);
+        const product = await Product.findById(productId);
 
+        if (!product) {
+            return res.status(404).json({ success: false, message: 'Product not found' });
+        }
 
-        const cartItem = user.cart.find((item) => item.product.toString() === productId);
+        // Check if product is already in the cart
+        const cartItem = user.cart.find(item => item.product.toString() === productId);
 
         if (cartItem) {
-
+            // Update the quantity if the product already exists in the cart
             cartItem.quantity += quantity;
         } else {
-
+            // Otherwise, add the new product to the cart
             user.cart.push({ product: productId, quantity });
         }
 
@@ -282,12 +276,8 @@ exports.addToCart = async (req, res, next) => {
             cart: user.cart,
         });
     } catch (error) {
-        console.error('Error adding to cart:', error);
-        res.status(500).json({
-            success: false,
-            message: 'Error adding item to cart',
-            error: error.message,
-        });
+        console.error(error);
+        res.status(500).json({ success: false, message: 'Error adding item to cart' });
     }
 };
 

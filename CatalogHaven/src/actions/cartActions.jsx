@@ -1,14 +1,25 @@
-import axios from 'axios';
-import { ADD_TO_CART } from '../constants/cartConstants';
+import { ADD_TO_CART } from "../constants/cartConstants";
 
-// Add item to cart
-export const addItemToCart = (productId, quantity) => async (dispatch, getState) => {
-    const { data } = await axios.post('/cart/add', { productId, quantity });
 
-    dispatch({
-        type: ADD_TO_CART,
-        payload: data,
-    });
+export const addItemToCart = (id, quantity) => async (dispatch, getState) => {
+    const { productDetails } = getState();
+    const { product } = productDetails;
 
-    localStorage.setItem('cartItems', JSON.stringify(getState().cart.cartItems));
+
+    if (product) {
+        const item = {
+            id: product._id,
+            name: product.name,
+            price: product.price,
+            quantity,
+            image: product.images && product.images[0]?.url,
+        };
+
+        dispatch({
+            type: ADD_TO_CART,
+            payload: item,
+        });
+
+        localStorage.setItem('cartItems', JSON.stringify(getState().cart.cartItems));
+    }
 };
