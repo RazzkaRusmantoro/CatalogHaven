@@ -24,6 +24,7 @@ function Home() {
 
     // Intersection observer for animation
     useEffect(() => {
+        const productItems = document.querySelectorAll('.product-item');
         const observer = new IntersectionObserver(entries => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {

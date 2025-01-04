@@ -14,6 +14,7 @@ import axios from 'axios';
 import { Toaster } from 'react-hot-toast';
 import { UserContextProvider } from '../context/userContext';
 import ProtectedRoute from './components/route/ProtectedRoute';
+import Shopping from './pages/Checkout/Shopping';
 
 import { loadUser } from './actions/userActions';
 import store from './store';
@@ -65,6 +66,7 @@ function App() {
             </Route>
             <Route path="/product/:id" element={<ProductDetails />} />
             <Route path="/search" element={<Search />} />
+            <Route path="/checkout/shipping" element={<Shopping />} />
           </Routes>
         </Layout>
       </Router>

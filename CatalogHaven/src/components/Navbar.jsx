@@ -7,6 +7,7 @@ import cart from "/assets/cart.png";
 import profile from "/assets/profile.png";
 import categoryMenu from "/assets/3-Lines.png";
 import categoryArrow from "/assets/arrow.png";
+import CartPopup from "./Cart/CartPopup";
 
 import { useDispatch, useSelector } from "react-redux";
 
@@ -17,6 +18,12 @@ function Navbar() {
     const [searchQuery, setSearchQuery] = useState("");
 
     const { user, loading } = useSelector(state => state.user);
+
+    const [isCartPopupVisible, setCartPopupVisible] = useState(false);
+
+    const toggleCartPopup = () => {
+        setCartPopupVisible(!isCartPopupVisible);
+    };
 
     const handleProfileClick = () => {
         if (user) {
@@ -58,7 +65,7 @@ function Navbar() {
         <div className="fullNavbar">
             <div className="Navbar">
                 <img src={Logo} alt="Logo" className="logo" onClick={handleHomeClick}/>
-                <form autocomplete="off" style={{ width: "50%" }}> 
+                <form autoComplete="off" style={{ width: "50%" }}> 
                     <input 
                         type="text" 
                         placeholder="Search for a product..." 
@@ -70,7 +77,7 @@ function Navbar() {
                     />
                 </form>
                 <div className="iconSection">
-                    <div className="navButton" id="cart">
+                    <div className="navButton" id="cart" onClick={toggleCartPopup}>
                         <p>Cart</p>
                         <img src={cart} alt="Cart" className="icons" />
                     </div>
@@ -84,6 +91,8 @@ function Navbar() {
                     </div>
                 </div>
             </div>
+            {/* Cart Popup */}
+            <CartPopup isVisible={isCartPopupVisible} onClose={() => setCartPopupVisible(false)} />
             <div className="Navbar2">
                 <div className="category">
                     <img src={categoryMenu} alt="category" className="icons" id="categoryMenu" />

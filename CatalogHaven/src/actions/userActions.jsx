@@ -20,7 +20,7 @@ export const login = (email, password) => async (dispatch) => {
         dispatch({ type: LOGIN_REQUEST });
         const config = {
             headers: {
-                'Content-Type': 'application/json', // Use JSON as content type
+                'Content-Type': 'application/json',
             }
         };
 
@@ -29,10 +29,9 @@ export const login = (email, password) => async (dispatch) => {
         if (data && data.user) {
             dispatch({
                 type: LOGIN_SUCCESS,
-                payload: data.user, // Assuming 'user' is the object returned from the backend
+                payload: data.user, 
             });
         } else {
-            // Dispatch LOGIN_FAIL if the user data is invalid
             dispatch({
                 type: LOGIN_FAIL,
                 payload: 'Invalid email or password',
@@ -60,7 +59,7 @@ export const register = (fname, lname, email, username, password) => async (disp
 
         dispatch({
             type: REGISTER_SUCCESS,
-            payload: data.user, // Assuming 'user' is the object returned after registration
+            payload: data.user, 
         });
     } catch (error) {
         dispatch({
@@ -82,6 +81,7 @@ export const loadUser = () => async (dispatch) => {
             payload: data.user,
         });
     } catch (error) {
+        console.log('Error loading user:' , error);
         dispatch({
             type: LOAD_USER_FAIL,
             payload: error.response?.data?.message || 'Failed to load user',

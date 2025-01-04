@@ -63,9 +63,8 @@ const ProductDetails = () => {
 
     const addToCart = () => {
         if (!isAuthenticated) {
-            // If the user is not logged in, redirect to the login page
             navigate('/sign-in');
-            return; // Stop further execution
+            return;
         }
 
         const cartItem = {

@@ -383,3 +383,17 @@ html, body {
         left: 100%;
     }
 }
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.fade-in {
+    opacity: 0; /* Initially hidden */
+    animation: fadeIn 1s ease-out forwards;
+}

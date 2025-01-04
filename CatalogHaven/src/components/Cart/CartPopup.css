@@ -1,0 +1,184 @@
+/* Gray overlay */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); /* Semi-transparent gray */
+    z-index: 999; /* Below the cart popup */
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease;
+}
+
+.overlay.visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Cart Popup */
+.cart-popup {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 400px;
+    height: 100%;
+    background: #fff;
+    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.2);
+    z-index: 10000000; /* Above the overlay */
+    transition: right 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    color: red;
+}
+
+.cart-popup.visible {
+    right: 0;
+}
+
+.cart-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    border-bottom: 1px solid #ccc;
+}
+
+.cart-header h2 {
+    margin: 0;
+    margin-left: 50px;
+    margin-top: 10px;
+}
+
+.close-button {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+.cart-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 1rem;
+}
+
+.cart-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.cart-item-image {
+    width: 60px;
+    height: 60px;
+    margin-right: 1rem;
+    object-fit: cover;
+}
+
+.cart-item-details {
+    flex: 1;
+}
+
+/* Adjusting quantity control to make space for remove button */
+.quantity-control {
+    display: flex;
+    align-items: center;
+    margin-top: 0.5rem;
+    justify-content: space-between; /* This will place the button on the far right */
+}
+
+.quantity-control label {
+    margin-right: 0.5rem;
+}
+
+.quantity-control input {
+    width: 50px;
+    padding: 0.25rem;
+    text-align: center;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+/* Remove Item Button */
+.remove-item-button {
+    background: none;
+    border: 2px solid darkred;
+    font-size: 1.5rem;
+    color: white;
+    cursor: pointer;
+    padding: 0;
+    margin-left: 10px;
+    background-color: red;
+    width: 30px;
+    height: 30px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+}
+
+.remove-item-button svg {
+    width: 20px;
+    height: 20px;
+    fill: white; /* Ensures the SVG icon is white initially */
+}
+
+.remove-item-button:hover {
+    color: darkred;
+    background-color: white;
+    border-color: darkred;
+}
+
+.remove-item-button:hover svg {
+    fill: darkred; /* Changes the SVG color on hover */
+}
+
+.cart-footer {
+    display: flex;
+    justify-content: space-between;
+    margin-top: auto; /* Pushes the footer to the bottom of the popup */
+    padding: 1rem;
+    border-top: 1px solid #eee;
+    background-color: #fff; /* Matches the popup background */
+}
+
+/* View Cart Button */
+.view-cart-button {
+    flex: 1;
+    margin: 0 5px;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+    font-weight: bold;
+    background-color: #f1f1f1; 
+    color: red;
+    transition: background-color 0.3s ease;
+}
+
+.view-cart-button:hover {
+    background-color: #ddd;
+}
+
+/* Checkout Button */
+.checkout-button {
+    flex: 1;
+    margin: 0 5px;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+    font-weight: bold;
+    background-color: red; 
+    color: #fff;
+    transition: background-color 0.3s ease;
+}
+
+.checkout-button:hover {
+    background-color: rgb(114, 0, 0);
+}

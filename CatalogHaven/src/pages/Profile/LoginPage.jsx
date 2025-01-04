@@ -27,56 +27,62 @@ function LoginPage() {
 
     const { user, error, loading } = useSelector((state) => state.user);
 
-    const loginUser = async (e) => {
-        e.preventDefault();
-        const { email, password } = loginData;
-        dispatch(login(email, password)); // Dispatch login action
-    };
-
-    const registerUser = async (e) => {
-        e.preventDefault();
-        const { fname, lname, email, username, password } = registerData;
-        dispatch(register(fname, lname, email, username, password)); // Dispatch register action
-    };
-
-    // Check for login success or failure based on Redux state
-    React.useEffect(() => {
-        if (user) {
-            toast.success('Login successful!');
-            setTimeout(() => {
-                navigate('/');
-            }, 1000);
-        } else if (error) {
-            if (error.toLowerCase().includes('invalid email or password')) {
-                toast.error('Invalid email or password. \nPlease try again.');
-                console.log(error);
-            } else {
-                toast.error(error); // Display other errors
-            }
-        }
-        
-    }, [user, error, navigate]);
-
-    React.useEffect(() => {
-        // Handle registration success or failure
-        if (user) {
-            toast.success('Registration successful!');
-            setTimeout(() => {
-                navigate('/');
-            }, 1000);
-        } else if (error) {
-            toast.error(error); // Show error message
-        }
-    }, [user, error, navigate]);
-
-    
     const [isActive, setIsActive] = useState(false);
+    const [isRegisterClicked, setIsRegisterClicked] = useState(false); // Track if register button was clicked
+
     const handleRegisterClick = () => {
         setIsActive(true);
     };
     const handleLoginClick = () => {
         setIsActive(false);
     };
+
+    const loginUser = async (e) => {
+        e.preventDefault();
+        const { email, password } = loginData;
+        dispatch(login(email, password)); 
+    };
+
+    const registerUser = async (e) => {
+        e.preventDefault();
+        const { fname, lname, email, username, password } = registerData;
+        dispatch(register(fname, lname, email, username, password)); 
+        setIsRegisterClicked(true);
+    };
+
+    
+
+    // Check for login success or failure based on Redux state
+    React.useEffect(() => {
+        if (!isActive && user) { 
+            toast.success('Login successful!');
+            setTimeout(() => {
+                navigate('/');
+            }, 1000);
+        } else if (!isActive && error) {
+            if (error.toLowerCase().includes('invalid email or password')) {
+                toast.error("Invalid email or password!");
+            }
+        }
+    }, [user, error, navigate, isActive]);
+
+    // Check for registration success or failure based on Redux state and register button click
+    React.useEffect(() => {
+        if (isRegisterClicked) { 
+            if (user) {
+                toast.success('Registration successful!');
+                setTimeout(() => {
+                    navigate('/');
+                }, 1000);
+            } else if (error) {
+                toast.error("Registration failed!");
+            }
+            setIsRegisterClicked(false); // Reset after handling the registration result
+        }
+    }, [user, error, navigate, isRegisterClicked]);
+
+    
+    
     return (
         <>
             <div className={`container ${isActive ? 'active' : ''}`}>
