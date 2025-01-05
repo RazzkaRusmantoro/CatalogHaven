@@ -3,7 +3,7 @@ import mapboxgl from 'mapbox-gl';
 import './MapComponent.css';
 
 
-const MapComponent = () => {
+const MapComponent = ({ onSelectAddress }) => {
   const mapContainerRef = useRef(null); // Create a ref to hold the map container
   const mapRef = useRef(null); // Store the map instance
   const [address, setAddress] = useState(''); // State to store the address
@@ -61,7 +61,6 @@ const MapComponent = () => {
 
 
       getAddressFromCenter();
-
       map.on('moveend', getAddressFromCenter);
 
       const resizeMap = () => {
@@ -87,13 +86,18 @@ const MapComponent = () => {
     };
   }, []);
 
+  const handleSelectAddress = () => {
+    onSelectAddress(address); // Pass the address back to the parent
+  };
+
   return (
     <div style={{ position: 'relative', height: '80vh' }}>
       <div ref={mapContainerRef} style={{ width: '100%', height: '100%' }} />
 
       {/* Button */}
-      <div>
-      </div>
+      <button onClick={handleSelectAddress} className="selectAddressButton">
+      ✔
+      </button>
 
       {/* SVG centered in the middle */}
       <div
