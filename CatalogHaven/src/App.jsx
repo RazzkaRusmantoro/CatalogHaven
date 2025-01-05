@@ -63,10 +63,11 @@ function App() {
             <Route path="/sign-in" element={<Login />} />
             <Route element={<ProtectedRoute />}>
                 <Route path="/profile" element={<UserInfo />} />
+                <Route path="/checkout/shipping" element={<Shopping />} />
             </Route>
             <Route path="/product/:id" element={<ProductDetails />} />
             <Route path="/search" element={<Search />} />
-            <Route path="/checkout/shipping" element={<Shopping />} />
+            
           </Routes>
         </Layout>
       </Router>

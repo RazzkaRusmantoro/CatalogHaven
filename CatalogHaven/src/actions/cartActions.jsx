@@ -1,4 +1,4 @@
-import { ADD_TO_CART, UPDATE_CART_ITEM_QUANTITY, REMOVE_FROM_CART } from "../constants/cartConstants";
+import { ADD_TO_CART, UPDATE_CART_ITEM_QUANTITY, REMOVE_FROM_CART, SAVE_SHIPPING } from "../constants/cartConstants";
 
 
 export const addItemToCart = (id, quantity) => async (dispatch, getState) => {

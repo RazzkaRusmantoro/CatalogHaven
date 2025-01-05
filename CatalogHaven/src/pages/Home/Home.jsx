@@ -63,7 +63,9 @@ function Home() {
             </div>
             <div className="content-wrapper">
                 <div className="container-display-box">
-                    <p> WE HAVE <br /> <b>YOUR WANTS.</b></p>
+                    <div className = "banner-text">
+                        <p> WE HAVE <br /> <b>YOUR WANTS.</b></p>
+                    </div>
                     <img src={sunglasses} alt="sunglasses" />
                     <img src={bg} id="bg" alt="background" />
                     <img src={bag} id="bag" alt="bag" />

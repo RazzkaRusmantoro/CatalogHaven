@@ -73,7 +73,6 @@ function Shopping() {
                                 required
                             />
                         </div>
-
                         <div>
                             <label htmlFor="phoneNo">Phone Number:</label>
                             <input
@@ -81,7 +80,20 @@ function Shopping() {
                                 id="phoneNo"
                                 value={phoneNo}
                                 onChange={(e) => setPhoneNo(e.target.value)}
+                                pattern="^[+0-9]{1,4}[\. \-]?[0-9]+([\. \-]?[0-9]+)*$"
+                                title="Please enter a valid phone number (numbers only, with optional symbols)"
                                 required
+                                maxLength="15"
+                                onInput={(e) => {
+                                    const value = e.target.value;
+                                    // Allow only numbers, '+' , '-', '.', and space
+                                    if (/[^0-9+\-.\s]/.test(value)) {
+                                        e.target.value = value.replace(/[^0-9+\-.\s]/g, ''); // Remove invalid characters
+                                    }
+                                    if (value.length > 15) {
+                                        e.target.value = value.slice(0, 15);
+                                    }
+                                }}
                             />
                         </div>
                         <div>

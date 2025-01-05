@@ -132,11 +132,15 @@ html, body {
     clip-path: inset(2.5% 0% 15% 0%);
 }
 
+.banner-text {
+    z-index: 5;
+}
+
 #bg {
     left: 0px;
     height: 400px;
     top: 0px;
-    z-index: 1;
+    z-index: 4;
     width: calc(65vw + 20px);
 }
 
@@ -152,7 +156,7 @@ html, body {
     position: absolute;
     bottom: 94.5px;
     left: 100px;
-    z-index: 1;
+    z-index: 5;
 }
 
 .container-display-box .button {
@@ -166,7 +170,9 @@ html, body {
     border-color: #fd575c;
     padding: 10px;
     border-radius: 5px;
+    z-index: 10;
 }
+
 
 
 .products-box-2 {
