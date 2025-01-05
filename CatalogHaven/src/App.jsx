@@ -14,7 +14,8 @@ import axios from 'axios';
 import { Toaster } from 'react-hot-toast';
 import { UserContextProvider } from '../context/userContext';
 import ProtectedRoute from './components/route/ProtectedRoute';
-import Shopping from './pages/Checkout/Shopping';
+import Shipping from './pages/Checkout/Shipping';
+import Checkout from './pages/Checkout/Checkout';
 
 import { loadUser } from './actions/userActions';
 import store from './store';
@@ -63,7 +64,8 @@ function App() {
             <Route path="/sign-in" element={<Login />} />
             <Route element={<ProtectedRoute />}>
                 <Route path="/profile" element={<UserInfo />} />
-                <Route path="/checkout/shipping" element={<Shopping />} />
+                <Route path="/checkout/shipping" element={<Shipping />} />
+                <Route path="/checkout/confirm" element={<Checkout />} />
             </Route>
             <Route path="/product/:id" element={<ProductDetails />} />
             <Route path="/search" element={<Search />} />

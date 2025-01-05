@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { saveShippingInfo } from "../../actions/cartActions";
 import MapComponent from "./MapComponent"; 
-import "./Shopping.css";
+import "./Shipping.css";
 
-function Shopping() {
+const Shipping = () => {
     const { shippingInfo } = useSelector((state) => state.cart);
 
     const [address, setAddress] = useState(shippingInfo?.address || "");
@@ -179,4 +179,4 @@ function Shopping() {
     );
 }
 
-export default Shopping;
+export default Shipping;
