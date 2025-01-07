@@ -142,7 +142,7 @@
     background-color: white;
     border-radius: 8px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    height: 50%;
+    height: 575px;
 
 }
 
@@ -150,18 +150,71 @@
     margin-bottom: 20px;
 }
 
+
 .submitOrderButton {
-    width: 100%;
-    padding: 10px;
-    background-color: red;
-    color: white;
+    position: relative;
+    overflow: hidden;
+    margin-top: 20px;
+    padding: 15px 40px;
+    font-weight: 900;
+    font-size: 1.2em;
+    border-radius: 200px;
     border: none;
-    border-radius: 5px;
+    color: #f9bdbd;
+    text-transform: uppercase;
+    box-shadow: -2px 2px 2px #ccc;
+    background-color: red;
     cursor: pointer;
+    height: 50px;
+    width: 100%;
 }
 
+/* Sheen effect */
+.sheen:after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -50%;
+    bottom: -50%;
+    left: -50%;
+    background: linear-gradient(to bottom, rgba(229, 172, 142, 0), rgba(255, 255, 255, 0.5) 50%, rgba(229, 172, 142, 0));
+    transform: rotateZ(60deg) translate(-5em, 7.5em);
+}
+
+/* Activate sheen on hover */
+.sheen:hover::after,
+.submitOrderButton:focus::after {
+    animation: sheen 1s forwards;
+}
+
+@keyframes sheen {
+    100% {
+        transform: rotateZ(60deg) translate(1em, -9em);
+    }
+}
+
+/* Button hover and focus */
 .submitOrderButton:hover {
-    background-color: darkred;
+    background-color: #ed5858;
+}
+
+.submitOrderButton:active {
+    box-shadow: 0px 0px 0px white;
+    -webkit-box-shadow: inset -2px 2px 2px #ccc;
+    -moz-box-shadow: inset -2px 2px 2px #ccc;
+    box-shadow: inset -2px 2px 2px #ccc;
+    transform: translate(0, 2px);
+    color: #FFC491;
+    background-color: #ed5858;
+}
+
+.submitOrderButton:focus {
+    outline: 0;
+}
+
+.sheenText {
+    position: relative;
+    bottom: 5px;
 }
 
 .couponCodeInput {
@@ -175,6 +228,28 @@
 
 .textOrder {
     position: relative;
-
 }
 
+.value {
+    font-size: 20px;
+}
+
+.orderSummary p {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 10px 0;
+}
+
+.orderSummary .headOrder {
+    flex: 1; /* Pushes the value to the right */
+    text-align: left;
+    color: #000;
+}
+
+.orderSummary .textOrder {
+    text-align: right;
+    flex-shrink: 0; /* Prevents the value from shrinking */
+    color: #ff9900;
+    margin-left: 10px;
+}

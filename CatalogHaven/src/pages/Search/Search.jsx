@@ -82,6 +82,8 @@ function Search() {
     };
 
     return (
+        <>
+        <div className = "background-layer"></div>
         <div className="searchPage">
             <div className="sidebar">
                 <div className="container-sidebar">
@@ -135,6 +137,7 @@ function Search() {
                 </div>
             </div>
         </div>
+        </>
     );
 }
 

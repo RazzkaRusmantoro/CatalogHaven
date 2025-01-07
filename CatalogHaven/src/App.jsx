@@ -1,5 +1,5 @@
 import React from 'react';
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 
 import Home from "./pages/Home/Home";
@@ -38,10 +38,19 @@ function Layout({ children }) {
 
 function App() {
 
+  const [stripeApiKey, setStripeApiKey] = useState('');
+
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(loadUser());
+
+    async function getStripeApiKey() {
+      const { data } = await axios.get('/stripeapikey');
+      setStripeApiKey(data.stripeApiKey);
+    }
+
+    getStripeApiKey();
   }, [dispatch]);
 
   

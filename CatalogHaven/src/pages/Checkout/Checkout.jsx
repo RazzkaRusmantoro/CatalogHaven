@@ -131,24 +131,25 @@ const Checkout = () => {
                         </p>
                         <hr className="cartItemSeparator" />
                         <p className = "textOrder">
-                            <strong className = "headOrder">Total Items:</strong> <p className = "textOrder" style={{ color: "#ff9900" }}>{totalItems}</p>
+                            <strong className = "headOrder">Total Items:</strong> <p className = "value" style={{ color: "#ff9900" }}>{totalItems} Items</p>
                         </p>
                         <p className = "textOrder">
-                            <strong className = "headOrder">Total Items Cost:</strong> <p className = "textOrder" style={{ color: "#ff9900" }}>${totalItemsCost}</p>
+                            <strong className = "headOrder">Total Items Cost:</strong> <p className = "value" style={{ color: "#ff9900" }}>${totalItemsCost}</p>
                         </p>
                         <p className = "textOrder">
-                            <strong className = "headOrder">Subtotal:</strong> <p className = "textOrder" style={{ color: "#ff9900" }}>${subtotal.toFixed(2)}</p>
-                        </p>
-                        <p className = "textOrder">
-                        <hr className="cartItemSeparator" />
-                            <strong className = "headOrder">Shipping:</strong> <p className = "textOrder" style={{ color: "#ff9900" }}>Free</p>
+                            <strong className = "headOrder">Subtotal:</strong> <p className = "value" style={{ color: "#ff9900" }}>${subtotal.toFixed(2)}</p>
                         </p>
                         <hr className="cartItemSeparator" />
                         <p className = "textOrder">
-                            <strong className = "headOrder">Order Total:</strong> <p className = "textOrder" style={{ color: "#ff9900" }}>${orderTotal.toFixed(2)}</p>
+                            <strong className = "headOrder">Shipping:</strong> <p className = "value" style={{ color: "#ff9900" }}>Free</p>
                         </p>
+                        <hr className="cartItemSeparator" />
+                        <p className = "textOrder">
+                            <strong className = "headOrder">Order Total:</strong> <p className = "value" style={{ color: "#ff9900" }}>${orderTotal.toFixed(2)}</p>
+                        </p>
+                        <hr className="cartItemSeparator" />
                     </div>
-                    <button className="submitOrderButton">Submit Order</button>
+                    <button className="submitOrderButton sheen"><div className="sheenText">Submit Order</div></button>
                 </div>
             </div>
         </>
