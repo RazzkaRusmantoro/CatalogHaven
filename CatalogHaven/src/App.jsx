@@ -1,27 +1,33 @@
-import React from 'react';
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
+import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
+import { Elements } from '@stripe/react-stripe-js';
+import { loadStripe } from '@stripe/stripe-js';
 
 import Home from "./pages/Home/Home";
 import Login from "./pages/Profile/LoginPage";
 import UserInfo from "./pages/Profile/UserInfo";
 import Search from "./pages/Search/Search";
 import ProductDetails from './pages/Product/ProductDetails';
-import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Footer from "./components/footer";
-import axios from 'axios';
 import { Toaster } from 'react-hot-toast';
 import { UserContextProvider } from '../context/userContext';
 import ProtectedRoute from './components/route/ProtectedRoute';
 import Shipping from './pages/Checkout/Shipping';
 import Checkout from './pages/Checkout/Checkout';
+import Payment from './pages/Checkout/Payment';
+
 
 import { loadUser } from './actions/userActions';
 import store from './store';
+import axios from 'axios';
 
 axios.defaults.baseURL = 'http://localhost:8000';
 axios.defaults.withCredentials = true;
+
+const stripePromise = loadStripe('pk_test_51Pf50dRxCns0JWUNHEicsRNxOtipIjtsYo57iL8g45rj1xtCGjTHvhawFDXv14husEhsSQzNDjksXn8QggqF4ah600rXpd3kP4');
+
 
 function Layout({ children }) {
   const location = useLocation();
@@ -38,25 +44,15 @@ function Layout({ children }) {
 
 function App() {
 
-  const [stripeApiKey, setStripeApiKey] = useState('');
 
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(loadUser());
 
-    async function getStripeApiKey() {
-      const { data } = await axios.get('/stripeapikey');
-      setStripeApiKey(data.stripeApiKey);
-    }
-
-    getStripeApiKey();
   }, [dispatch]);
 
-  
-
-  
-  return (  
+  return (
     <UserContextProvider>
       <Router>
         <Toaster position='bottom-right' toastOptions={{
@@ -67,20 +63,22 @@ function App() {
             height: '80px',
           },
         }} />
-        <Layout>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/sign-in" element={<Login />} />
-            <Route element={<ProtectedRoute />}>
+        <Elements stripe={stripePromise}>
+          <Layout>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/sign-in" element={<Login />} />
+              <Route element={<ProtectedRoute />}>
                 <Route path="/profile" element={<UserInfo />} />
                 <Route path="/checkout/shipping" element={<Shipping />} />
                 <Route path="/checkout/confirm" element={<Checkout />} />
-            </Route>
-            <Route path="/product/:id" element={<ProductDetails />} />
-            <Route path="/search" element={<Search />} />
-            
-          </Routes>
-        </Layout>
+                <Route path="/checkout/payment" element={<Payment />} />
+              </Route>
+              <Route path="/product/:id" element={<ProductDetails />} />
+              <Route path="/search" element={<Search />} />
+            </Routes>
+          </Layout>
+        </Elements>
       </Router>
     </UserContextProvider>
   );

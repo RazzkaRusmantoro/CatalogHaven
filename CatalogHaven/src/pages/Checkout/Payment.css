@@ -1,0 +1,188 @@
+.bglayer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: #ffffff;
+    z-index: -1;
+}
+.page-container {
+    display: flex;
+    justify-content: center; 
+    height: 100vh;            
+    padding: 20px;
+    gap: 100px;
+  }
+
+  
+.payment-container {
+    position: relative;
+    top: -20px;
+    max-width: 600px;
+    width: 100%;     
+    margin: 50px 0;
+    background-color: #ffffff;
+    padding: 20px 30px;
+    border-radius: 10px;
+    text-align: center;
+}
+.payment-container h2 {
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.payment-description {
+    color: #666;
+    font-size: 14px;
+    margin-bottom: 20px;
+}
+
+.payment-summary {
+    background-color: #f9f9f9;
+    padding: 15px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.payment-summary h3 {
+    margin: 0 0 10px;
+    font-size: 16px;
+    color: #555;
+}
+
+.payment-summary p {
+    margin: 0;
+    font-size: 14px;
+    color: #333;
+}
+
+.payment-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.card-element-container {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #fefefe;
+}
+
+.payment-button {
+    padding: 12px 20px;
+    border: none;
+    border-radius: 50px;
+    background-color: #0073ff;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.payment-button:hover {
+    background-color: #2935b9;
+}
+
+.payment-button:disabled {
+    background-color: #aaa;
+    cursor: not-allowed;
+}
+
+.payment-message {
+    margin-top: 20px;
+    font-size: 14px;
+    color: #d9534f;
+}
+
+.payment-message.success {
+    color: #5cb85c; 
+}
+
+.payment-methods {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.payment-methods label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+    color: #333;
+}
+
+.payment-methods input[type="radio"] {
+    margin: 0;
+}
+
+.stripe-element {
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #fefefe;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  
+.payment-form .form-group {
+  display: flex;
+  gap: 15px;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.form-input {
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 14px;
+  width: 32%;
+}
+
+.form-input {
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 14px;
+  width: 48%;
+}
+
+.payment-button {
+  margin-top: 20px;
+}
+
+.paypal-label svg {
+    position: relative;
+    bottom: 2.5px;
+    width: 24px; 
+    height: 24px;
+}
+
+.card-label svg {
+    position: relative;
+    bottom: 2.5px;
+    width: 24px;
+    height: 24px;
+}
+
+.payment-title {
+    color: #333;
+}
+
+
+.shopping-header {
+    color: #333;
+}
+
+.cat-gif {
+    position: relative;
+    top: 50px;
+    height: 600px;
+    border-radius: 10px;
+}
