@@ -7,9 +7,10 @@ import {
   CardCvcElement,
 } from '@stripe/react-stripe-js';
 import axios from 'axios';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import './Payment.css';
 import { useNavigate } from 'react-router-dom';
+import { createOrder } from '../../actions/orderActions';
 import catGif from "/assets/shocked-surprised.gif";
 
 const Payment = () => {
@@ -28,8 +29,8 @@ const Payment = () => {
   const cartItems = useSelector((state) => state.cart.cartItems);
   const user = useSelector((state) => state.user);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-  const orderInfo = JSON.parse(sessionStorage.getItem('orderInfo'));
 
   useEffect(() => {
     if (cartItems && cartItems.length > 0) {
@@ -57,6 +58,9 @@ const Payment = () => {
     e.preventDefault();
     setLoading(true);
   
+    const shippingInfo = JSON.parse(localStorage.getItem('shippingInfo'));
+
+
     if (paymentMethod === 'card') {
       try {
         const amountInCents = Math.round(totalAmount * 100); // Convert to cents
@@ -77,6 +81,35 @@ const Payment = () => {
           setMessage(`Payment failed: ${result.error.message}`);
         } else if (result.paymentIntent.status === 'succeeded') {
           setMessage('Payment successful!');
+
+          // Create the order after successful payment
+          const orderData = {
+            orderItems: cartItems.map(item => ({
+              product: item.id || '', 
+              name: item.name || '',  
+              price: item.price || 0,  
+              quantity: item.quantity || 0, 
+              image: {
+                url: item.image || '',
+                public_id: item.image.split('/').pop().split('.')[0] || '', 
+              }
+            })),
+            shippingInfo: shippingInfo || {
+              address: '', 
+              city: '',
+              phone: '',
+              postalCode: '',
+              country: '',
+            },
+            itemsPrice: totalAmount,
+            shippingPrice: 0, 
+            totalPrice: totalAmount,
+            paymentInfo: result.paymentIntent,
+          };
+          
+          
+          dispatch(createOrder(orderData)); // Dispatch action to create order
+
           navigate('/checkout/success');
         }
       } catch (error) {

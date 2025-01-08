@@ -9,7 +9,7 @@ const Shipping = () => {
 
     const [address, setAddress] = useState(shippingInfo?.address || "");
     const [city, setCity] = useState(shippingInfo?.city || "");
-    const [phoneNo, setPhoneNo] = useState(shippingInfo?.phoneNo || "");
+    const [phone, setPhone] = useState(shippingInfo?.phone || "");
     const [postalCode, setPostalCode] = useState(shippingInfo?.postalCode || "");
     const [country, setCountry] = useState(shippingInfo?.country || "");
     const [isMapOpen, setIsMapOpen] = useState(false);
@@ -48,7 +48,7 @@ const Shipping = () => {
 
     const submitHandler = (e) => {
         e.preventDefault();
-        dispatch(saveShippingInfo({ address, city, phoneNo, postalCode, country }));
+        dispatch(saveShippingInfo({ address, city, phone, postalCode, country }));
     };
 
     const handleSelectAddress = (selectedAddress) => {
@@ -78,8 +78,8 @@ const Shipping = () => {
                             <input
                                 type="tel"
                                 id="phoneNo"
-                                value={phoneNo}
-                                onChange={(e) => setPhoneNo(e.target.value)}
+                                value={phone}
+                                onChange={(e) => setPhone(e.target.value)}
                                 pattern="^[+0-9]{1,4}[\. \-]?[0-9]+([\. \-]?[0-9]+)*$"
                                 title="Please enter a valid phone number (numbers only, with optional symbols)"
                                 required
