@@ -37,20 +37,24 @@ export const createOrder = (order) => async(dispatch) => {
 export const myOrders = () => async (dispatch) => {
     try {
         dispatch({ type: MY_ORDERS_REQUEST });
-
+        
         const { data } = await axios.get('/orders/profile');
-
+        
+        console.log('Fetched Orders:', data);
+        
         dispatch({
             type: MY_ORDERS_SUCCESS,
-            payload: data,
+            payload: data.orders,
         });
     } catch (error) {
+        console.error('Error fetching orders:', error);
         dispatch({
             type: MY_ORDERS_FAIL,
-            payload: error.response?.data?.message || 'Failed to load orders',
+            payload: error.response?.data.message || error.message
         });
     }
 };
+
 
 // Clear Errors
 export const clearErrors = () => async (dispatch) => {

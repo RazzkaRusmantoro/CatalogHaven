@@ -4,7 +4,7 @@ const Product = require("../models/product");
 
 const newOrder = async (req, res, next) => {
 
-    const { 
+    const {
         orderItems,
         shippingInfo,
         itemsPrice,
@@ -50,19 +50,23 @@ const getSingleOrder = async (req, res, next) => {
 // Get user's orders
 const myOrders = async (req, res, next) => {
     try {
-        // Query the database for orders tied to the authenticated user
-        const orders = await Order.find({ user: req.user.id });
+        const orders = await Order.find({ user: req.user._id })
+            .populate({
+                path: 'orderItems.product',  // Populate the product field in orderItems
+                select: 'name price images'  // Select only necessary fields (name, price, images)
+            });
 
-        // Send back the orders in the response
         res.status(200).json({
             success: true,
             orders
         });
     } catch (error) {
-        next(error);
+        res.status(500).json({
+            success: false,
+            message: error.message
+        });
     }
 };
-
 
 // Admin Routes
 

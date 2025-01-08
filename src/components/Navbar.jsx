@@ -52,6 +52,14 @@ function Navbar() {
         }
     };
 
+    const handleOrderClick = () => {
+        if (user) {
+            navigate("/orders");
+        } else {
+            navigate("/sign-in");
+        }
+    }
+
     useEffect(() => {
         if (searchQuery === "") {
             setSearchQuery("");
@@ -81,7 +89,7 @@ function Navbar() {
                         <p>Cart</p>
                         <img src={cart} alt="Cart" className="icons" />
                     </div>
-                    <div className="navButton" id="order">
+                    <div className="navButton" id="order"onClick={handleOrderClick}>
                         <p>Orders</p>
                         <img src={order} alt="order" className="icons" />
                     </div>

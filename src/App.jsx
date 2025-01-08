@@ -17,6 +17,7 @@ import ProtectedRoute from './components/route/ProtectedRoute';
 import Shipping from './pages/Checkout/Shipping';
 import Checkout from './pages/Checkout/Checkout';
 import Payment from './pages/Checkout/Payment';
+import ListOrders from "./pages/Orders/ListOrders";
 
 
 import { loadUser } from './actions/userActions';
@@ -73,6 +74,7 @@ function App() {
                 <Route path="/checkout/shipping" element={<Shipping />} />
                 <Route path="/checkout/confirm" element={<Checkout />} />
                 <Route path="/checkout/payment" element={<Payment />} />
+                <Route path="/orders" element={<ListOrders />} />
               </Route>
               <Route path="/product/:id" element={<ProductDetails />} />
               <Route path="/search" element={<Search />} />

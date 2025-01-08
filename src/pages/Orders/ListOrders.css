@@ -1,0 +1,132 @@
+/* General Layout */
+.list-orders-container {
+    position: relative;
+    top: 30px;
+    min-height: 100vh;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    width: 100%;
+}
+
+.list-orders {
+    width: 90%;
+    border-radius: 10px;
+    padding: 20px;
+}
+
+/* Order Cards */
+.order-card {
+    background: #fdfdfd;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 20px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Hover Effect */
+.order-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Order Header (Title + Status) */
+.order-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.order-id {
+    font-size: 20px;
+    font-weight: 600;
+    color: red;
+    margin-bottom: 10px;
+}
+
+.order-status {
+    position: relative;
+    right: 20px;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+/* Status Styling */
+.order-status.processing {
+    color: #f59e0b;
+}
+
+.order-status.completed {
+    color: #10b981;
+}
+
+.order-status.cancelled {
+    color: #ef4444;
+}
+
+/* Order Details */
+.order-date, .order-price {
+    font-size: 14px;
+    color: #666;
+    margin: 5px 0;
+}
+
+/* Items Section */
+.order-items h3 {
+    font-size: 16px;
+    font-weight: 600;
+    color: #444;
+    margin-top: 15px;
+}
+
+.order-item {
+    display: flex;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.order-item:last-child {
+    border-bottom: none;
+}
+
+.item-image {
+    width: 50px;
+    height: 50px;
+    border-radius: 5px;
+    margin-right: 15px;
+    object-fit: contain;
+}
+
+.item-details {
+    flex-grow: 1;
+}
+
+.item-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: rgb(96, 0, 0);
+}
+
+.item-price, .item-quantity, .item-total {
+    font-size: 12px;
+    color: #555;
+}
+
+/* No Orders Message */
+.no-orders {
+    text-align: center;
+    font-size: 16px;
+    color: #888;
+}
+
+.span-price {
+    color: rgb(0, 92, 163);
+    font-size: 15px;
+}
+
+.total-item {
+    font-size: 15px;
+}
