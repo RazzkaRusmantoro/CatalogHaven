@@ -5,7 +5,7 @@ const { newOrder, getSingleOrder, myOrders, allOrders, updateOrders, deleteOrder
 const { isAuthenticatedUser } = require('../middlewares/auth');
 
 
-router.route('/orders/new').post(isAuthenticatedUser, newOrder);
+router.route('/order/new').post(isAuthenticatedUser, newOrder);
 
 router.route('/order/:id').get(isAuthenticatedUser, getSingleOrder);
 
