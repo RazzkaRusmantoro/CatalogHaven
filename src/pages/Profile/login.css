@@ -1,0 +1,394 @@
+@keyframes fade {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: start; /* Center all child elements */
+    justify-content: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    min-height: 450px;
+    min-width: 1100px;
+    transform: translate(-50%, -50%);
+    border-style: solid;
+    border-width: 3px; 
+    border-color: rgba(251, 200, 200, 0.793);
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(5px);
+    box-shadow: 0 5px 10px rgba(255, 132, 132, 0.426);
+    overflow: hidden;
+    animation: fade 0.5s ease-in;
+}
+
+.login-box {
+    display: flex;
+    flex-direction: column; /* Arrange children in a column */
+    align-items: center;
+    text-align: center; /* Center text elements */
+    padding-left: 50px;
+    transition: 1.5s ease;
+    opacity: 1;
+    visibility: visible;
+}
+
+#login-title {
+    color: red;
+    font-size: 30px;
+    margin-bottom: 40px; /* Add some space below the title */
+    z-index: 1;
+}
+
+#hr2 {
+    position: absolute;
+    top: 110px;
+    background-color: red;
+    height: 2px;
+    width: 5%;
+    border: none;
+    z-index: 1;
+}
+
+#hr3 {
+    position: absolute;
+    top: -290px;
+    right: 215px;
+    background-color: red;
+    height: 2px;
+    width: 5%;
+    border: none;
+    z-index: 1;
+}
+
+.container form {
+    display: flex;
+    flex-direction: column; /* Arrange form elements in a column */
+    align-items: center; /* Center form elements */
+    z-index: 1;
+}
+
+
+
+.input-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.icon-label {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 40px;
+    width: 40px;
+    background-color: red;
+    border-radius: 10px 0 0 10px;
+    box-shadow: 0 5px 10px rgba(255, 132, 132, 0.426);
+}
+
+.inputs {
+    width: 400px;
+    padding: 10px;
+    padding-left: 20px;
+    border-radius: 0 10px 10px 0;
+    border: none;
+    height: 20px;
+}
+
+.inputs::placeholder {
+    color: rgb(164, 111, 111);
+}
+
+.inputs:focus {
+    outline: none;
+    border: none;
+}
+
+.button-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.button-container button {
+    position: relative;
+    border: none;
+    color: white;
+    padding: 10px 50px;
+    border-radius: 20px;
+    font-size: 15px;
+    box-shadow: 0 5px 10px rgba(255, 132, 132, 0.426);
+    cursor: pointer;
+    overflow: hidden;
+    background: none;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.button-container button::before {
+    content: "";
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background: linear-gradient(#8e0f1a, #951212, #b3303b, #ff5c5c);
+    top: 0;
+    left: 0;
+    z-index: -1;
+    border-radius: 20px;
+    transition: 0.3s ease; /* Smooth transition for background change */
+}
+
+.button-container button:hover {
+    transform: scale(1.1); /* Scale the button to 110% of its original size */
+}
+
+.button-container button:hover::before {
+    background: linear-gradient(#ff7e7e, #ff5c5c, #9d1a25, #951212);
+}
+
+
+.container .curved-shape {
+    position: absolute;
+    right: 50px;
+    top: -5px;
+    height: 800px;
+    width: 1250px;
+    background: linear-gradient(#65020a, #951212, #b3303b, #fd7373);
+    transform: rotate(10deg) skewY(45deg);
+    margin-right: 0px;
+    transform-origin: bottom right;
+    z-index: 2;
+    transition: 1.5s ease;
+    
+}
+
+.container.active .curved-shape{
+    transform: translateX(-50%) translateY(-25%);
+}
+
+.container.active .login-box {
+    opacity: 0;
+    visibility: hidden;
+}
+
+
+.regi-text {
+    color: red;
+    margin-top: 20px;
+    line-height: 1.5;
+}
+
+.regi-link {
+    color: rgb(43, 0, 0);
+    text-decoration: none;
+    position: relative;
+    display: inline-block; 
+    overflow: hidden; 
+    vertical-align:top; 
+}
+.regi-link::before {
+    content: '';
+    position: absolute;
+    bottom: -0;
+    left: 0;
+    height: 1.5px;
+    width: 100%;
+    background-color: rgb(43, 0, 0);
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+}
+
+.regi-link:hover::before {
+    transform: translateX(0);
+}
+
+@keyframes fadeInRight {
+    0% {
+        opacity: 0;
+        transform: translateX(50%);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Keyframes for the opacity transition when hiding */
+@keyframes fadeOutLeft {
+    0% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+    100% {
+        opacity: 0;
+        transform: translateX(50%);
+    }
+}
+.register-box {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    text-align: center;
+    padding: 20px;
+    opacity: 0;
+    visibility: hidden;
+    transition: visibility 1.5s ease, opacity 1.5s ease;
+}
+
+.container.active .register-box {
+    animation: fadeInRight 1.5s forwards;
+    visibility: visible;
+}
+
+.container:not(.active) .register-box {
+    animation: fadeOutLeft 1.5s forwards;
+    visibility: hidden;
+}
+
+
+.register-title {
+    color: red;
+    font-size: 30px;
+    margin-top: -355px;
+    margin-right: 160px;
+    margin-bottom: 20px; /* Add space below the title */
+}
+
+.input-container-regi {
+    display: flex;
+    flex-direction: column; /* Stack input groups vertically */
+    align-items: flex-start; /* Align items to the left within the container */
+    margin-left: 560px; /* Add space between the right edge and input container */
+    margin-top: 15px; /* Add space above the input container */
+}
+
+.input-group-regi {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px; /* Add space below each input group */
+}
+
+.icon-label-regi {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 30px;
+    width: 30px;
+    background-color: red;
+    border-radius: 10px 0 0 10px;
+    box-shadow: 0 5px 10px rgba(255, 132, 132, 0.426);
+}
+
+.inputs-regi {
+    width: 350px;
+    padding: 10px;
+    padding-left: 20px;
+    border-radius: 0 10px 10px 0;
+    border: none;
+    height: 10px; /* Adjust height to match the icon */
+    font-size: 12px;
+}
+
+.inputs-regi::placeholder {
+    color: rgb(164, 111, 111);
+}
+
+.inputs-regi:focus {
+    outline: none;
+    border: none;
+}
+
+.button-container-regi {
+    margin-left: 550px;
+    display: flex;
+    justify-content: center;
+    margin-top: 0px;
+}
+
+.button-container-regi button {
+    position: relative;
+    border: none;
+    color: white;
+    padding: 7.5px 40px;
+    border-radius: 20px;
+    font-size: 15px;
+    box-shadow: 0 5px 10px rgba(255, 132, 132, 0.426);
+    cursor: pointer;
+    overflow: hidden;
+    background: none;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    margin-top: 10px;
+}
+
+.button-container-regi button::before {
+    content: "";
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background: linear-gradient(#8e0f1a, #951212, #b3303b, #ff5c5c);
+    top: 0;
+    left: 0;
+    z-index: -1;
+    border-radius: 20px;
+    transition: 0.3s ease; /* Smooth transition for background change */
+}
+
+.button-container-regi button:hover {
+    transform: scale(1.1); /* Scale the button to 110% of its original size */
+}
+
+.button-container-regi button:hover::before {
+    background: linear-gradient(#ff7e7e, #ff5c5c, #9d1a25, #951212);
+}
+
+
+
+.login-text {
+    position: absolute;
+    color: red;
+    bottom: 0px;
+    right: 110px;
+    line-height: 1.5;
+}
+
+.login-link {
+    color: rgb(43, 0, 0);
+    text-decoration: none;
+    position: relative;
+    display: inline-block; 
+    overflow: hidden; 
+    vertical-align:top; 
+}
+.login-link::before {
+    content: '';
+    position: absolute;
+    bottom: -0;
+    left: 0;
+    height: 1.5px;
+    width: 100%;
+    background-color: rgb(43, 0, 0);
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+}
+
+.login-link:hover::before {
+    transform: translateX(0);
+}
+
+.error-message {
+    color: red;
+    
+
+}
+
+.error-message-regi {
+    color: red;
+    margin-left: 80px;
+}

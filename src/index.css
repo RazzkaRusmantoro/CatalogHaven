@@ -1,0 +1,51 @@
+
+
+html, body {
+  height: 100%;
+  margin: 0;
+  overflow-x: hidden;
+}
+
+@keyframes scroll-background {
+  0% {
+    background-position: 0 0; 
+  }
+  100% {
+    background-position: 10000% 0;
+  }
+}
+
+:root {
+  font-family: 'Anek Telugu', sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light;
+  color: rgba(255, 255, 255, 0.87);
+  
+
+  background-image: url("/assets/red-bg.png"), url("/assets/red-bg.png");
+  background-repeat: repeat-x;
+  background-size: auto 100%;
+  background-attachment: fixed;
+  animation: scroll-background 1000s linear infinite;
+}
+
+
+::-webkit-scrollbar {
+  width: 12px;
+  z-index: 9999;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #ffa4a4;
+  border-radius: 7.5px; 
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #ff9393; 
+}

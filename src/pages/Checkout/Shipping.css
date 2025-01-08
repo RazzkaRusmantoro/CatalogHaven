@@ -1,0 +1,256 @@
+.background-layer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(255, 255, 255, 0.725);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    z-index: -1;
+}
+
+.shipping {
+    display: flex;
+    justify-content: center; 
+    align-items: flex-start;
+    padding: 20px;
+    position: relative;
+    top: -20px;
+    z-index: 1;
+    gap: 20px; 
+
+}
+.shippingBox {
+    width: 100%;
+    max-width: 700px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    margin-top: 70px;
+    max-height: 550px;
+}
+
+.shippingHeading {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 1.8rem;
+    color: #d9534f; 
+}
+
+.shippingForm {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.shippingForm div {
+    display: flex;
+    flex-direction: column;
+}
+
+.shippingForm label {
+    font-size: 0.9rem;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #5a0000;
+}
+
+.shippingForm input,
+.shippingForm select {
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #fdfdfd;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+.shippingForm input:focus,
+.shippingForm select:focus {
+    border-color: #d9534f; 
+    box-shadow: 0 0 5px rgba(217, 83, 79, 0.5); 
+}
+
+.shippingForm input::placeholder {
+    color: #aaa;
+}
+
+.shippingButton {
+    background-color: #d9534f; 
+    color: #fff;
+    padding: 12px;
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 49.5%;
+    max-height: 50%;
+}
+
+.shippingButton:hover {
+    background-color: #c12e2f; 
+}
+
+.paymentButtonContainer {
+    width: 100%;
+    max-width: 500px; 
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); 
+    padding: 20px; 
+    margin-top: 70px; 
+    display: flex;
+    justify-content: center; 
+    flex-direction: column; 
+    align-items: center;
+}
+
+.paymentButton {
+    position: relative;
+    top: 35px;
+    background-color: #d9534f;
+    color: #fff;
+    padding: 15px 20px;
+    border: none;
+    border-radius: 100px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 375px;
+    max-width: 100%;
+    box-sizing: border-box;
+    display: block;
+}
+
+.paymentButton:hover {
+    background-color: #c12e2f;
+}
+
+.securityInfo {
+    max-width: 350px;
+    margin-top: 30px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 20px;
+    color: gray;
+}
+
+.securityInfo li b {
+    color: #1c8e36; 
+}
+
+.securityInfo ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.securityInfo li {
+    position: relative;
+    padding-left: 25px; 
+}
+
+.securityInfo li::before {
+    content: "\2714";
+    color: #28a745;
+    font-size: 1.2rem;
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+
+.securityInfo li:first-child::before {
+    content: ""; 
+}
+
+.securityItem svg {
+    position: relative;
+    width: 20px;
+    height: 20px;
+    right: 30px;
+    top: 5px;
+    margin-right: -21px;
+}
+
+
+@media (max-width: 768px) {
+    .paymentButtonContainer {
+        padding: 15px;
+        margin-left: 15px;
+    }
+
+    .paymentButton {
+        margin-top: 20px; 
+        width: 80%; 
+    }
+
+    .securityInfo {
+        margin-top: 20px; 
+        width: 100%;
+    }
+}
+
+
+.mapPopup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.mapPopupContent {
+    background: white;
+    padding: 10px;
+    position: relative;
+    width: 80%;
+    height: 80%;
+    border-radius: 10px;
+}
+
+.closeMapButton {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: transparent;
+    border-color: black;
+    border-style: dashed;
+    color: white;
+    border: none;
+    padding: 20px;
+    cursor: pointer;
+    border-radius: 1px;
+}
+
+.closeMapButton svg {
+    fill: rgb(255, 255, 255);
+    width: 30px;
+    height: 30px;
+}
+
+.mapButton {
+    position: relative;
+    bottom: 53px;
+    margin-top: 10px;
+    background-color: #d9ad4f;
+    color: #fff;
+    padding: 12px;
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 49.5%;
+    margin-left: auto; 
+    display: block; 
+    text-align: center;
+    max-height: 100px;
+}

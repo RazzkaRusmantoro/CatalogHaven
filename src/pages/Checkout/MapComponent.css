@@ -1,0 +1,57 @@
+.address {
+    color: red;
+    font-size: 1rem;
+    padding: 5px;
+    word-wrap: break-word;
+    width: 50%;
+    text-align: center;
+}
+
+.selectAddressButton {
+    position: absolute; 
+    background-color: greenyellow;
+    border-color: white;
+    border-style: double;
+    border-radius: 5px;
+    height: 50px;
+    width: 100px;
+    color: white;
+    font-size: 16px; 
+    bottom: 5%;
+    left: 4%;
+    cursor: pointer;
+    z-index: 100; 
+    transition: transform 0.2s ease-in-out; 
+}
+
+.selectAddressButton:hover {
+    transform: scale(1.1);
+}
+
+@media (max-width: 768px) {
+    .selectAddressButton {
+        height: 40px;
+        width: 80px;
+        font-size: 14px;
+    }
+
+    .address {
+        font-size: 0.9rem;
+        padding: 8px;
+    }
+}
+
+@media (max-width: 480px) {
+    .selectAddressButton {
+        height: 35px;
+        width: 70px;
+        font-size: 12px;
+        bottom: 15%;
+        left: 10%;
+    }
+
+    .address {
+        font-size: 0.8rem;
+        padding: 6px;
+    }
+}
