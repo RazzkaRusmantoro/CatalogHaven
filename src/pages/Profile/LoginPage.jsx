@@ -28,7 +28,7 @@ function LoginPage() {
     const { user, error, loading } = useSelector((state) => state.user);
 
     const [isActive, setIsActive] = useState(false);
-    const [isRegisterClicked, setIsRegisterClicked] = useState(false); // Track if register button was clicked
+    const [isRegisterClicked, setIsRegisterClicked] = useState(false);
 
     const handleRegisterClick = () => {
         setIsActive(true);
@@ -49,8 +49,6 @@ function LoginPage() {
         dispatch(register(fname, lname, email, username, password)); 
         setIsRegisterClicked(true);
     };
-
-    
 
     // Check for login success or failure based on Redux state
     React.useEffect(() => {

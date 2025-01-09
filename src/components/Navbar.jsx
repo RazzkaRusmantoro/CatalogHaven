@@ -109,7 +109,6 @@ function Navbar() {
                 </div>
                 <p>Best Sellers</p>
                 <p>Deals</p>
-                <p>Subscription</p>
                 <p>Sell</p>
                 <p>Customer Service</p>
                 <p>About Us</p>

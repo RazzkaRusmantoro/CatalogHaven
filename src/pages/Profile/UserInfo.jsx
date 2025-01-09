@@ -12,20 +12,20 @@ function UserInfo() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    // Retrieve user data from Redux store
     const { user } = useSelector((state) => state.user);
 
-    // Initialize local state with user data or empty object
     const [editableField, setEditableField] = useState("");
     const [userData, setUserData] = useState(user || {});
-
     const [currentPassword, setCurrentPassword] = useState("");
     const [newPassword, setNewPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
+    const [profilePicture, setProfilePicture] = useState(null);
+    const [preview, setPreview] = useState(user?.avatar?.url || "https://via.placeholder.com/150");
 
     useEffect(() => {
         if (user) {
-            setUserData(user); // Update local state when user data is available
+            setUserData(user);
+            setPreview(user.avatar?.url || "https://via.placeholder.com/150");
         }
     }, [user]);
 
@@ -43,27 +43,57 @@ function UserInfo() {
         setUserData({ ...userData, [name]: value });
     };
 
-    useEffect(() => {
-        // Clear the current password if autofilled
-        if (currentPassword && currentPassword.length > 0) {
-            setCurrentPassword('');
+    const handleProfilePictureChange = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            console.log("Selected file:", file); // Check if file is selected
+            setProfilePicture(file);
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                setPreview(reader.result);
+            };
+            reader.readAsDataURL(file);
         }
-    }, [currentPassword]);
+    };
+    
 
+    const handleProfilePictureUpload = async () => {
+        const formData = new FormData();
+        formData.append("avatar", profilePicture);
+    
+        try {
+            const response = await axios.put('/profile/update/avatar', formData, {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem("token")}`,
+                    "Content-Type": "multipart/form-data",
+                },
+            });
+    
+            if (response.data.success) {
+                toast.success("Profile picture updated successfully!");
+            } else {
+                toast.error(response.data.error || "Error updating profile picture.");
+            }
+        } catch (error) {
+            console.error("Error updating profile picture:", error);
+            toast.error("An error occurred while updating the profile picture.");
+        }
+    };
+    
+    
+    
     const handlePasswordChange = async () => {
-
         if (!currentPassword || !newPassword || !confirmPassword) {
             toast.error("Please fill in all fields.");
             return;
         }
-    
+
         if (newPassword !== confirmPassword) {
             toast.error("New password and confirmation password do not match.");
             return;
         }
-    
-        try {
 
+        try {
             const response = await axios.put('/password/update', {
                 oldPassword: currentPassword,
                 password: newPassword,
@@ -71,11 +101,10 @@ function UserInfo() {
             }, {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem("token")}`,
-                }
+                },
             });
-    
+
             if (response.data.success) {
-                console.log("Password updated successfully:", response.data);
                 toast.success("Password changed successfully!");
                 setEditableField("");
                 setCurrentPassword("");
@@ -89,28 +118,23 @@ function UserInfo() {
             toast.error("An error occurred while updating the password.");
         }
     };
-    
 
     const handleSave = async () => {
-        setEditableField(""); // Save and stop editing
+        setEditableField("");
         try {
-            // Send the updated user data to the server for persistence
             const response = await axios.put('/profile/update', userData, {
                 headers: {
-                    Authorization: `Bearer ${localStorage.getItem("token")}`, // Use token for authentication
-                }
+                    Authorization: `Bearer ${localStorage.getItem("token")}`,
+                },
             });
-            // Handle the response (e.g., show success message)
-            console.log("Profile updated successfully:", response.data);
-            toast.success("Edit complete!"); // Show success toast
+
+            toast.success("Edit complete!");
         } catch (error) {
             console.error("Error updating profile:", error);
-            // Handle error (e.g., show an error message)
-            toast.error("Error updating profile!"); // Show error toast
+            toast.error("Error updating profile!");
         }
     };
 
-    // Check if user data is available and render appropriately
     if (!user) {
         return <Loader />;
     }
@@ -120,10 +144,21 @@ function UserInfo() {
             <div className="background-layer"></div>
             <div className="user-info-container">
                 <div className="user-image">
-                    <img
-                        src="https://via.placeholder.com/150"
-                        alt="Profile"
-                    />
+                    <label htmlFor="profile-picture-input">
+                        <img src={preview} alt="Profile" className="profile-picture" />
+                        <input
+                            id="profile-picture-input"
+                            type="file"
+                            accept="image/*"
+                            style={{ display: "none" }}
+                            onChange={handleProfilePictureChange}
+                        />
+                    </label>
+                    {profilePicture && (
+                        <button onClick={handleProfilePictureUpload} className="save-button">
+                            Upload Picture
+                        </button>
+                    )}
                 </div>
                 <div className="user-details">
                     <h2 className="user-name">
@@ -140,7 +175,6 @@ function UserInfo() {
                 <div className="user-profile-details">
                     <h3>User Profile</h3>
 
-                    {/* First Name */}
                     <div className="profile-item">
                         <strong>First Name:</strong>
                         {editableField === "firstName" ? (
@@ -159,7 +193,6 @@ function UserInfo() {
                         />
                     </div>
 
-                    {/* Last Name */}
                     <div className="profile-item">
                         <strong>Last Name:</strong>
                         {editableField === "lastName" ? (
@@ -178,7 +211,6 @@ function UserInfo() {
                         />
                     </div>
 
-                    {/* Username */}
                     <div className="profile-item">
                         <strong>Username:</strong>
                         {editableField === "username" ? (
@@ -197,7 +229,6 @@ function UserInfo() {
                         />
                     </div>
 
-                    {/* Email */}
                     <div className="profile-item">
                         <strong>Email:</strong>
                         {editableField === "email" ? (
@@ -216,7 +247,6 @@ function UserInfo() {
                         />
                     </div>
 
-                    {/* Password Change Section */}
                     <div className="profile-item">
                         <strong>Change Password:</strong>
                         {editableField === "password" ? (
@@ -229,7 +259,6 @@ function UserInfo() {
                                         value={currentPassword}
                                         onChange={(e) => setCurrentPassword(e.target.value)}
                                         autoComplete="off"
-                                        
                                     />
                                 </div>
                                 <div>
@@ -263,14 +292,12 @@ function UserInfo() {
                         />
                     </div>
 
-                    {/* Join Date */}
                     <div className="profile-item">
                         <strong>Join Date:</strong>
                         <span>{new Date(user.joinDate).toLocaleDateString()}</span>
                     </div>
 
-                    {/* Save Button */}
-                    {editableField && (
+                    {editableField && editableField !== "profilePicture" && (
                         <div className="save-button-container">
                             <button className="save-button" onClick={handleSave}>
                                 Save Changes

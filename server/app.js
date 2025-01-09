@@ -6,6 +6,7 @@ const cookieParser = require('cookie-parser');
 const app = express();
 const cloudinary = require('cloudinary').v2;
 const errorMiddleware = require('./middlewares/errors');
+const fileupload = require('express-fileupload');
 
 // Database connection
 mongoose.connect(process.env.MONGO_URL)
@@ -23,6 +24,7 @@ cloudinary.config({
 app.use(express.json());
 app.use(cookieParser());
 app.use(express.urlencoded({extended: false}));
+app.use(fileupload({useTempFiles: true}))
 
 // Routes
 app.use('/', require('./routes/authRoutes'));

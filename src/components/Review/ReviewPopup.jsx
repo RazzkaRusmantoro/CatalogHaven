@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { newReview, clearErrors, getProductDetails } from '../../actions/productActions';
 import './ReviewPopup.css';
+import { toast } from 'react-hot-toast';
 
 const ReviewPopup = ({ productId, isOpen, onClose }) => {
     const [rating, setRating] = useState(0);
@@ -28,7 +29,7 @@ const ReviewPopup = ({ productId, isOpen, onClose }) => {
         e.preventDefault();
 
         if (!rating || !comment.trim()) {
-            alert('Please fill in both rating and comment.');
+            toast.error('Please enter a rating and comment.');
             return;
         }
 
@@ -42,7 +43,7 @@ const ReviewPopup = ({ productId, isOpen, onClose }) => {
 
     React.useEffect(() => {
         if (success) {
-            alert('Review submitted successfully!');
+            toast.success('Review submitted successfully!');
             setRating(0);
             setComment('');
             dispatch({ type: 'NEW_REVIEW_RESET' });
@@ -66,7 +67,7 @@ const ReviewPopup = ({ productId, isOpen, onClose }) => {
                                 className="product-image-review-thumbnail"
                             />
                         </div>
-                        <div className="product-details">
+                        <div className="product-details-review">
                             <h3 className="product-name-review">{product?.name}</h3>
                     
                             <label className="rating-label">

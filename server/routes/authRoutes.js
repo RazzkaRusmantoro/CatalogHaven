@@ -1,7 +1,7 @@
 const express2 = require('express');
 const router = express2.Router();
 const cors2 = require("cors");   
-const { testHandler, registerUser, loginUser, forgotPassword, resetPassword, getProfile, updatePassword, updateProfile, logoutUser, getAllUsers,
+const { testHandler, registerUser, loginUser, forgotPassword, resetPassword, getProfile, updatePassword, updateProfile, updateProfilePicture, logoutUser, getAllUsers,
     getUser, deleteUser
  } = require('../controllers/authController');
 
@@ -34,6 +34,8 @@ router.route('/profile').get(isAuthenticatedUser, getProfile);
 router.route('/password/update').put(isAuthenticatedUser, updatePassword);
 
 router.route('/profile/update').put(isAuthenticatedUser, updateProfile);
+
+router.route('/profile/update/avatar').put(isAuthenticatedUser, updateProfilePicture);
 
 // User logout (optional)
 router.route('/logout').get(logoutUser);

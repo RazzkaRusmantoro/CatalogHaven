@@ -3,6 +3,16 @@ const { hashPassword, comparePassword } = require('../helpers/auth');
 const jwt = require('jsonwebtoken');
 const sendEmail = require('../utils/sendEmail');
 const crypto = require('crypto');
+const cloudinary = require('cloudinary').v2;
+const fileupload = require('express-fileupload');
+
+
+cloudinary.config({
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET,
+});
+
 
 const testHandler = (req, res) => {
     res.json('Test is working.');
@@ -326,6 +336,8 @@ const updateProfile = async (req, res, next) => {
             useFindAndModify: false,  // Use the native findOneAndUpdate() method
         });
 
+        
+
         // Return the updated user data in the response
         res.status(200).json({
             success: true,
@@ -339,6 +351,54 @@ const updateProfile = async (req, res, next) => {
     }
 
 }
+
+const updateProfilePicture = async (req, res, next) => {
+    try {
+        // Only delete the old avatar if it exists (has a public_id)
+        if (req.user.avatar && req.user.avatar.public_id) {
+            await cloudinary.uploader.destroy(req.user.avatar.public_id);
+        } else {
+            console.log('No avatar to delete or missing public_id.');
+        }
+
+        // Check if a file is uploaded using express-fileupload
+        if (req.files && req.files.avatar) {
+            const avatarFile = req.files.avatar;
+
+            // Upload the avatar file to Cloudinary
+            const myCloud = await cloudinary.uploader.upload(avatarFile.tempFilePath, {
+                folder: 'avatars',
+                width: 300,
+                crop: 'scale',
+            });
+
+            // Save the new avatar's public_id and URL to the user's profile
+            req.user.avatar = {
+                public_id: myCloud.public_id,
+                url: myCloud.secure_url
+            };
+
+            console.log('New avatar uploaded successfully.');
+        } else {
+            console.log('No file provided.');
+        }
+
+        // Save the updated user profile
+        await req.user.save();
+
+        res.status(200).json({
+            success: true,
+            user: req.user,
+        });
+    } catch (error) {
+        console.log('Error caught: ', error);
+        res.json({
+            error: 'An error occurred while updating the profile picture.',
+        });
+    }
+};
+
+
 
 const logoutUser = async (req, res, next) => {
 
@@ -406,6 +466,7 @@ module.exports = {
     getProfile,
     updatePassword,
     updateProfile,
+    updateProfilePicture,
     logoutUser,
 
     getAllUsers,
