@@ -58,21 +58,55 @@
     margin-top: 20px;
     margin-left: auto;
     margin-right: 75px;
+    display: flex;
+    justify-content: flex-end;
 }
 
 .logout-button {
-    padding: 10px 20px;
+    padding: 12px 30px;
     background-color: #ff4d4f;
     color: white;
     border: none;
-    border-radius: 5px;
+    border-radius: 30px;
     cursor: pointer;
-    font-size: 16px;
-    transition: background-color 0.3s ease;
+    font-size: 18px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    transition: all 0.3s ease-in-out;
+    position: relative;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.logout-button::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg, #ff4d4f, #e63946);
+    border-radius: 30px;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+    z-index: -1;
 }
 
 .logout-button:hover {
     background-color: #e63946;
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+}
+
+.logout-button:hover::before {
+    opacity: 1;
+}
+
+.logout-button:focus {
+    outline: none;
+}
+
+.logout-button:active {
+    transform: translateY(2px);
 }
 
 /* User Profile Container */
@@ -158,17 +192,17 @@ input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focu
     cursor: pointer;
     font-size: 1.1rem;
     width: 100%;
-    max-width: 200px; /* You can adjust this to your liking */
+    max-width: 200px;
     margin-top: 20px;
     transition: background-color 0.3s ease, transform 0.2s ease;
-    padding: 8px 15px; /* Reduce padding for a smaller button */
-    font-size: 1rem; /* Slightly smaller font size */
-    width: auto; /* Let the button width adjust to its content */
-    max-width: 150px; /* Adjust to a smaller width */
+    padding: 8px 15px;
+    font-size: 1rem; 
+    width: auto;
+    max-width: 150px;
     margin-top: 15px;
 }
 
-/* Hover effect for Save Changes Button */
+
 .save-button:hover {
     background-color: #c12e2f;
     transform: scale(1.05);
@@ -198,7 +232,7 @@ input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focu
     box-shadow: 0 0 5px rgba(217, 83, 79, 0.5);
 }
 
-/* Save New Password Button - Smaller */
+
 .save-button {
     padding: 8px 15px; 
     font-size: 1rem;
@@ -229,5 +263,70 @@ input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focu
     border-color: #d9534f;
     outline: none;
     box-shadow: 0 0 5px rgba(217, 83, 79, 0.5);
+}
+
+.user-image {
+  position: relative;
+  display: inline-block;
+}
+
+.profile-picture {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+  transition: all 0.3s ease;
+}
+
+.user-image:hover .profile-picture {
+  filter: brightness(70%);
+}
+
+.profile-edit-icon {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  font-size: 20px;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 50%;
+  padding: 5px;
+  display: none;
+}
+
+.user-image:hover .profile-edit-icon {
+  display: block;
+}
+
+.save-button {
+  margin-top: 10px;
+}
+/* User Image */
+.user-image {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+}
+  
+.profile-picture {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.user-image:hover .profile-picture {
+    filter: brightness(70%);
+}
+
+
+.user-image:hover .profile-edit-icon {
+    display: block;
+}
+
+.save-button {
+  margin-top: 10px;
 }
 

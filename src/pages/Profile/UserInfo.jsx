@@ -146,20 +146,21 @@ function UserInfo() {
                 <div className="user-image">
                     <label htmlFor="profile-picture-input">
                         <img src={preview} alt="Profile" className="profile-picture" />
-                        <input
-                            id="profile-picture-input"
-                            type="file"
-                            accept="image/*"
-                            style={{ display: "none" }}
-                            onChange={handleProfilePictureChange}
-                        />
                     </label>
+                    <input
+                        id="profile-picture-input"
+                        type="file"
+                        accept="image/*"
+                        style={{ display: "none" }}
+                        onChange={handleProfilePictureChange}
+                    />
                     {profilePicture && (
                         <button onClick={handleProfilePictureUpload} className="save-button">
                             Upload Picture
                         </button>
                     )}
                 </div>
+
                 <div className="user-details">
                     <h2 className="user-name">
                         Welcome, {user.fname} {user.lname}!
