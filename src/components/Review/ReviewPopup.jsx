@@ -60,7 +60,7 @@ const ReviewPopup = ({ productId, isOpen, onClose }) => {
                     </button>
                     {product && (
                     <div className="product-image-review">
-                        <div className="product-image-container">
+                        <div className="product-image-container-review">
                             <img
                                 src={(product?.images && product?.images.length > 0) ? product?.images[0]?.url : ''}
                                 alt={product?.name || 'Product'}
@@ -71,7 +71,7 @@ const ReviewPopup = ({ productId, isOpen, onClose }) => {
                             <h3 className="product-name-review">{product?.name}</h3>
                     
                             <label className="rating-label">
-                                <div className="star-rating">
+                                <div className="star-rating-review">
                                     {[1, 2, 3, 4, 5].map((star) => (
                                         <span
                                             key={star}

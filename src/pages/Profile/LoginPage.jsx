@@ -1,16 +1,17 @@
-import React, { useState, FormEvent, FormEventHandler} from 'react';
+import React, { useState, useEffect } from 'react';
 import './login.css';
-import axios from 'axios';
 import { toast } from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { login, register } from '../../actions/userActions';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { login, register, clearErrors } from '../../actions/userActions';
+import { Link } from 'react-router-dom';
 
-"use client";
 function LoginPage() {
-    const dispatch = useDispatch();
+
     const navigate = useNavigate();
+    const dispatch = useDispatch();
+
+    const { user, error, isAuthenticated } = useSelector((state) => state.user);
 
     const [loginData, setLoginData] = useState({
         email: '',
@@ -25,62 +26,36 @@ function LoginPage() {
         password: '',
     });
 
-    const { user, error, loading } = useSelector((state) => state.user);
-
     const [isActive, setIsActive] = useState(false);
-    const [isRegisterClicked, setIsRegisterClicked] = useState(false);
 
-    const handleRegisterClick = () => {
-        setIsActive(true);
-    };
-    const handleLoginClick = () => {
-        setIsActive(false);
-    };
+    useEffect(() => {
+        if (isAuthenticated) {
+            console.log('Successfully authenticated');
+            toast.success("Successful!");
+            setTimeout(() => {
+                navigate('/');
+            }, 1000);
+        } else if (error && error !== "Login to access this resource") {
+            console.log('Error: ', error);
+            toast.error(error);
+            dispatch(clearErrors());
+        }
+    }, [navigate, isAuthenticated, error, dispatch]);
+    
 
     const loginUser = async (e) => {
         e.preventDefault();
-        const { email, password } = loginData;
-        dispatch(login(email, password)); 
+        dispatch(login(loginData.email, loginData.password));
     };
 
     const registerUser = async (e) => {
         e.preventDefault();
-        const { fname, lname, email, username, password } = registerData;
-        dispatch(register(fname, lname, email, username, password)); 
-        setIsRegisterClicked(true);
+        dispatch(register(registerData.fname, registerData.lname, registerData.email, registerData.username, registerData.password));
     };
 
-    // Check for login success or failure based on Redux state
-    React.useEffect(() => {
-        if (!isActive && user) { 
-            toast.success('Login successful!');
-            setTimeout(() => {
-                navigate('/');
-            }, 1000);
-        } else if (!isActive && error) {
-            if (error.toLowerCase().includes('invalid email or password')) {
-                toast.error("Invalid email or password!");
-            }
-        }
-    }, [user, error, navigate, isActive]);
+    const handleRegisterClick = () => setIsActive(true);
+    const handleLoginClick = () => setIsActive(false);
 
-    // Check for registration success or failure based on Redux state and register button click
-    React.useEffect(() => {
-        if (isRegisterClicked) { 
-            if (user) {
-                toast.success('Registration successful!');
-                setTimeout(() => {
-                    navigate('/');
-                }, 1000);
-            } else if (error) {
-                toast.error("Registration failed!");
-            }
-            setIsRegisterClicked(false); // Reset after handling the registration result
-        }
-    }, [user, error, navigate, isRegisterClicked]);
-
-    
-    
     return (
         <>
             <div className={`container ${isActive ? 'active' : ''}`}>
@@ -179,4 +154,5 @@ function LoginPage() {
         </>
     );
 }
+
 export default LoginPage;

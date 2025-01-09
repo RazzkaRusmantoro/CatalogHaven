@@ -2,48 +2,37 @@ const mongoose = require('mongoose');
 const {Schema} = mongoose; 
 const crypto = require('crypto');
 
-const userSchema = new Schema({
-    fname: String,
-    lname: String,
-    email: {
-        type: String,
-        unique: true
-    },
-    username: {
-        type: String,
-        unique: true
-    },
-    password: String,
-
-    avatar: {
-        public_id: {
+const userSchema = new Schema(
+    {
+        fname: String,
+        lname: String,
+        email: {
             type: String,
+            unique: true
         },
-
-        url: {
+        username: {
             type: String,
-        }
-    },
-
-    cart: [
-        {
-            product: {
-                type: mongoose.Schema.ObjectId,
-                ref: 'Product', // Reference to ProductModel
-                required: true,
-            },
-            quantity: {
-                type: Number,
-                required: true,
-                min: [1, 'Quantity must be at least 1'],
-                default: 1,
-            },
+            unique: true
         },
-    ],
+        password: String,
 
-    resetPasswordToken: String,
-    resetPasswordExpire: Date
-});
+        avatar: {
+            public_id: {
+                type: String,
+            },
+
+            url: {
+                type: String,
+            }
+        },
+        
+        resetPasswordToken: String,
+        resetPasswordExpire: Date
+    },
+    {
+        timestamps: true
+    }
+);
 
 
 // Generate password reset token

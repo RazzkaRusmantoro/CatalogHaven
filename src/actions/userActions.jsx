@@ -45,6 +45,7 @@ export const login = (email, password) => async (dispatch) => {
     }
 };  
 
+
 // Register user
 export const register = (fname, lname, email, username, password) => async (dispatch) => {
     try {
@@ -61,13 +62,19 @@ export const register = (fname, lname, email, username, password) => async (disp
             type: REGISTER_SUCCESS,
             payload: data.user, 
         });
+
     } catch (error) {
+        // Extracting the error message and dispatching to the toast
+        const errorMessage = error.response?.data?.error || 'An error occurred during registration';
+        
         dispatch({
             type: REGISTER_FAIL,
-            payload: error.response?.data?.message || 'An error occurred during registration',
+            payload: errorMessage,
         });
+        toast.error(errorMessage);
     }
 };
+
 
 // Load user details
 export const loadUser = () => async (dispatch) => {

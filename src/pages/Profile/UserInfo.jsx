@@ -295,7 +295,7 @@ function UserInfo() {
 
                     <div className="profile-item">
                         <strong>Join Date:</strong>
-                        <span>{new Date(user.joinDate).toLocaleDateString()}</span>
+                        <span>{new Date(user.createdAt).toLocaleDateString()}</span>
                     </div>
 
                     {editableField && editableField !== "profilePicture" && (

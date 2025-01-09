@@ -17,57 +17,80 @@ cloudinary.config({
 const testHandler = (req, res) => {
     res.json('Test is working.');
 }
-
-// Register Endpoint
 const registerUser = async (req, res) => {
     try {
-        const {fname, lname, email, username, password} = req.body;
+        const { fname, lname, email, username, password } = req.body;
+
         // Check if fname/lname is entered
         if (!fname || !lname) {
-            return res.json({
+            return res.status(400).json({
                 error: 'Full name is required.'
-            })
-        };
-        // Check if password is good
-        if (!password || password.length < 6) {
-            return res.json({
-                error: 'Password is required and must be 6 or more characters long.'
-            })
-        };
-        // Check if email exists
-        const exist = await User.findOne({email});
-        if (exist) {
-            return res.json({
-                error: 'Email is already taken.'
-            })
-        };
+            });
+        }
 
-        
-        // Check is username exists
-        const exist2 = await User.findOne({username});
+        // Check if password is valid (at least 6 characters)
+        if (!password || password.length < 6) {
+            return res.status(400).json({
+                error: 'Password must be at least 6 characters long.'
+            });
+        }
+
+        // Check if email exists
+        const exist = await User.findOne({ email });
+        if (exist) {
+            return res.status(400).json({
+                error: 'Email already exists.'
+            });
+        }
+
+        // Check if username exists
+        const exist2 = await User.findOne({ username });
         if (exist2) {
-            return res.json({
-                error: 'Username is already taken.'
-            })
-        };
-        
+            return res.status(400).json({
+                error: 'Username already exists.'
+            });
+        }
+
         // Hash password
         const hashedPassword = await hashPassword(password);
 
-        // Creates user
+        // Create user
         const user = await User.create({
-            fname, lname, email, username, password: hashedPassword,
-        })
+            fname,
+            lname,
+            email,
+            username,
+            password: hashedPassword
+        });
 
-        return res.json({
+        // Generate token
+        const token = jwt.sign(
+            {
+                email: user.email,
+                id: user._id,
+                user: user.username,
+                fname: user.fname,
+                lname: user.lname
+            },
+            process.env.JWT_SECRET,
+            {}
+        );
+
+        // Send the token in a cookie and respond with the user data
+        res.cookie('token', token, { httpOnly: true, secure: process.env.NODE_ENV === 'DEVELOPMENT' }).json({
             success: true,
             user,
+            token
         });
 
     } catch (error) {
-        console.log("Error caught: ", error);
+        console.error("Error caught: ", error);
+        return res.status(500).json({
+            error: 'Server error. Please try again later.'
+        });
     }
-}
+};
+
 
 // Login Endpoint
 const loginUser = async (req, res) => {
