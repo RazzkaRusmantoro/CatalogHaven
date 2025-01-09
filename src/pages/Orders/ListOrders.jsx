@@ -4,15 +4,31 @@ import Loader from '../../components/Loader';
 import { myOrders, clearErrors } from '../../actions/orderActions';
 import './ListOrders.css';
 import { Link } from 'react-router-dom';
+import ReviewPopup from '../../components/Review/ReviewPopup';
+import { useState } from 'react';
 
 const ListOrders = () => {
     const dispatch = useDispatch();
     const { loading, error, orders } = useSelector(state => state.myOrders);
 
+    const [isReviewPopupOpen, setIsReviewPopupOpen] = useState(false);
+    const [currentProductId, setCurrentProductId] = useState(null);
+
     useEffect(() => {
         dispatch(myOrders());
         return () => dispatch(clearErrors());
     }, [dispatch]);
+
+    const openReviewPopup = (productId) => {
+        setCurrentProductId(productId);
+        setIsReviewPopupOpen(true);
+    };
+
+    const closeReviewPopup = () => {
+        setIsReviewPopupOpen(false);
+        setCurrentProductId(null);
+    };
+
 
     if (loading) return <Loader />;
     if (error) return <p className="error-message">{error}</p>;
@@ -51,8 +67,17 @@ const ListOrders = () => {
                                                 </Link>
                                                 <p className="item-price"><strong>Price:</strong> ${item.price}</p>
                                                 <p className="item-quantity"><strong>Qty:</strong> {item.quantity}</p>
-                                                <p className="item-total"><strong className = "total-item">Total:</strong> <span className='span-price'>${item.price * item.quantity}</span></p>
+                                                <p className="item-total"><strong className="total-item">Total:</strong> <span className="span-price">${item.price * item.quantity}</span></p>
                                             </div>
+                                            {/* Add the Review Product button if order status is completed */}
+                                            {order.orderStatus.toLowerCase() === 'completed' && (
+                                            <button
+                                                className="review-button"
+                                                onClick={() => openReviewPopup(item.product?._id)}
+                                            >
+                                                Review Product
+                                            </button>
+                                            )}
                                         </div>
                                     ))
                                 ) : (
@@ -66,6 +91,12 @@ const ListOrders = () => {
                 )}
             </div>
         </div>
+
+        <ReviewPopup 
+                productId={currentProductId} 
+                isOpen={isReviewPopupOpen} 
+                onClose={closeReviewPopup} 
+        />
         </>
     );
 };
