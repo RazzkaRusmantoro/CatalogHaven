@@ -60,3 +60,20 @@ a {
     font-size: 18px;
     margin-left: 5px;
 }
+
+.reviews-card {
+    color:rgb(33, 47, 141);
+    font-size: 18px;
+    margin-left: 5px;
+}
+
+.rating-card {
+    color: rgb(50, 50, 50);
+    margin-right: 5px;
+}
+
+.arrow-card {
+    color: black;
+    font-size: 15px;
+    margin-left: -2px;
+}

@@ -323,3 +323,16 @@ exports.removeFromCart = async (req, res, next) => {
         });
     }
 };
+
+exports.calculateAverageRating = async (productId) => {
+    const product = await Product.findById(productId);
+
+    if (!product) {
+        throw new Error('Product not found');
+    }
+
+    const totalRating = product.reviews.reduce((acc, review) => acc + review.rating, 0);
+    const averageRating = totalRating / product.reviews.length;
+
+    return averageRating;
+};

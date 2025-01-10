@@ -87,7 +87,7 @@ const ListOrders = () => {
                         </div>
                     ))
                 ) : (
-                    <p className="no-orders">No orders found.</p>
+                    <p className="no-orders">No orders found. Purchase an item to see your orders!</p>
                 )}
             </div>
         </div>

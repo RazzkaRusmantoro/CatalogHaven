@@ -205,3 +205,45 @@
     padding: 13px 50px;
   }
 }
+
+.no-orders {
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+    color: #ff0000;
+    margin-top: 50px;
+    padding: 20px;
+    border: 2px dashed #ddd;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #f9f9f961, #eaeaea);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    animation: pulse 1.5s infinite;
+    position: relative;
+    font-size: 30px;
+}
+
+.no-orders:before {
+    content: '😢';
+    font-size: 50px;
+    display: block;
+    margin-bottom: 10px;
+    animation: bounce 1.5s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+}
+
+@keyframes bounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}

@@ -1,0 +1,87 @@
+
+
+.popup-stars {
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.popup-rating {
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+.popup-distribution {
+    margin-top: 10px;
+}
+.popup-bar {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+    width: 100%; 
+}
+
+.popup-bar-label {
+    width: 50px;
+    font-size: 0.9em;
+}
+
+.popup-bar-track {
+    flex: 1; 
+    height: 8px;
+    background: #f0f0f0;
+    border-radius: 4px;
+    position: relative;
+}
+
+.popup-bar-fill {
+    height: 100%;
+    background: #ff7300;
+    border-radius: 4px;
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+.popup-bar-percentage {
+    font-size: 0.9em;
+    color: #555;
+    margin-left: 0px; 
+    width: 50px; 
+    text-align: right; 
+}
+
+.rating-popup {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: white;
+    border: 1px solid #ddd;
+    padding: 10px;
+    width: 300px;
+    z-index: 10;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: none;
+}
+
+.rating-header {
+    color: #ff7300;
+}
+
+.product-item:hover .rating-popup {
+    display: block;
+}
+
+.product-item {
+    position: relative;
+}
+
+@media (max-width: 600px) {
+    .rating-popup {
+        position: static;
+        transform: none;
+        width: 100%;
+        box-shadow: none;
+    }
+}
+
