@@ -18,6 +18,7 @@ import Shipping from './pages/Checkout/Shipping';
 import Checkout from './pages/Checkout/Checkout';
 import Payment from './pages/Checkout/Payment';
 import ListOrders from "./pages/Orders/ListOrders";
+import Sell from "./pages/Sell/Sell";
 
 
 import { loadUser } from './actions/userActions';
@@ -78,6 +79,7 @@ function App() {
               </Route>
               <Route path="/product/:id" element={<ProductDetails />} />
               <Route path="/search" element={<Search />} />
+              <Route path="/sell" element={<Sell />} />
             </Routes>
           </Layout>
         </Elements>

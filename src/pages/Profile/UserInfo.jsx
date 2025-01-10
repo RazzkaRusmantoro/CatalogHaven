@@ -301,10 +301,13 @@ function UserInfo() {
 
                     {editableField && editableField !== "profilePicture" && (
                         <div className="save-button-container">
-                            <button className="save-button" onClick={handleSave}>
-                                Save Changes
+                            <button className="cssbuttons-io" onClick={handleSave}>
+                                <span>
+                                    Save Changes
+                                </span>
                             </button>
                         </div>
+                        
                     )}
                 </div>
             </div>
