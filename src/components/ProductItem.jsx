@@ -7,55 +7,25 @@ import './ProductItem.css';
 const ProductItem = ({ product }) => {
     const [showPopup, setShowPopup] = useState(false);
     const [isBottom, setIsBottom] = useState(false);
-    const productItemRef = useRef(null)
+    const productItemRef = useRef(null);
+    const ratingsRef = useRef(null);
 
     const calculateStarDistribution = (reviews) => {
         const distribution = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
-
-        reviews.forEach(review => {
+        reviews.forEach((review) => {
             if (review.rating >= 1 && review.rating <= 5) {
                 distribution[review.rating]++;
             }
         });
-
         return distribution;
     };
 
     const starDistribution = calculateStarDistribution(product.reviews);
 
-    const handleMouseEnter = () => {
-        setShowPopup(true);
-    };
-
-    const handleMouseLeave = () => {
-        setShowPopup(false);
-    };
-
-    const checkPosition = () => {
-        if (productItemRef.current) {
-            const { right, bottom } = productItemRef.current.getBoundingClientRect();
-            const viewportWidth = window.innerWidth;
-            const viewportHeight = window.innerHeight;
-
-
-            if (right > viewportWidth - 100 && bottom < viewportHeight - 150) {
-                setIsBottom(false);
-            } else {
-                setIsBottom(true);
-            }
-        }
-    };
-
-    useEffect(() => {
-        checkPosition();
-        window.addEventListener('resize', checkPosition);
-        return () => window.removeEventListener('resize', checkPosition);
-    }, []);
-
     const renderStarRating = (rating) => {
         const totalStars = 5;
-        const fullStar = "★";
-        const emptyStar = "☆";
+        const fullStar = '★';
+        const emptyStar = '☆';
         let stars = '';
 
         for (let i = 1; i <= totalStars; i++) {
@@ -67,15 +37,15 @@ const ProductItem = ({ product }) => {
 
     return (
         <a href={`/product/${product._id}`}>
-            <div
-                className="product-item"
-                ref={productItemRef}
-                onMouseEnter={handleMouseEnter}
-                onMouseLeave={handleMouseLeave}
-            >
+            <div className="product-item" ref={productItemRef}>
                 <img src={product.images[0].url} alt={product.name} />
                 <h6>{product.name}</h6>
-                <div className="ratings">
+                <div
+                    className="ratings"
+                    ref={ratingsRef}
+                    onMouseEnter={() => setShowPopup(true)}
+                    onMouseLeave={() => setShowPopup(false)}
+                >
                     <span className="star-rating">
                         <span className="rating-card">{product.ratings.toFixed(1)}</span>
                         {renderStarRating(Math.round(product.ratings))}

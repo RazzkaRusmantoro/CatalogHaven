@@ -86,7 +86,7 @@ function Home() {
 
                 <div className="products-box-2">
                     <div className="featured-container">
-                        <div>
+                        <div className="featured-box">
                             <p id="featured"><b>Featured Products</b></p>
                             <hr id="hr" />
                         </div>

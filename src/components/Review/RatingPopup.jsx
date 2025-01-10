@@ -3,14 +3,14 @@ import PropTypes from 'prop-types';
 
 import './RatingPopup.css';
 
-const RatingPopup = ({ ratings, numReviews, starDistribution, isBottom }) => {
+const RatingPopup = ({ ratings, numReviews, starDistribution }) => {
     const calculatePercentage = (starCount) => {
         if (numReviews === 0) return 0;
         return ((starCount / numReviews) * 100).toFixed(1);
     };
 
     return (
-        <div className={`rating-popup ${isBottom ? 'bottom' : 'right'}`}>
+        <div className="rating-popup">
             <h4 className="rating-header">Ratings & Reviews</h4>
             <div className="popup-stars">
                 <div className="popup-rating">{ratings.toFixed(1)} ★</div>
@@ -50,7 +50,6 @@ RatingPopup.propTypes = {
         4: PropTypes.number.isRequired,
         5: PropTypes.number.isRequired,
     }).isRequired,
-    isBottom: PropTypes.bool.isRequired,
 };
 
 export default RatingPopup;
