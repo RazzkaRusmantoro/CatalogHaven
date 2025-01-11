@@ -8,7 +8,15 @@ import { ALL_PRODUCTS_REQUEST, ALL_PRODUCTS_SUCCESS, ALL_PRODUCTS_FAIL, CLEAR_ER
     NEW_REVIEW_REQUEST,
     NEW_REVIEW_SUCCESS,
     NEW_REVIEW_RESET,
-    NEW_REVIEW_FAIL
+    NEW_REVIEW_FAIL,
+    ADD_PRODUCT_REQUEST,
+    ADD_PRODUCT_SUCCESS,
+    ADD_PRODUCT_FAIL,
+    ADD_PRODUCT_RESET,
+    USER_PRODUCTS_REQUEST,
+    USER_PRODUCTS_SUCCESS,
+    USER_PRODUCTS_FAIL,
+    UPDATE_PRODUCTS_RESET,
  } from "../constants/productConstants";
 
 export const productsReducer = (state = { products: [], featuredProducts: [] }, action) => {
@@ -40,6 +48,27 @@ export const productsReducer = (state = { products: [], featuredProducts: [] }, 
                 ...state,
                 error: null
             }
+            case USER_PRODUCTS_REQUEST: // Handle request for user products
+            return {
+                ...state,
+                loading: true,
+                products: [] // Clear products until they are fetched
+            }
+
+        case USER_PRODUCTS_SUCCESS: // Handle successful response for user products
+            return {
+                ...state,
+                loading: false,
+                products: action.payload // Store the user products
+            }
+
+        case USER_PRODUCTS_FAIL: // Handle error response for user products
+            return {
+                ...state,
+                loading: false,
+                error: action.payload
+            }
+
 
         case FEATURED_PRODUCTS_REQUEST:
             return {
@@ -62,6 +91,7 @@ export const productsReducer = (state = { products: [], featuredProducts: [] }, 
                 error: action.payload
             };
 
+        
         default:
             return state;
 
@@ -148,3 +178,39 @@ export const newReviewReducer = ( state = {}, action ) => {
     }
 
 }
+
+const initialState = {
+    products: [],
+    totalRevenue: {},
+    loading: false,
+    error: null,
+};
+
+
+export const productRevenueReducer = (state = initialState, action) => {
+    switch (action.type) {
+        case GET_PRODUCT_REVENUE_REQUEST:
+            return { 
+                ...state, loading: true 
+            };
+            case GET_PRODUCT_REVENUE_SUCCESS:
+                return {
+                    ...state,
+                    totalRevenue: {
+                        ...state.totalRevenue,
+                        [action.payload.productId]: action.payload.revenue,
+                    },
+                    loading: false,
+                };
+        case GET_PRODUCT_REVENUE_FAIL:
+            return { 
+                ...state, loading: false, error: action.payload 
+            };
+        case CLEAR_ERRORS:
+            return { 
+                ...state, error: null 
+            };
+        default:
+            return state;
+    }
+};

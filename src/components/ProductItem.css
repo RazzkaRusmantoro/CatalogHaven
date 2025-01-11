@@ -52,7 +52,7 @@ a {
     display: flex;
     align-items: center;
     justify-content: center;
-    color: orange;
+    color: #ffa500;
 }
 
 .star-rating {
@@ -76,5 +76,15 @@ a {
     color: black;
     font-size: 15px;
     margin-left: -2px;
+}
+
+
+.rating-num {
+    margin-right: 5px;
+}
+
+.reviews-details {
+    color: #4f4f4f;
+    margin-left: 10px;
 }
 

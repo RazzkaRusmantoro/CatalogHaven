@@ -121,9 +121,10 @@ const ProductDetails = () => {
 
                         <div className="product-rating">
                             <span className="star-rating">
+                                <span className = "rating-num">{product.ratings}</span>
                                 {renderStarRating(product.ratings)}
                             </span>
-                            <span id="reviews">({product.numReviews})</span>
+                            <span className="reviews-details">({product.numReviews} Reviews)</span>
                         </div>
                         <div className="product-quantity">
                             <p>Quantity:</p>

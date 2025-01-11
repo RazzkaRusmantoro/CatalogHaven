@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const {Schema} = mongoose;
+const { Schema } = mongoose;
 
 const productSchema = new Schema({
 
@@ -45,7 +45,6 @@ const productSchema = new Schema({
                 type: String,
                 required: true
             },
-
         }
     ],
 
@@ -72,8 +71,8 @@ const productSchema = new Schema({
     },
 
     seller: {
-        type: String,
-        required: [true, 'Missing product seller.'],
+        type: String,  // Changed to string and no longer required
+        default: '',   // Default to empty string if no user is logged in
     },
     
     stock: {
@@ -118,8 +117,6 @@ const productSchema = new Schema({
         type: Date,
         default: Date.now
     },
-
-    
 
 });
 

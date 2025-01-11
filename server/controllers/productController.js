@@ -2,6 +2,8 @@ const Product = require('../models/product');
 
 const APIFeatures = require('../utils/apiFeatures');
 
+const OrderModel = require('../models/order');
+
 exports.getFeaturedProducts = async (req, res, next) => {
     
     try {
@@ -24,16 +26,46 @@ exports.getFeaturedProducts = async (req, res, next) => {
 
 
 exports.newProduct = async (req, res, next) => {
+    try {
+        const { user } = req;  // Get the user from the request (assuming user is added via middleware)
 
-    req.body.user = req.user.id;
+        if (!user) {
+            return res.status(401).json({
+                success: false,
+                message: 'User must be logged in to add a product.'
+            });
+        }
 
-    const product = await Product.create(req.body)
+        const { name, price, description, category, stock, images } = req.body;  // Extract the required fields
 
-    res.status(201).json({
-        success: true,
-        product
-    })
-}
+        // Create the new product data
+        const productData = {
+            name,
+            price,
+            description,
+            category,
+            stock,
+            images,
+            user: user._id, // Automatically set the user as the logged-in user's ID
+        };
+
+        const product = new Product(productData);
+        await product.save();
+
+        res.status(201).json({
+            success: true,
+            product,
+        });
+    } catch (error) {
+        console.error('Error creating product:', error);
+        res.status(500).json({
+            success: false,
+            message: 'Unable to create product',
+            error: error.message,
+        });
+    }
+};
+
 
 exports.getProducts = async (req, res, next) => {
     try {
@@ -335,4 +367,68 @@ exports.calculateAverageRating = async (productId) => {
     const averageRating = totalRating / product.reviews.length;
 
     return averageRating;
+};
+
+// Get all products for a specific user
+exports.getUserProducts = async (req, res) => {
+    try {
+        const userId = req.params.id;
+
+        if (!userId) {
+            return res.status(400).json({ message: 'User ID is required' });
+        }
+
+        const products = await Product.find({ user: userId });
+
+        console.log('Fetched Products:', products);
+
+        res.status(200).json({
+            success: true,
+            products,
+        });
+    } catch (error) {
+        console.error('Error fetching user products:', error);
+        res.status(500).json({
+            success: false,
+            message: error.message || 'Failed to retrieve user products',
+        });
+    }
+};
+
+
+// Calculate total revenue for a product across all orders
+exports.getProductRevenue = async (req, res) => {
+    try {
+        const productId = req.params.productId;
+
+        if (!productId) {
+            return res.status(400).json({ message: 'Product ID is required' });
+        }
+
+        const orders = await OrderModel.find({ 'orderStatus': 'Completed' });
+
+        // Calculate the total revenue for the specified product
+        const totalRevenue = orders.reduce((acc, order) => {
+            const productRevenue = order.orderItems.reduce((orderAcc, item) => {
+                if (item.product.toString() === productId) {
+                    return orderAcc + (item.price * item.quantity);
+                }
+                return orderAcc;
+            }, 0);
+
+            return acc + productRevenue;
+        }, 0);
+
+        res.status(200).json({
+            success: true,
+            totalRevenue
+        });
+
+    } catch (error) {
+        console.error('Error calculating product revenue:', error);
+        res.status(500).json({
+            success: false,
+            message: error.message || 'Failed to calculate product revenue'
+        });
+    }
 };

@@ -19,6 +19,7 @@ import Checkout from './pages/Checkout/Checkout';
 import Payment from './pages/Checkout/Payment';
 import ListOrders from "./pages/Orders/ListOrders";
 import Sell from "./pages/Sell/Sell";
+import SellDashboard from "./pages/Sell/SellDashboard";
 
 
 import { loadUser } from './actions/userActions';
@@ -76,6 +77,7 @@ function App() {
                 <Route path="/checkout/confirm" element={<Checkout />} />
                 <Route path="/checkout/payment" element={<Payment />} />
                 <Route path="/orders" element={<ListOrders />} />
+                <Route path="/sell/dashboard" element={<SellDashboard />} />
               </Route>
               <Route path="/product/:id" element={<ProductDetails />} />
               <Route path="/search" element={<Search />} />
