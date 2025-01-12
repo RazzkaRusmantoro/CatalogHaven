@@ -29,6 +29,7 @@ import {
     GET_PRODUCT_REVENUE_SUCCESS, 
     GET_PRODUCT_REVENUE_FAIL, 
 } from "../constants/productConstants";
+import toast from 'react-hot-toast';
 
 export const getProducts = (keyword = '', currentPage = 1) => async(dispatch) => {
     try {
@@ -119,24 +120,36 @@ export const newReview = (reviewData) => async(dispatch) => {
     }
 }
 
+
+// Action to add a new product
 export const addProduct = (product) => async (dispatch) => {
     try {
         dispatch({ type: ADD_PRODUCT_REQUEST });
+        
+        // Get the token from localStorage or state if needed
+        const token = localStorage.getItem("authToken");
+
         const config = {
             headers: {
-                'Content-Type': 'application/json',
+                'Content-Type': 'multipart/form-data',
+                'Authorization': `Bearer ${token}`,
             },
         };
+
         const { data } = await axios.post('/product/new', product, config);
+
         dispatch({
             type: ADD_PRODUCT_SUCCESS,
-            payload: data,
+            payload: data.product
         });
+
+        toast.success('Product added successfully!');
     } catch (error) {
         dispatch({
             type: ADD_PRODUCT_FAIL,
             payload: error.response?.data?.message || 'Failed to add product',
         });
+        toast.error('Failed to add product');
     }
 };
 
@@ -144,7 +157,6 @@ export const getUserProducts = (userId) => async (dispatch) => {
     try {
         dispatch({ type: USER_PRODUCTS_REQUEST });
 
-        // Log userId to ensure it's being passed correctly
         console.log('Fetching products for user:', userId); 
 
         const { data } = await axios.get(`/products/user/${userId}`);

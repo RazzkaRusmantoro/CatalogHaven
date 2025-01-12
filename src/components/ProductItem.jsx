@@ -35,10 +35,19 @@ const ProductItem = ({ product }) => {
         return stars;
     };
 
+    const imageSrc = product.images && Array.isArray(product.images) && product.images.length > 0
+        ? product.images[0].url
+        : product.image
+        ? product.image.url
+        : '/placeholder.png';
+
     return (
         <a href={`/product/${product._id}`}>
             <div className="product-item" ref={productItemRef}>
-                <img src={product.images[0].url} alt={product.name} />
+                <img
+                    src={imageSrc}
+                    alt={product.name}
+                />
                 <h6>{product.name}</h6>
                 <div
                     className="ratings"
@@ -74,7 +83,10 @@ ProductItem.propTypes = {
             PropTypes.shape({
                 url: PropTypes.string.isRequired,
             })
-        ).isRequired,
+        ),
+        image: PropTypes.shape({
+            url: PropTypes.string.isRequired,
+        }), 
         ratings: PropTypes.number.isRequired,
         numReviews: PropTypes.number.isRequired,
         reviews: PropTypes.array.isRequired,

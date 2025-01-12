@@ -3,6 +3,14 @@ const Product = require('../models/product');
 const APIFeatures = require('../utils/apiFeatures');
 
 const OrderModel = require('../models/order');
+const cloudinary = require('cloudinary').v2;
+
+
+cloudinary.config({
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET,
+});
 
 exports.getFeaturedProducts = async (req, res, next) => {
     
@@ -24,47 +32,73 @@ exports.getFeaturedProducts = async (req, res, next) => {
     }
 };
 
+const multer = require('multer');
+const path = require('path');
 
-exports.newProduct = async (req, res, next) => {
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, 'uploads/'); 
+    },
+    filename: (req, file, cb) => {
+        cb(null, Date.now() + path.extname(file.originalname));
+    }
+});
+
+const upload = multer({ storage: storage });
+
+exports.newProduct = async (req, res) => {
     try {
-        const { user } = req;  // Get the user from the request (assuming user is added via middleware)
-
-        if (!user) {
-            return res.status(401).json({
-                success: false,
-                message: 'User must be logged in to add a product.'
+        if (!req.user) {
+            return res.status(400).json({
+                error: 'User must be authenticated to create a product.',
             });
         }
 
-        const { name, price, description, category, stock, images } = req.body;  // Extract the required fields
+        if (req.files && req.files.image) {
+            const imageFile = req.files.image;
+            const myCloud = await cloudinary.uploader.upload(imageFile.tempFilePath, {
+                folder: 'products',
+                width: 800,
+                crop: 'scale',
+            });
 
-        // Create the new product data
-        const productData = {
-            name,
-            price,
-            description,
-            category,
-            stock,
-            images,
-            user: user._id, // Automatically set the user as the logged-in user's ID
-        };
+            const category = req.body.category; 
 
-        const product = new Product(productData);
-        await product.save();
+            const product = new Product({
+                name: req.body.name,
+                description: req.body.description,
+                price: req.body.price,
+                image: {
+                    public_id: myCloud.public_id,
+                    url: myCloud.secure_url
+                },
+                category: category, 
+                seller: `${req.user.fname} ${req.user.lname}`, 
+                user: req.user._id, 
+                stock: req.body.stock,  
+            });
 
-        res.status(201).json({
-            success: true,
-            product,
-        });
+            await product.save();
+
+            res.status(201).json({
+                success: true,
+                product,
+            });
+        } else {
+            res.status(400).json({
+                error: 'No image file provided.',
+            });
+        }
     } catch (error) {
-        console.error('Error creating product:', error);
+        console.log('Error creating product: ', error);
         res.status(500).json({
-            success: false,
-            message: 'Unable to create product',
-            error: error.message,
+            error: 'An error occurred while creating the product.',
         });
     }
+
+    console.log('Product created successfully.');
 };
+
 
 
 exports.getProducts = async (req, res, next) => {

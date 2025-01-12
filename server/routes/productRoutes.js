@@ -3,13 +3,14 @@ const router = express.Router();
 const cors = require("cors");   
 const { newProduct, getProducts, getFeaturedProducts, getSingleProduct, updateProduct, deleteProduct, createProductReview, calculateAverageRating, getProductReviews, deleteReview, addToCart,getUserProducts, getProductRevenue } = require('../controllers/productController');
 
+const cloudinary = require('cloudinary');
+
+
 const { isAuthenticatedUser } = require('../middlewares/auth');
 
 router.route('/search').get(getProducts);
 
 router.route('/products/featured').get(getFeaturedProducts);
-
-router.route('/product/new').post(isAuthenticatedUser, newProduct);
 
 router.route('/product/:id').get(getSingleProduct);
 
@@ -25,9 +26,13 @@ router.route('/reviews').delete(isAuthenticatedUser, deleteReview);
 
 router.route('/cart/add', isAuthenticatedUser, addToCart);
 
+router.route('/product/new').post(isAuthenticatedUser, newProduct);
+
 router.route('/products/user/:id').get(isAuthenticatedUser, getUserProducts);
 
 router.route('/revenue/product/:productId').get(getProductRevenue);
+
+
 
 
 module.exports = router;

@@ -1,0 +1,86 @@
+/* Styles specific to the AddProduct component */
+.add-product-popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.add-product-popup .popup-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: -1;
+}
+
+.add-product-popup .popup-content {
+    position: relative;
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    max-width: 600px;
+    width: 100%;
+    z-index: 100;
+
+}
+
+.add-product-popup h2 {
+    margin-bottom: 20px;
+    color: red;
+}
+
+.add-product-popup form {
+    display: flex;
+    flex-direction: column;
+}
+
+.add-product-popup label {
+    margin-bottom: 10px;
+    color: red;
+    width: 100%;
+}
+
+.add-product-label {
+    width: 100%;
+}
+
+.add-product-popup input,
+.add-product-popup textarea {
+    padding: 8px;
+    margin: 5px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 95%;
+}
+
+.add-product-popup .submit-btn {
+    padding: 10px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.add-product-popup .submit-btn:disabled {
+    background-color: #ccc;
+}
+
+.add-product-popup .close-popup-btn {
+    background-color: #dc3545;
+    margin-top: 20px;
+}
+
+.add-product-popup .error-message {
+    color: red;
+    margin-bottom: 10px;
+}

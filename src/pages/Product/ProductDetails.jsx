@@ -15,7 +15,7 @@ const ProductDetails = () => {
     const { loading = false, error = null, product = {} } = useSelector(state => state.productDetails || {});
     const { isAuthenticated } = useSelector(state => state.user);
     const [quantity, setQuantity] = useState(1);
-    const [recentCartItem, setRecentCartItem] = useState(null); // Store only the most recently added item
+    const [recentCartItem, setRecentCartItem] = useState(null);
     const [isDropdownVisible, setDropdownVisible] = useState(false);
     const [isDescriptionVisible, setDescriptionVisible] = useState(false);
     const cartItems = useSelector(state => state.cart.cartItems);
@@ -30,7 +30,7 @@ const ProductDetails = () => {
 
     useEffect(() => {
         if (!loading && product) {
-            console.log('Product Image URL:', product.images && product.images.length > 0 ? product.images[0].url : 'No image available');
+            console.log('Product Image URL:', product.images && product.images.length > 0 ? product.images[0].url : product.image ? product.image.url : 'No image available');
         }
     }, [loading, product]);
 
@@ -72,13 +72,12 @@ const ProductDetails = () => {
             name: product.name,
             price: product.price,
             quantity,
-            image: product.images && product.images[0]?.url,
+            image: product.images && product.images.length > 0 ? product.images[0].url : product.image ? product.image.url : '',  
         };
 
-        dispatch(addItemToCart(productId, quantity)); // Add to global cart (Redux)
-        setRecentCartItem(cartItem); // Update the most recent cart item for dropdown
-        setDropdownVisible(true); // Show the dropdown
-
+        dispatch(addItemToCart(productId, quantity)); 
+        setRecentCartItem(cartItem);
+        setDropdownVisible(true); 
 
         setTimeout(() => {
             setDropdownVisible(false);
@@ -87,6 +86,12 @@ const ProductDetails = () => {
         console.log('Current cart items:', cartItems);
         console.log('Added to cart:', cartItem);
     };
+
+    const imageSrc = product.images && Array.isArray(product.images) && product.images.length > 0
+        ? product.images[0].url
+        : product.image
+        ? product.image.url
+        : '/placeholder.png';
 
     return (
         <>
@@ -99,7 +104,7 @@ const ProductDetails = () => {
                     <div className="product-image-container">
                         <div className="product-image">
                             <img
-                                src={product.images && product.images.length > 0 ? product.images[0].url : ''}
+                                src={imageSrc}
                                 alt={product.name || 'Product Image'}
                             />
                         </div>
@@ -113,7 +118,7 @@ const ProductDetails = () => {
                             <h3>USD ${product.price || '0.00'}</h3>
                         </div>
                         <div className="horizontal">
-                            <hr></hr>
+                            <hr />
                         </div>
                         <div className="product-seller">
                             <p><b>Seller:</b> {product.user?.username || product.seller || 'Unknown'}</p>
@@ -121,7 +126,7 @@ const ProductDetails = () => {
 
                         <div className="product-rating">
                             <span className="star-rating">
-                                <span className = "rating-num">{product.ratings}</span>
+                                <span className="rating-num">{product.ratings}</span>
                                 {renderStarRating(product.ratings)}
                             </span>
                             <span className="reviews-details">({product.numReviews} Reviews)</span>

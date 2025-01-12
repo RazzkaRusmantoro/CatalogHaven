@@ -48,21 +48,21 @@ export const productsReducer = (state = { products: [], featuredProducts: [] }, 
                 ...state,
                 error: null
             }
-            case USER_PRODUCTS_REQUEST: // Handle request for user products
+            case USER_PRODUCTS_REQUEST: 
             return {
                 ...state,
                 loading: true,
-                products: [] // Clear products until they are fetched
+                products: [] 
             }
 
-        case USER_PRODUCTS_SUCCESS: // Handle successful response for user products
+        case USER_PRODUCTS_SUCCESS: 
             return {
                 ...state,
                 loading: false,
-                products: action.payload // Store the user products
+                products: action.payload
             }
 
-        case USER_PRODUCTS_FAIL: // Handle error response for user products
+        case USER_PRODUCTS_FAIL:
             return {
                 ...state,
                 loading: false,
@@ -209,6 +209,44 @@ export const productRevenueReducer = (state = initialState, action) => {
         case CLEAR_ERRORS:
             return { 
                 ...state, error: null 
+            };
+        default:
+            return state;
+    }
+};
+
+
+const initialStateAdd = {
+    product: null,
+    loading: false,
+    success: false,
+    error: null,
+};
+
+export const addProductReducer = (state = initialStateAdd, action) => {
+    switch (action.type) {
+        case ADD_PRODUCT_REQUEST:
+            return {
+                ...state,
+                loading: true,
+            };
+        case ADD_PRODUCT_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                product:  action.payload.product,
+                success: action.payload.success,
+            };
+        case ADD_PRODUCT_FAIL:
+            return {
+                ...state,
+                loading: false,
+                error: action.payload,
+            };
+        case CLEAR_ERRORS:
+            return {
+                ...state,
+                error: null,
             };
         default:
             return state;
