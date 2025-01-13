@@ -189,7 +189,7 @@ html, body {
 }
 
 /* Button Styling */
-.button-55 {
+.button-56 {
     z-index: 5;
     position: absolute;
     bottom: 60px;
@@ -218,12 +218,12 @@ html, body {
     transition: all 235ms ease-in-out;
 }
 
-.button-55:hover {
+.button-56:hover {
     box-shadow: rgba(0, 0, 0, .3) 2px 8px 8px -5px;
     transform: translate3d(0, 2px, 0);
 }
 
-.button-55:focus {
+.button-56:focus {
     box-shadow: rgba(0, 0, 0, .3) 2px 8px 4px -6px;
 }
 

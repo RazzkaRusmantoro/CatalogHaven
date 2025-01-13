@@ -24,7 +24,10 @@ import {
     USER_PRODUCTS_REQUEST,
     USER_PRODUCTS_SUCCESS,
     USER_PRODUCTS_FAIL,
-    UPDATE_PRODUCTS_RESET,
+    UPDATE_PRODUCT_FAIL,
+    UPDATE_PRODUCT_SUCCESS,
+    UPDATE_PRODUCT_REQUEST,
+    UPDATE_PRODUCT_RESET,
     GET_PRODUCT_REVENUE_REQUEST, 
     GET_PRODUCT_REVENUE_SUCCESS, 
     GET_PRODUCT_REVENUE_FAIL, 
@@ -227,3 +230,44 @@ export const getProductRevenue = (productId) => async (dispatch) => {
     
 };
 
+// Update Product
+export const updateProduct = (id, productData) => async (dispatch) => {
+    try {
+        dispatch({ type: UPDATE_PRODUCT_REQUEST });
+
+        const formData = new FormData();
+        formData.append('name', productData.name);
+        formData.append('price', productData.price);
+        formData.append('stock', productData.stock);
+        if (productData.image) {
+            formData.append('image', productData.image);
+        }
+
+        const config = {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
+        };
+
+        const { data } = await axios.put(`/product/update/${id}`, formData, config);
+
+        dispatch({
+            type: UPDATE_PRODUCT_SUCCESS,
+            payload: data.success,
+        });
+
+        toast.success('Product updated successfully!');
+        console.log("Update Success:", data.success);
+
+        window.location.reload();
+
+        dispatch({ type: UPDATE_PRODUCT_RESET });
+    } catch (error) {
+        dispatch({
+            type: UPDATE_PRODUCT_FAIL,
+            payload: error.response?.data?.message || 'Something went wrong',
+        });
+
+        dispatch({ type: UPDATE_PRODUCT_RESET });
+    }
+};

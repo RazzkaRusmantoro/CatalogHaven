@@ -14,7 +14,7 @@ router.route('/products/featured').get(getFeaturedProducts);
 
 router.route('/product/:id').get(getSingleProduct);
 
-router.route('/admin/product/:id').put(isAuthenticatedUser, updateProduct).delete(isAuthenticatedUser, deleteProduct);
+router.route('/product/update/:id').put(isAuthenticatedUser, updateProduct);
 
 router.route('/review').put(isAuthenticatedUser, createProductReview);
 

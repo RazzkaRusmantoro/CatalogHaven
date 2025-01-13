@@ -173,28 +173,59 @@ exports.getSingleProduct = async (req, res, next) => {
 }
 
 exports.updateProduct = async (req, res, next) => {
+    try {
+        let product = await Product.findById(req.params.id);
 
-    let product = await Product.findById(req.params.id);
+        if (!product) {
+            return res.status(404).json({
+                success: false,
+                message: 'Product not found.',
+            });
+        }
 
-    if (!product) {
-        return res.json({
+        if (req.files && req.files.image) {
+            if (product.image && product.image.public_id) {
+                await cloudinary.uploader.destroy(product.image.public_id);
+            }
+
+            const imageFile = req.files.image;
+            const uploadedImage = await cloudinary.uploader.upload(imageFile.tempFilePath, {
+                folder: 'products',
+                width: 800,
+                crop: 'scale',
+            });
+
+            req.body.image = {
+                public_id: uploadedImage.public_id,
+                url: uploadedImage.secure_url,
+            };
+
+            console.log('New image uploaded successfully.');
+        } else {
+            req.body.image = product.image;
+        }
+
+        product = await Product.findByIdAndUpdate(req.params.id, req.body, {
+            new: true,
+            runValidators: true,
+            useFindAndModify: false,
+        });
+
+        res.status(200).json({
+            success: true,
+            message: 'Product updated successfully.',
+            product,
+        });
+    } catch (error) {
+        console.error('Error updating product:', error);
+        res.status(500).json({
             success: false,
-            message: 'Product not found.'
-        })
+            message: 'An error occurred while updating the product.',
+            error: error.message,
+        });
     }
+};
 
-    product = await Product.findByIdAndUpdate(req.params.id, req.body, {
-        new: true,
-        runValidators: true,
-        useFindAndModify: false
-    });
-
-    res.json({
-        success: true,
-        product
-    })
-
-}
 
 exports.deleteProduct = async (req, res, next) => {
 
