@@ -108,7 +108,7 @@ const Payment = () => {
           };
           
           
-          dispatch(createOrder(orderData)); // Dispatch action to create order
+          dispatch(createOrder(orderData)); // Dispatch action to create the order
 
           navigate('/checkout/success');
         }

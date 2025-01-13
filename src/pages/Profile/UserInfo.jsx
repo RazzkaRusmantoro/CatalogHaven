@@ -20,12 +20,12 @@ function UserInfo() {
     const [newPassword, setNewPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
     const [profilePicture, setProfilePicture] = useState(null);
-    const [preview, setPreview] = useState(user?.avatar?.url || "https://via.placeholder.com/150");
+    const [preview, setPreview] = useState(user?.avatar?.url || "https://fakeimg.pl/600x400");
 
     useEffect(() => {
         if (user) {
             setUserData(user);
-            setPreview(user.avatar?.url || "https://via.placeholder.com/150");
+            setPreview(user.avatar?.url || "https://fakeimg.pl/600x400");
         }
     }, [user]);
 
@@ -46,7 +46,7 @@ function UserInfo() {
     const handleProfilePictureChange = (e) => {
         const file = e.target.files[0];
         if (file) {
-            console.log("Selected file:", file); // Check if file is selected
+            console.log("Selected file:", file);
             setProfilePicture(file);
             const reader = new FileReader();
             reader.onloadend = () => {

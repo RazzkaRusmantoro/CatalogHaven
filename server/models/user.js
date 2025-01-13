@@ -27,7 +27,12 @@ const userSchema = new Schema(
         },
         
         resetPasswordToken: String,
-        resetPasswordExpire: Date
+        resetPasswordExpire: Date,
+
+        stripeAccountId: {
+            type: String,
+            required: false
+        }
     },
     {
         timestamps: true

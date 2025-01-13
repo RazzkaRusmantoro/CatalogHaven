@@ -20,7 +20,7 @@ import Payment from './pages/Checkout/Payment';
 import ListOrders from "./pages/Orders/ListOrders";
 import Sell from "./pages/Sell/Sell";
 import SellDashboard from "./pages/Sell/SellDashboard";
-
+import StripeReturnPage from "./pages/Sell/StripeReturnPage";
 
 import { loadUser } from './actions/userActions';
 import store from './store';
@@ -78,6 +78,7 @@ function App() {
                 <Route path="/checkout/payment" element={<Payment />} />
                 <Route path="/orders" element={<ListOrders />} />
                 <Route path="/sell/dashboard" element={<SellDashboard />} />
+                <Route path="/stripe-return" element={<StripeReturnPage />} />
               </Route>
               <Route path="/product/:id" element={<ProductDetails />} />
               <Route path="/search" element={<Search />} />

@@ -6,6 +6,7 @@ import { cartReducer } from "./reducers/cartReducers";
 import { authReducer } from "./reducers/userReducers";
 import { newOrderReducer, myOrdersReducer } from "./reducers/orderReducers";
 import { newReviewReducer } from "./reducers/productReducers";
+import { stripeReducer } from "./reducers/stripeReducers";
 
 const reducer = combineReducers({
     products: productsReducer,
@@ -14,7 +15,8 @@ const reducer = combineReducers({
     user: authReducer,
     newOrder: newOrderReducer,
     myOrders: myOrdersReducer,
-    newReview: newReviewReducer
+    newReview: newReviewReducer,
+    stripe: stripeReducer
     
 });
 
@@ -25,7 +27,7 @@ let initialState = {
 
     },
     myOrders: {
-        orders: [],  // Default state for orders
+        orders: [],
         loading: false,
         error: null,
     }
