@@ -75,7 +75,6 @@ const SellDashboard = () => {
 
   const togglePopup = () => {
     if (!user.stripeAccountId) {
-      // If no Stripe account is linked, show the Stripe linking popup
       setShowLinkStripePopup(true);
       return;
     }
@@ -121,10 +120,6 @@ const SellDashboard = () => {
     }
   };
 
-  const handleLinkStripeClose = () => {
-    setShowLinkStripePopup(false);
-  };
-
   const handleStripeOnboarding = async () => {
     try {
       const { data } = await axios.post("/stripe/onboarding", { userId: user._id });
@@ -141,44 +136,32 @@ const SellDashboard = () => {
     }
   };
 
-  const handleStripeReturn = async () => {
-    try {
-      // Get the accountId from the URL query parameters after Stripe return
-      const accountId = new URLSearchParams(window.location.search).get("accountId");
-  
-      const { data } = await axios.post('/verify-stripe', { accountId });
-  
-      if (data.success) {
-        // Account successfully linked
-        toast.success('Your Stripe account is now linked!');
-        navigate("/dashboard");
-      } else {
-        // Handle failure to link account
-        toast.error('Failed to link your Stripe account');
-      }
-    } catch (error) {
-      toast.error('Error verifying Stripe account');
-    }
-  };
 
   return (
     <>
-      {showLinkStripePopup && (
-        <div className="link-stripe-popup">
-          <div className="popup-content">
-            <h3>You need to link your Stripe account to sell a product!</h3>
-            <p>
-              To start selling, please link your Stripe account.
-              <br />
-              <button onClick={handleStripeOnboarding}>Click here to link your Stripe account</button>
-            </p>
-            <button onClick={handleLinkStripeClose}>Close</button>
-          </div>
+      {showPopup && <AddProduct closePopup={togglePopup} />}
+      <div className="background-layer"></div>
+
+      {/* Conditionally render the Stripe container */}
+      {!user?.stripeAccountId && (
+        <div className="stripe-container">
+          {showLinkStripePopup && (
+            <div className="link-stripe-popup">
+              <div className="popup-content">
+                <h1>You need to link your Stripe account to sell a product!</h1>
+                <p>
+                  <span className="stripe-text">To start selling, please link your Stripe account.</span>
+                  <br />
+                  <button className="stripe-btn" onClick={handleStripeOnboarding}>
+                    <i className="stripe-animation"></i>Click here to link your Stripe account<i className="stripe-animation"></i>
+                  </button>
+                </p>
+              </div>
+            </div>
+          )}
         </div>
       )}
 
-      {showPopup && <AddProduct closePopup={togglePopup} />}
-      <div className="background-layer"></div>
       <div className="sell-dashboard">
         <div className="sell-container-header">
           <h1>↓ Your Products:</h1>
