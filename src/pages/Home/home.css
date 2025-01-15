@@ -132,7 +132,8 @@ html, body {
 #pattern3,
 #pattern4,
 #pattern5,
-#pattern6 {
+#pattern6,
+#pattern7 {
     right: 0px;
     height: 500px;
     top: -19px;
@@ -159,6 +160,10 @@ html, body {
 
 #pattern6 {
     right: 1457.7px;
+}
+
+#pattern7 {
+    right: 2915.4px;
 }
 
 .banner-text {

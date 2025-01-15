@@ -75,6 +75,7 @@ function Home() {
                     <img src={pattern} id="pattern4" alt="pattern" />
                     <img src={pattern} id="pattern5" alt="pattern" />
                     <img src={pattern} id="pattern6" alt="pattern" />
+                    <img src={pattern} id="pattern7" alt="pattern" />
 
                     <h6 className="subtext">With sales starting at 20% off...</h6>
                     <button className="button-56">SHOP NOW</button>
