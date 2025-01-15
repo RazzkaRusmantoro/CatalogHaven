@@ -1,7 +1,16 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import "./CartDropdown.css";
 
+
 const CartDropdown = ({ cartItems }) => {
+
+    const navigate = useNavigate();
+
+    const handleCheckoutShipping = () => {
+        navigate("/checkout/shipping");
+    };
+    
     return (
         <div className="cart-dropdown">
             <h4>Added to Cart!</h4>
@@ -18,8 +27,7 @@ const CartDropdown = ({ cartItems }) => {
                 ))}
             </ul>
             <div className="cart-dropdown-buttons">
-                <button className="view-cart-button">View Cart</button>
-                <button className="checkout-button">Checkout</button>
+                <button className="checkout-button" onClick = {handleCheckoutShipping}>Checkout</button>
             </div>
         </div>
     );

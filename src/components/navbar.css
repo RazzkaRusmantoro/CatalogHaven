@@ -94,6 +94,7 @@ p {
     display: flex;
     align-items: center;
     margin-left: -50px;
+    cursor: pointer;
 }
 
 .category img {
@@ -202,3 +203,44 @@ p {
         margin-right: 0;
     }
 }
+
+.Navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    padding: 10px 20px;
+    background-color: white;
+    z-index: 3;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+    animation: slideDown1 0.5s ease forwards;
+}
+
+.categoryDropdown {
+    position: absolute;
+    top: 45px;
+    left: -5px;
+    right: 10px;
+    background-color: rgb(222, 90, 90);
+    padding: 10px 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    z-index: 2;
+    width: 20%;
+}
+
+.categoryItem {
+    display: block;
+    padding: 10px;
+    color: white;
+    font-size: 16px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.categoryItem:hover {
+    background-color: rgb(250, 115, 115);
+}
+

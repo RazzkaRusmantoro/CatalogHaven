@@ -1,5 +1,6 @@
 import React from "react";
 import box from "/assets/corrugated_boxes.png";
+import { Link }from "react-router-dom";
 
 import "./Sell.css";
 
@@ -24,9 +25,11 @@ const Sell = () => {
                     <h1 className = "sell-text">Become a seller at CatalogHaven</h1>
                     <p className = "sell-description">Allow yourself to sell your own items at our platform!</p>
                     <div className = "sell-button-container">
-                        <button>
-                            Let's Sell!
-                        </button>
+                        <Link to = "/sell/dashboard">
+                            <button>
+                                Let's Sell!
+                            </button>
+                        </Link>
                     </div>
                 </div>
                 <div className = "sell-image-container">

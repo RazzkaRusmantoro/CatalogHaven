@@ -1,11 +1,19 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { updateCartItemQuantity, removeItemFromCart } from "../../actions/cartActions";
 import "./CartPopup.css";
 
 const CartPopup = ({ isVisible, onClose }) => {
+    const navigate = useNavigate();
     const cartItems = useSelector((state) => state.cart.cartItems);
     const dispatch = useDispatch();
+
+    const handleCheckoutShipping = () => {
+        onClose();
+        navigate("/checkout/shipping");
+        
+    };
 
     const handleQuantityChange = (id, newQuantity) => {
         if (newQuantity < 1) return;
@@ -72,7 +80,7 @@ const CartPopup = ({ isVisible, onClose }) => {
                 </div>
                 {cartItems.length > 0 && (
                     <div className="cart-footer">
-                        <button className="checkout-button">Checkout</button>
+                        <button className="checkout-button" onClick = {handleCheckoutShipping}>Checkout</button>
                     </div>
                 )}
             </div>
