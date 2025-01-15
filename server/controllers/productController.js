@@ -470,7 +470,7 @@ exports.getProductRevenue = async (req, res) => {
             return res.status(400).json({ message: 'Product ID is required' });
         }
 
-        const orders = await OrderModel.find({ 'orderStatus': 'Completed' });
+        const orders = await OrderModel.find({ 'orderStatus': 'Processing' });
 
         // Calculate the total revenue for the specified product
         const totalRevenue = orders.reduce((acc, order) => {

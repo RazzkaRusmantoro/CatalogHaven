@@ -2,6 +2,50 @@ const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 const User = require("../models/user");
 const bodyParser = require('body-parser');
 
+exports.checkAccount = async (req, res, next) => {
+    try {
+        const userId = req.params.userId;
+
+        const user = await User.findById(userId);
+
+        if (!user || !user.stripeAccountId) {
+            return res.status(400).json({
+                success: false,
+                message: "User not found or Stripe account not linked.",
+            });
+        }
+
+        const accountId = user.stripeAccountId;
+        
+        const account = await stripe.accounts.retrieve(accountId);
+
+        console.log("Account Details:", account);
+
+
+        if (account.details_submitted) {
+            console.log("Account is fully set up!");
+            res.status(200).json({
+                success: true,
+                message: "Account is fully set up!",
+                account,
+            });
+        } else {
+            console.log("Account is not fully set up.");
+            res.status(200).json({
+                success: false,
+                message: "Account is not fully set up.",
+            });
+        }
+    } catch (error) {
+        console.error("Error retrieving account:", error.message);
+        res.status(500).json({
+            success: false,
+            message: "Failed to check account",
+            error: error.message,
+        });
+    }
+};
+
 // Process Stripe Payments
 exports.processPayment = async (req, res, next) => {
     try {
@@ -18,40 +62,52 @@ exports.processPayment = async (req, res, next) => {
                 return res.status(400).json({ success: false, message: "User not found." });
             }
 
-            if (!user.stripeAccountId) {
-                const account = await stripe.accounts.create({ type: 'standard' });
-                user.stripeAccountId = account.id;
-                await user.save();
-            }
+            // If user has a Stripe account linked, transfer funds to that account
+            if (user.stripeAccountId) {
+                const paymentIntent = await stripe.paymentIntents.create(
+                    {
+                        amount,
+                        currency: "usd",
+                        metadata: { integration_check: "accept_a_payment" },
+                        transfer_data: {
+                            destination: user.stripeAccountId,  // Transfer to seller's account
+                        },
+                    },
+                    {
+                        stripeAccount: user.stripeAccountId,
+                    }
+                );
 
-            const paymentIntent = await stripe.paymentIntents.create(
-                {
+                return res.status(200).json({
+                    success: true,
+                    client_secret: paymentIntent.client_secret,
+                });
+            } else {
+                // If user does not have a Stripe account linked, transfer funds to platform account
+                const paymentIntent = await stripe.paymentIntents.create({
                     amount,
                     currency: "usd",
                     metadata: { integration_check: "accept_a_payment" },
-                },
-                {
-                    stripeAccount: user.stripeAccountId,
-                }
-            );
+                });
 
-            return res.status(200).json({
+                return res.status(200).json({
+                    success: true,
+                    client_secret: paymentIntent.client_secret,
+                });
+            }
+        } else {
+            // Fallback to platform-level payments (no user specified)
+            const paymentIntent = await stripe.paymentIntents.create({
+                amount,
+                currency: "usd",
+                metadata: { integration_check: "accept_a_payment" },
+            });
+
+            res.status(200).json({
                 success: true,
                 client_secret: paymentIntent.client_secret,
             });
         }
-
-        // Fallback for platform-level payments
-        const paymentIntent = await stripe.paymentIntents.create({
-            amount,
-            currency: "usd",
-            metadata: { integration_check: "accept_a_payment" },
-        });
-
-        res.status(200).json({
-            success: true,
-            client_secret: paymentIntent.client_secret,
-        });
     } catch (error) {
         console.error("Error processing payment:", error.message);
         res.status(500).json({ success: false, message: error.message });
