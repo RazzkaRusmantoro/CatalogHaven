@@ -19,6 +19,10 @@ const Checkout = () => {
         dispatch(removeItemFromCart(id));
     };
 
+    const handleSubmitOrder = () => {
+        navigate("/checkout/payment");
+    };
+
     // Calculate the subtotal, shipping, and order total
     const subtotal = cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
     const shipping = 0; // Free shipping for now
@@ -149,7 +153,7 @@ const Checkout = () => {
                         </p>
                         <hr className="cartItemSeparator" />
                     </div>
-                    <button className="submitOrderButton sheen"><div className="sheenText">Submit Order</div></button>
+                    <button className="submitOrderButton sheen" onClick = {handleSubmitOrder}><div className="sheenText">Submit Order</div></button>
                 </div>
             </div>
         </>

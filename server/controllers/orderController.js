@@ -3,7 +3,6 @@ const Order = require("../models/order");
 const Product = require("../models/product");
 
 const newOrder = async (req, res, next) => {
-
     const {
         orderItems,
         shippingInfo,
@@ -13,23 +12,73 @@ const newOrder = async (req, res, next) => {
         paymentInfo
     } = req.body;
 
-    const order = await Order.create({
-        orderItems,
-        shippingInfo,
-        itemsPrice,
-        shippingPrice,
-        totalPrice,
-        paymentInfo,
-        paidAt: Date.now(),
-        user: req.user._id
-    });
+    try {
+        // Populate the image URL and public_id for each orderItem
+        const populatedOrderItems = await Promise.all(orderItems.map(async (item) => {
+            if (!item.product) {
+                throw new Error("Product ID is required in each order item.");
+            }
 
-    res.status(200).json({
-        success: true,
-        order
-    })
+            const product = await Product.findById(item.product);
 
-}
+            if (!product) {
+                throw new Error(`Product not found with ID: ${item.product}`);
+            }
+
+            console.log("Product image field:", product.image);
+
+            let image = {};
+
+            if (product.image?.url && product.image?.public_id) {
+                image.url = product.image.url;
+                image.public_id = product.image.public_id;
+            }
+            else {
+                console.error(`Invalid image fields for product with ID ${item.product}`);
+                throw new Error(`Product with ID ${item.product} must have valid image fields.`);
+            }
+
+            item.image = image; 
+
+            return item;
+        }));
+
+        // After processing all items, ensure each orderItem has valid image fields
+        populatedOrderItems.forEach(item => {
+            if (!item.image?.url || !item.image?.public_id) {
+                console.error("Missing image fields for order item:", item);
+                throw new Error("Each order item must have a valid image with a URL and public_id.");
+            }
+        });
+
+        const order = await Order.create({
+            orderItems: populatedOrderItems,
+            shippingInfo,
+            itemsPrice,
+            shippingPrice,
+            totalPrice,
+            paymentInfo,
+            paidAt: Date.now(),
+            user: req.user._id
+        });
+
+        res.status(200).json({
+            success: true,
+            order
+        });
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({
+            success: false,
+            message: error.message
+        });
+    }
+};
+
+
+
+
 
 // Get Single Order
 const getSingleOrder = async (req, res, next) => {

@@ -1,10 +1,12 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { saveShippingInfo } from "../../actions/cartActions";
 import MapComponent from "./MapComponent"; 
 import "./Shipping.css";
 
 const Shipping = () => {
+    const navigate = useNavigate();
     const { shippingInfo } = useSelector((state) => state.cart);
 
     const [address, setAddress] = useState(shippingInfo?.address || "");
@@ -54,6 +56,10 @@ const Shipping = () => {
     const handleSelectAddress = (selectedAddress) => {
         setAddress(selectedAddress); // Update the address from MapComponent
         setIsMapOpen(false); // Close the map
+    };
+
+    const handleContinueToPayment = () => {
+        navigate('/checkout/confirm');
     };
 
     return (
@@ -141,7 +147,7 @@ const Shipping = () => {
                     </button>
                 </div>
                 <div className="paymentButtonContainer">
-                    <button className="paymentButton">Continue to Payment</button>
+                    <button className="paymentButton"onClick ={handleContinueToPayment}>Continue to Payment</button>
                     <div className="securityInfo">
                         <ul>
                             <li className="securityItem">

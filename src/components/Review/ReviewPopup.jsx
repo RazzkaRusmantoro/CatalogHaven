@@ -51,6 +51,16 @@ const ReviewPopup = ({ productId, isOpen, onClose }) => {
         }
     }, [success, dispatch, onClose]);
 
+    const getImageSrc = (product) => {
+        if (product?.image?.url) {
+            return product.image.url;
+        } else if (product?.images && Array.isArray(product.images) && product.images.length > 0) {
+            return product.images[0].url;
+        } else {
+            return "/placeholder.png";
+        }
+    };
+
     return (
         isOpen && (
             <div className="popup-overlay">
@@ -59,48 +69,47 @@ const ReviewPopup = ({ productId, isOpen, onClose }) => {
                         &times;
                     </button>
                     {product && (
-                    <div className="product-image-review">
-                        <div className="product-image-container-review">
-                            <img
-                                src={(product?.images && product?.images.length > 0) ? product?.images[0]?.url : ''}
-                                alt={product?.name || 'Product'}
-                                className="product-image-review-thumbnail"
-                            />
-                        </div>
-                        <div className="product-details-review">
-                            <h3 className="product-name-review">{product?.name}</h3>
+                        <div className="product-image-review">
+                            <div className="product-image-container-review">
+                                <img
+                                    src={getImageSrc(product)}
+                                    alt={product?.name || 'Product'}
+                                    className="product-image-review-thumbnail"
+                                />
+                            </div>
+                            <div className="product-details-review">
+                                <h3 className="product-name-review">{product?.name}</h3>
                     
-                            <label className="rating-label">
-                                <div className="star-rating-review">
-                                    {[1, 2, 3, 4, 5].map((star) => (
-                                        <span
-                                            key={star}
-                                            className={`star ${star <= rating ? 'filled' : ''}`}
-                                            onClick={() => setRating(star)}
-                                        >
-                                            &#9733;
-                                        </span>
-                                    ))}
-                                </div>
-                            </label>
-
-                            {/* Review Form under rating */}
-                            <form className="review-form" onSubmit={handleSubmit}>
-                                
-                                <label className="comment-label">
-                                    <textarea
-                                        value={comment}
-                                        onChange={(e) => setComment(e.target.value)}
-                                        placeholder="Write your review here..."
-                                        className = "comment-input"
-                                    />
+                                <label className="rating-label">
+                                    <div className="star-rating-review">
+                                        {[1, 2, 3, 4, 5].map((star) => (
+                                            <span
+                                                key={star}
+                                                className={`star ${star <= rating ? 'filled' : ''}`}
+                                                onClick={() => setRating(star)}
+                                            >
+                                                &#9733;
+                                            </span>
+                                        ))}
+                                    </div>
                                 </label>
-                                <button type="submit" className="submit-btn">
-                                    SEND REVIEW
-                                </button>
-                            </form>
-                        </div>
-                    </div>                    
+
+                                {/* Review Form under rating */}
+                                <form className="review-form" onSubmit={handleSubmit}>
+                                    <label className="comment-label">
+                                        <textarea
+                                            value={comment}
+                                            onChange={(e) => setComment(e.target.value)}
+                                            placeholder="Write your review here..."
+                                            className="comment-input"
+                                        />
+                                    </label>
+                                    <button type="submit" className="submit-btn">
+                                        SEND REVIEW
+                                    </button>
+                                </form>
+                            </div>
+                        </div>                    
                     )}
 
                     {error && <p className="error-message">{error}</p>}

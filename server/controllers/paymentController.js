@@ -7,43 +7,33 @@ exports.processPayment = async (req, res, next) => {
     try {
         const { amount, userId } = req.body;
 
-        console.log('Processing payment with amount:', amount, 'for userId:', userId);
+        if (!amount) {
+            return res.status(400).json({ success: false, message: "Amount is required." });
+        }
 
         if (userId) {
             const user = await User.findById(userId);
 
             if (!user) {
-                console.log('User not found for userId:', userId);
                 return res.status(400).json({ success: false, message: "User not found." });
             }
 
-            console.log('User found:', user);
-
             if (!user.stripeAccountId) {
-                console.log('User does not have a Stripe account, creating one...');
-                const account = await stripe.accounts.create({
-                    type: 'standard',
-                });
+                const account = await stripe.accounts.create({ type: 'standard' });
                 user.stripeAccountId = account.id;
                 await user.save();
-                console.log('Stripe account created for user. Account ID:', account.id);
             }
 
-            // Create the payment intent on behalf of the connected account
             const paymentIntent = await stripe.paymentIntents.create(
                 {
                     amount,
                     currency: "usd",
-                    metadata: {
-                        integration_check: "accept_a_payment",
-                    },
+                    metadata: { integration_check: "accept_a_payment" },
                 },
                 {
                     stripeAccount: user.stripeAccountId,
                 }
             );
-
-            console.log('Payment intent created. Client Secret:', paymentIntent.client_secret);
 
             return res.status(200).json({
                 success: true,
@@ -51,27 +41,23 @@ exports.processPayment = async (req, res, next) => {
             });
         }
 
-        // If no userId is provided, create the payment intent directly for the platform's Stripe account.
-        console.log('No userId provided, creating payment intent for platform...');
+        // Fallback for platform-level payments
         const paymentIntent = await stripe.paymentIntents.create({
             amount,
             currency: "usd",
-            metadata: {
-                integration_check: "accept_a_payment",
-            },
+            metadata: { integration_check: "accept_a_payment" },
         });
-
-        console.log('Payment intent created for platform. Client Secret:', paymentIntent.client_secret);
 
         res.status(200).json({
             success: true,
             client_secret: paymentIntent.client_secret,
         });
     } catch (error) {
-        console.error('Error processing payment:', error);
+        console.error("Error processing payment:", error.message);
         res.status(500).json({ success: false, message: error.message });
     }
 };
+
 
 // Send Stripe API Key
 exports.sendStripeApi = async (req, res, next) => {

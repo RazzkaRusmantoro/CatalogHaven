@@ -55,73 +55,73 @@ const Payment = () => {
   };
 
   const handlePayment = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-  
-    const shippingInfo = JSON.parse(localStorage.getItem('shippingInfo'));
+      e.preventDefault();
+      setLoading(true);
 
-
-    if (paymentMethod === 'card') {
-      try {
-        const amountInCents = Math.round(totalAmount * 100); // Convert to cents
-        const { data } = await axios.post('/payment/process', { amount: amountInCents });
-        const clientSecret = data.client_secret;
-  
-        const result = await stripe.confirmCardPayment(clientSecret, {
-          payment_method: {
-            card: elements.getElement(CardNumberElement),
-            billing_details: {
-              name: `${billingDetails.firstName} ${billingDetails.lastName}`,
-              email: billingDetails.email,
-            },
-          },
-        });
-  
-        if (result.error) {
-          setMessage(`Payment failed: ${result.error.message}`);
-        } else if (result.paymentIntent.status === 'succeeded') {
-          setMessage('Payment successful!');
-
-          // Create the order after successful payment
-          const orderData = {
-            orderItems: cartItems.map(item => ({
-              product: item.id || '', 
-              name: item.name || '',  
-              price: item.price || 0,  
-              quantity: item.quantity || 0, 
-              image: {
-                url: item.image || '',
-                public_id: item.image.split('/').pop().split('.')[0] || '', 
-              }
-            })),
-            shippingInfo: shippingInfo || {
-              address: '', 
-              city: '',
-              phone: '',
-              postalCode: '',
-              country: '',
-            },
-            itemsPrice: totalAmount,
-            shippingPrice: 0, 
-            totalPrice: totalAmount,
-            paymentInfo: result.paymentIntent,
-          };
-          
-          
-          dispatch(createOrder(orderData)); // Dispatch action to create the order
-
-          navigate('/checkout/success');
-        }
-      } catch (error) {
-        setMessage(`Error: ${error.response?.data?.message || error.message}`);
-      } finally {
-        setLoading(false);
+      const shippingInfo = JSON.parse(localStorage.getItem("shippingInfo"));
+      if (!shippingInfo) {
+          setMessage("Shipping information is missing.");
+          setLoading(false);
+          return;
       }
-    } else if (paymentMethod === 'paypal') {
-      setMessage('Go make the PayPal integration already, nerd.');
-      setLoading(false);
-    }
+
+      if (paymentMethod === "card") {
+          try {
+              const amountInCents = Math.round(totalAmount * 100); // Convert to cents
+              const { data } = await axios.post("/payment/process", { 
+                  amount: amountInCents, 
+                  userId: user?._id 
+              });
+
+              const clientSecret = data.client_secret;
+
+              const result = await stripe.confirmCardPayment(clientSecret, {
+                  payment_method: {
+                      card: elements.getElement(CardNumberElement),
+                      billing_details: {
+                          name: `${billingDetails.firstName} ${billingDetails.lastName}`,
+                          email: billingDetails.email,
+                      },
+                  },
+              });
+
+              if (result.error) {
+                  setMessage(`Payment failed: ${result.error.message}`);
+              } else if (result.paymentIntent.status === "succeeded") {
+                  setMessage("Payment successful!");
+
+                  const orderData = {
+                      orderItems: cartItems.map((item) => ({
+                          product: item.id || "",
+                          name: item.name || "",
+                          price: item.price || 0,
+                          quantity: item.quantity || 0,
+                          image: {
+                              url: item.image || "",
+                              public_id: item.image ? item.image.split("/").pop().split(".")[0] : "",
+                          },
+                      })),
+                      shippingInfo,
+                      itemsPrice: totalAmount,
+                      shippingPrice: 0,
+                      totalPrice: totalAmount,
+                      paymentInfo: result.paymentIntent,
+                  };
+
+                  dispatch(createOrder(orderData)); // Dispatch action to create the order
+                  navigate("/checkout/success");
+              }
+          } catch (error) {
+              setMessage(`Error: ${error.response?.data?.message || error.message}`);
+          } finally {
+              setLoading(false);
+          }
+      } else {
+          setMessage("PayPal integration is not implemented yet.");
+          setLoading(false);
+      }
   };
+
   
 
   return (

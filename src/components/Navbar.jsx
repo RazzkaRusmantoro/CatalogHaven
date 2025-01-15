@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { useState, useEffect } from "react"; 
 import "./navbar.css";
 import Logo from "/assets/Logo.png";
@@ -27,9 +27,9 @@ function Navbar() {
 
     const handleProfileClick = () => {
         if (user) {
-            navigate("/profile"); // Navigate to the profile page if user is logged in
+            navigate("/profile");
         } else {
-            navigate("/sign-in"); // Navigate to the login page if not logged in
+            navigate("/sign-in");
         }
         
     };
@@ -42,15 +42,21 @@ function Navbar() {
         navigate("/sign-in");
     };
 
+    const handleSellClick = () => {
+        navigate("/sell");
+    }
+
     const handleSearchChange = (event) => {
         setSearchQuery(event.target.value);
     };
 
     const handleSearchKeyDown = (event) => {
         if (event.key === "Enter" && searchQuery.trim()) {
-            navigate(`/search?keyword=${searchQuery}`);
+            event.preventDefault()
+            navigate(`/search?keyword=${searchQuery}`, { replace: true });
         }
     };
+    
 
     const handleOrderClick = () => {
         if (user) {
@@ -109,7 +115,7 @@ function Navbar() {
                 </div>
                 <p>Best Sellers</p>
                 <p>Deals</p>
-                <p>Sell</p>
+                <Link to="/sell"><p>Sell</p></Link>
                 <p>Customer Service</p>
                 <p>About Us</p>
             </div>

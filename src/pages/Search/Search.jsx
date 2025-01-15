@@ -47,7 +47,7 @@ function Search() {
                 if (selectedCategory) {
                     url += `&category=${selectedCategory}`;
                 }
-
+    
                 const response = await axios.get(url);
                 setProducts(response.data.products);
                 setPageCount(Math.ceil(response.data.productCount / resPerPage));
@@ -57,9 +57,10 @@ function Search() {
                 setLoading(false);
             }
         };
-
+    
         fetchProducts();
-    }, [searchQuery, selectedCategory, currentPage]);
+    }, [searchQuery, selectedCategory, currentPage]); // Added searchQuery as a dependency
+    
 
     const handleCategoryChange = (category) => {
         const params = new URLSearchParams(location.search);
