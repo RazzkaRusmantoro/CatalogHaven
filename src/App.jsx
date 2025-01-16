@@ -21,6 +21,7 @@ import ListOrders from "./pages/Orders/ListOrders";
 import Sell from "./pages/Sell/Sell";
 import SellDashboard from "./pages/Sell/SellDashboard";
 import StripeReturnPage from "./pages/Sell/StripeReturnPage";
+import Contact from "./pages/Contact/Contact";
 
 import { loadUser } from './actions/userActions';
 import store from './store';
@@ -83,6 +84,7 @@ function App() {
               <Route path="/product/:id" element={<ProductDetails />} />
               <Route path="/search" element={<Search />} />
               <Route path="/sell" element={<Sell />} />
+              <Route path="/contact-us" element={<Contact />} />
             </Routes>
           </Layout>
         </Elements>

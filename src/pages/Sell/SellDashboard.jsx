@@ -30,7 +30,6 @@ const SellDashboard = () => {
 
   useEffect(() => {
     if (error) {
-      alert(error);
       dispatch(clearErrors());
     }
   }, [error, dispatch]);
@@ -75,6 +74,7 @@ const SellDashboard = () => {
 
   const togglePopup = () => {
     if (!user.stripeAccountId) {
+      toast.error("Please link your Stripe account first.");
       setShowLinkStripePopup(true);
       return;
     }
@@ -127,8 +127,6 @@ const SellDashboard = () => {
       if (data.success) {
         // Redirect the user to Stripe for onboarding
         window.location.href = data.url;
-      } else {
-        alert(data.message);
       }
     } catch (error) {
       console.error("Error during Stripe onboarding:", error);
