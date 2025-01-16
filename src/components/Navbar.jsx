@@ -51,6 +51,10 @@ function Navbar() {
         navigate("/");
     };
 
+    const handleContactClick = () => {
+        navigate("/contact-us");
+    };
+
     const handleSearchChange = (event) => {
         setSearchQuery(event.target.value);
     };
@@ -127,11 +131,9 @@ function Navbar() {
                         ))}
                     </div>
                 )}
-                <p>Best Sellers</p>
                 <p>Deals</p>
                 <Link to="/sell"><p>Sell</p></Link>
-                <p>Customer Service</p>
-                <p>About Us</p>
+                <Link to="/contact-us"><p>Customer Service</p></Link>
             </div>
         </div>
     );
