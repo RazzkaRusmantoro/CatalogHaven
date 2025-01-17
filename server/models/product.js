@@ -21,7 +21,7 @@ const productSchema = new Schema({
         type: Number, 
         default: 0, // Discount is optional and defaults to 0 (no discount)
         min: [0, 'Discount cannot be negative.'],
-        max: [100, 'Discount cannot exceed 100%.'] // Assuming it's a percentage
+        max: [100, 'Discount cannot exceed 100%.']
     },
 
     description: {

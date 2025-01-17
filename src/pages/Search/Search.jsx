@@ -45,7 +45,7 @@ function Search() {
             try {
                 let url = `/search?keyword=${searchQuery}&page=${currentPage}&limit=${resPerPage}`;
                 if (selectedCategory) {
-                    url += `&category=${selectedCategory}`;
+                    url += `&category=${encodeURIComponent(selectedCategory)}`;
                 }
     
                 const response = await axios.get(url);
@@ -59,7 +59,7 @@ function Search() {
         };
     
         fetchProducts();
-    }, [searchQuery, selectedCategory, currentPage]); // Added searchQuery as a dependency
+    }, [searchQuery, selectedCategory, currentPage]);
     
 
     const handleCategoryChange = (category) => {

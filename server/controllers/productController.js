@@ -46,6 +46,16 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
+exports.directNewProduct = async (req, res) => {
+    req.body.user = req.user._id;
+    const product = await Product.create(req.body);
+
+    res.status(201).json({
+        success: true,
+        product,
+    });
+}
+
 exports.newProduct = async (req, res) => {
     try {
         if (!req.user) {

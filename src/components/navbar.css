@@ -195,7 +195,6 @@ p {
     }
 }
 
-/* For very small screens (mobile phones) */
 @media (max-width: 480px) {
     .Navbar2 {
         padding: 10px 15px;
@@ -291,3 +290,44 @@ p {
 .categoryItem:hover {
     background-color: rgb(250, 115, 115);
 }
+
+
+
+.Navbar2 a p:hover::after {
+    left: 0;
+    width: 100%;
+}
+
+
+.Navbar2 a p:hover {
+    color: #b51717;
+    letter-spacing: 1px;
+}
+
+
+.Navbar2 a p::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: 0px;
+    width: 0;
+    height: 2px;
+    background-color: #e63946;
+    transition: all 0.3s ease, letter-spacing 0.3s ease;
+}
+
+.Navbar2 a p:hover::after {
+    left: 0;
+    width: 100%;
+}
+.Navbar2 a p {
+    position: relative;
+    font-size: 16px;
+    color: #e63946;
+    font-family: 'Anek Telugu', sans-serif;
+    text-align: center;
+    cursor: pointer;
+    margin: 0 15px; 
+    transition: color 0.3s ease, letter-spacing 0.3s ease;
+}
+

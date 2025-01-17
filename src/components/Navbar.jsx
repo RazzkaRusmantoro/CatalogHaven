@@ -133,7 +133,6 @@ function Navbar() {
                         ))}
                     </div>
                 )}
-                <p>Deals</p>
                 <Link to="/sell"><p>Sell</p></Link>
                 <Link to="/contact-us"><p>Customer Service</p></Link>
             </div>

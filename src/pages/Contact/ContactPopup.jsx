@@ -12,7 +12,7 @@ const ContactPopup = ({ isVisible, onClose }) => {
                     <h2 className="popup-title">Contact Customer Service</h2>
                     <p className="popup-message">
                     We’re here to help! Please fill out the form below or email us at
-                    <a href="mailto:support@example.com"> cataloghaven.contact@gmail.com</a>.
+                    <a href="cataloghaven.contact@gmail.com"> cataloghaven.contact@gmail.com</a>.
                     </p>
                     <form className="popup-form">
                     <input type="text" placeholder="Your Name" required />
