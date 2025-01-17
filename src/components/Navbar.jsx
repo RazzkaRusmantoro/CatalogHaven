@@ -86,17 +86,19 @@ function Navbar() {
         <div className="fullNavbar">
             <div className="Navbar">
                 <img src={Logo} alt="Logo" className="logo" onClick={handleHomeClick} />
-                <form autoComplete="off" style={{ width: "50%" }}>
-                    <input
-                        type="text"
-                        placeholder="Search for a product..."
-                        className="searchBar"
-                        value={searchQuery}
-                        onChange={handleSearchChange}
-                        onKeyDown={handleSearchKeyDown}
-                        autoComplete="none"
-                    />
-                </form>
+                <div className = "search-nav">
+                    <form autoComplete="off" style={{ width: "50%" }}>
+                        <input
+                            type="text"
+                            placeholder="Search for a product..."
+                            className="searchBar"
+                            value={searchQuery}
+                            onChange={handleSearchChange}
+                            onKeyDown={handleSearchKeyDown}
+                            autoComplete="none"
+                        />
+                    </form>
+                </div>
                 <div className="iconSection">
                     <div className="navButton" id="cart" onClick={toggleCartPopup}>
                         <p>Cart</p>

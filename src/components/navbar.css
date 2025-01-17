@@ -38,8 +38,14 @@ body {
 .Navbar .logo {
     width: 200px;
     margin-left: 10px;
-    padding-right: 100px;
     cursor: pointer;
+}
+
+.search-nav {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .searchBar {
@@ -48,9 +54,10 @@ body {
     padding-left: 20px;
     border: 1px solid #949494;
     border-radius: 10px;
-    width: 80%;
-    margin-left: 0px;
+    width: 100%; 
+    max-width: 500px;  
 }
+
 
 .iconSection {
     margin-right: 75px;
@@ -122,41 +129,16 @@ p {
 
 /* Mobile responsive */
 @media (max-width: 768px) {
-    .Navbar {
-        flex-direction: column;
-        align-items: center;
-        padding: 10px;
-    }
-
-    .Navbar .logo {
-        margin-left: 0;
-        padding-right: 0;
-        width: 150px;
-    }
-
-    .searchBar {
-        width: 80%;
-        margin: 10px 0;
-    }
-
-    .iconSection {
-        margin-right: 0;
-        margin-top: 10px;
-    }
-
-    .navButton {
-        margin-left: 15px;
-        margin-bottom: 10px;
-    }
-
     .Navbar2 {
-        flex-direction: column;
-        align-items: center;
+        flex-direction: column; 
         padding: 10px 20px;
     }
 
     .category {
-        margin-left: 0;
+        margin-left: 0; 
+        width: 100%; 
+        justify-content: center;
+        text-align: center; 
     }
 
     .category img {
@@ -168,6 +150,24 @@ p {
         display: none;
     }
 
+    .navButton {
+        margin-left: 0;
+        margin-bottom: 10px; 
+        width: 100%;
+        text-align: center; 
+    }
+
+    .Navbar .logo {
+        width: 120px;
+        margin-bottom: 10px;
+    }
+
+    .iconSection {
+        margin-right: 0;
+        margin-top: 10px;
+        justify-content: center;
+    }
+
     .navButton img {
         width: 25px;
     }
@@ -176,33 +176,67 @@ p {
         width: 25px;
     }
 
-    .Navbar .logo {
-        width: 120px;
+    .categoryDropdown {
+        width: 100%; 
+        position: static;
+        margin-top: 10px;
+        top: auto;
+        left: auto;
+        right: auto;
+    }
+
+    .categoryItem {
+        padding: 10px;
+        font-size: 16px;
+    }
+
+    .categoryItem:hover {
+        background-color: rgb(250, 115, 115);
     }
 }
 
-/* Smaller mobile devices */
+/* For very small screens (mobile phones) */
 @media (max-width: 480px) {
-    .Navbar .logo {
-        width: 100px;
+    .Navbar2 {
+        padding: 10px 15px;
     }
 
-    .searchBar {
-        width: 90%;
-    }
-
-    .navButton {
-        margin-left: 10px;
+    .category {
+        width: 100%;
+        justify-content: center; 
+        text-align: center;
     }
 
     .category img {
-        width: 12px;
+        width: 15px;
     }
 
-    .iconSection {
-        margin-right: 0;
+    .navButton {
+        margin-bottom: 5px;
+    }
+
+    .Navbar .logo {
+        width: 90px;
+    }
+
+    .navButton img {
+        width: 20px;
+    }
+
+    .icons {
+        width: 20px;
+    }
+
+    .categoryDropdown {
+        width: 100%; 
+    }
+
+    .categoryItem {
+        font-size: 14px;
     }
 }
+
+
 
 .Navbar {
     position: fixed;
