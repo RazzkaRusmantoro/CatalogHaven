@@ -1,0 +1,130 @@
+.popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+.popup-container {
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 12px;
+    max-width: 1000px;
+    width: 100%;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+    position: relative;
+    text-align: center;
+    animation: slideUp 0.4s ease-out;
+    height: 400px;
+}
+
+.popup-close-btn {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: none;
+    border: none;
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.popup-close-btn:hover {
+    color: #e63946;
+}
+
+.popup-title {
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 15px;
+    color: #e63946;
+}
+
+.popup-message {
+    font-size: 16px;
+    margin-bottom: 20px;
+    color: #555;
+    line-height: 1.5;
+}
+
+.popup-message a {
+    color: #e63946;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.popup-message a:hover {
+    text-decoration: underline;
+}
+
+.popup-form input,
+.popup-form textarea {
+    width: 90%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 14px;
+    font-family: 'Arial', sans-serif;
+    transition: border-color 0.3s ease;
+}
+
+.popup-form input:focus,
+.popup-form textarea:focus {
+    border-color: #e63946;
+    outline: none;
+}
+
+.popup-submit-btn {
+    background: linear-gradient(135deg, #e63946, #f77f00);
+    color: #fff;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.4s ease, transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.popup-submit-btn:hover {
+    background: linear-gradient(135deg, #d62828, #e76f51);
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+.popup-submit-btn:active {
+    transform: translateY(1px);
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+    background: linear-gradient(135deg, #b51717, #d64535);
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}

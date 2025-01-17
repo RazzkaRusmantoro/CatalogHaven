@@ -2,9 +2,11 @@ import React, { useState, useEffect } from "react";
 import "./Contact.css";
 import contactimg1 from "/assets/contactimg1.jpg";
 import contactimg2 from "/assets/contactimg2.jpg";
+import ContactPopup from "./ContactPopup";
 
 const Contact = () => {
   const [showImage, setShowImage] = useState(true);
+  const [isPopupVisible, setIsPopupVisible] = useState(false);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -12,6 +14,9 @@ const Contact = () => {
     }, 5000);
     return () => clearInterval(interval);
   }, []);
+
+  const openPopup = () => setIsPopupVisible(true);
+  const closePopup = () => setIsPopupVisible(false);
 
   return (
     <>
@@ -26,7 +31,7 @@ const Contact = () => {
             </div>
           </div>
           <div class="btn-conteiner">
-            <a class="btn-content" href="#">
+            <a class="btn-content" href="#" onClick = {openPopup}>
                 <span class="btn-title">CONTACT</span>
                 <span class="icon-arrow">
                 <svg width="66px" height="43px" viewBox="0 0 66 43" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -37,8 +42,8 @@ const Contact = () => {
                     </g>
                 </svg>
                 </span> 
-                </a>
-            </div>
+            </a>
+          </div>
         </div>
         <div className="contact-right">
           <div className="contact-images">
@@ -55,6 +60,7 @@ const Contact = () => {
           </div>
         </div>
       </div>
+      {isPopupVisible && <ContactPopup isVisible={isPopupVisible} onClose={closePopup} />}
     </>
   );
 };
