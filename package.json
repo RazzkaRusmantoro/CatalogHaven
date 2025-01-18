@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "commonjs",
-  "homepage": "https://razzkarusmantoro.github.io/",
+  "homepage": "https://razzkarusmantoro.github.io/cataloghaven",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
