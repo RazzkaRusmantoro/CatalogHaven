@@ -9,7 +9,9 @@
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "start": "nodemon app.js",
-    "seeder": "node server/utils/seeder.js"
+    "seeder": "node server/utils/seeder.js",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist"
   },
   "dependencies": {
     "@redux-devtools/extension": "^3.3.0",
