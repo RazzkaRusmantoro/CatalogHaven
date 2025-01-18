@@ -35,8 +35,12 @@ app.use('/', require('./routes/productRoutes'));
 app.use('/', require('./routes/orderRoutes'));
 app.use('/', require('./routes/paymentRoutes'));
 
-
-
+if (process.env.NODE_ENV === 'production') {
+    app.use(express.static(path.join(__dirname, '../dist/')));
+    app.get('*', (req, res) => {
+        res.sendFile(path.resolve(__dirname, '../dist/index.html'));
+    });
+}
 // Middleware to handle errors
 app.use(errorMiddleware);
 
