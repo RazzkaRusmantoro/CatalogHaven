@@ -16,11 +16,9 @@ import {
     NEW_REVIEW_REQUEST,
     NEW_REVIEW_SUCCESS,
     NEW_REVIEW_FAIL,
-    NEW_REVIEW_RESET,
     ADD_PRODUCT_REQUEST,
     ADD_PRODUCT_SUCCESS,
     ADD_PRODUCT_FAIL,
-    ADD_PRODUCT_RESET,
     USER_PRODUCTS_REQUEST,
     USER_PRODUCTS_SUCCESS,
     USER_PRODUCTS_FAIL,
@@ -30,7 +28,10 @@ import {
     UPDATE_PRODUCT_RESET,
     GET_PRODUCT_REVENUE_REQUEST, 
     GET_PRODUCT_REVENUE_SUCCESS, 
-    GET_PRODUCT_REVENUE_FAIL, 
+    GET_PRODUCT_REVENUE_FAIL,
+    FETCH_REVIEWS_REQUEST,
+    FETCH_REVIEWS_SUCCESS,
+    FETCH_REVIEWS_FAIL
 } from "../constants/productConstants";
 import toast from 'react-hot-toast';
 
@@ -269,5 +270,26 @@ export const updateProduct = (id, productData) => async (dispatch) => {
         });
 
         dispatch({ type: UPDATE_PRODUCT_RESET });
+    }
+};
+
+
+export const fetchProductReviews = (productId) => async (dispatch) => {
+    try {
+        dispatch({ type: FETCH_REVIEWS_REQUEST });
+
+        const { data } = await axios.get(`/products/${productId}/reviews`);
+
+        console.log('Fetched Reviews:', data.reviews);
+
+        dispatch({
+            type: FETCH_REVIEWS_SUCCESS,
+            payload: data.reviews,
+        });
+    } catch (error) {
+        dispatch({
+            type: FETCH_REVIEWS_FAIL,
+            payload: error.response?.data?.message || error.message,
+        });
     }
 };

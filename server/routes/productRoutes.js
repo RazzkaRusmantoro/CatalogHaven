@@ -18,7 +18,7 @@ router.route('/product/update/:id').put(isAuthenticatedUser, updateProduct);
 
 router.route('/review').put(isAuthenticatedUser, createProductReview);
 
-router.route('/reviews').get(isAuthenticatedUser, getProductReviews);
+router.route('/products/:id/reviews').get(isAuthenticatedUser, getProductReviews);
 
 router.route('/rating').get(calculateAverageRating);
 

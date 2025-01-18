@@ -290,3 +290,7 @@
         padding: 15px 40px;
     }
 }
+
+#reviews-product {
+    cursor: pointer;
+}

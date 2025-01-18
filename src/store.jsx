@@ -7,6 +7,7 @@ import { authReducer } from "./reducers/userReducers";
 import { newOrderReducer, myOrdersReducer } from "./reducers/orderReducers";
 import { newReviewReducer } from "./reducers/productReducers";
 import { stripeReducer } from "./reducers/stripeReducers";
+import { reviewsReducer } from "./reducers/productReducers";
 
 const reducer = combineReducers({
     products: productsReducer,
@@ -16,7 +17,8 @@ const reducer = combineReducers({
     newOrder: newOrderReducer,
     myOrders: myOrdersReducer,
     newReview: newReviewReducer,
-    stripe: stripeReducer
+    stripe: stripeReducer,
+    reviews: reviewsReducer
     
 });
 

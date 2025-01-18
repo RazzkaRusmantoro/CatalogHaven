@@ -300,14 +300,41 @@ exports.createProductReview = async (req, res, next) => {
 
 // Get Product's Reviews
 exports.getProductReviews = async (req, res, next) => {
+    try {
+        const { id } = req.params;
 
-    const product = await Product.findById(req.query.id);
+        // Find the product by ID and populate the reviews' user field
+        const product = await Product.findById(id).populate({
+            path: 'reviews.user',
+            select: 'fname lname avatar.url', // Select fields to include from the User model
+        });
 
-    res.status(200).json({
-        success: true,
-        reviews: product.reviews
-    })
-}
+        if (!product) {
+            return res.status(404).json({
+                success: false,
+                message: 'Product not found',
+            });
+        }
+
+        const formattedReviews = product.reviews.map((review) => ({
+            name: `${review.user.fname} ${review.user.lname}`,
+            profilePicture: review.user.avatar?.url || null,
+            rating: review.rating,
+            comment: review.comment,
+        }));
+
+        res.status(200).json({
+            success: true,
+            reviews: formattedReviews,
+        });
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: 'Server Error',
+            error: error.message,
+        });
+    }
+};
 
 
 // Delete a review from product

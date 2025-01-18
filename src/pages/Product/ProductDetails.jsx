@@ -4,21 +4,25 @@ import { useParams } from 'react-router-dom';
 import './ProductDetails.css';
 import Loader from '../../components/Loader';
 import { useDispatch, useSelector } from 'react-redux';
-import { getProductDetails, clearErrors } from '../../actions/productActions';
+import { getProductDetails, clearErrors, fetchProductReviews } from '../../actions/productActions';
 import { addItemToCart } from '../../actions/cartActions';
+import ReviewListPopup from './ReviewListPopup';
 import CartDropdown from '../../components/Cart/CartDropdown';
 
 const ProductDetails = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const { id: productId } = useParams();
-    const { loading = false, error = null, product = {} } = useSelector(state => state.productDetails || {});
-    const { isAuthenticated } = useSelector(state => state.user);
+
+    const { loading: productLoading, error, product = {} } = useSelector((state) => state.productDetails || {});
+    const { reviews, loading: reviewsLoading } = useSelector((state) => state.reviews || {});
+    const { isAuthenticated } = useSelector((state) => state.user);
+
     const [quantity, setQuantity] = useState(1);
     const [recentCartItem, setRecentCartItem] = useState(null);
     const [isDropdownVisible, setDropdownVisible] = useState(false);
     const [isDescriptionVisible, setDescriptionVisible] = useState(false);
-    const cartItems = useSelector(state => state.cart.cartItems);
+    const [isReviewsPopupVisible, setReviewsPopupVisible] = useState(false);
 
     useEffect(() => {
         if (error) {
@@ -28,26 +32,13 @@ const ProductDetails = () => {
         dispatch(getProductDetails(productId));
     }, [dispatch, error, productId]);
 
-    useEffect(() => {
-        if (!loading && product) {
-            console.log('Product Image URL:', product.images && product.images.length > 0 ? product.images[0].url : product.image ? product.image.url : 'No image available');
-        }
-    }, [loading, product]);
-
-    const increaseQuantity = () => {
-        setQuantity(quantity + 1);
-    };
-
-    const decreaseQuantity = () => {
-        if (quantity > 1) {
-            setQuantity(quantity - 1);
-        }
-    };
+    const increaseQuantity = () => setQuantity(quantity + 1);
+    const decreaseQuantity = () => quantity > 1 && setQuantity(quantity - 1);
 
     const renderStarRating = (rating) => {
         const totalStars = 5;
-        const fullStar = "★";
-        const emptyStar = "☆";
+        const fullStar = '★';
+        const emptyStar = '☆';
         let stars = '';
 
         for (let i = 1; i <= totalStars; i++) {
@@ -57,9 +48,7 @@ const ProductDetails = () => {
         return stars;
     };
 
-    const toggleDescription = () => {
-        setDescriptionVisible(!isDescriptionVisible);
-    };
+    const toggleDescription = () => setDescriptionVisible(!isDescriptionVisible);
 
     const addToCart = () => {
         if (!isAuthenticated) {
@@ -72,31 +61,31 @@ const ProductDetails = () => {
             name: product.name,
             price: product.price,
             quantity,
-            image: product.images && product.images.length > 0 ? product.images[0].url : product.image ? product.image.url : '',  
+            image: product.images?.[0]?.url || product.image?.url || '',
         };
 
-        dispatch(addItemToCart(productId, quantity)); 
+        dispatch(addItemToCart(productId, quantity));
         setRecentCartItem(cartItem);
-        setDropdownVisible(true); 
+        setDropdownVisible(true);
 
         setTimeout(() => {
             setDropdownVisible(false);
         }, 3000);
-
-        console.log('Current cart items:', cartItems);
-        console.log('Added to cart:', cartItem);
     };
 
-    const imageSrc = product.images && Array.isArray(product.images) && product.images.length > 0
-        ? product.images[0].url
-        : product.image
-        ? product.image.url
-        : '/placeholder.png';
+    const showReviewsPopup = () => {
+        dispatch(fetchProductReviews(productId));
+        setReviewsPopupVisible(true);
+    };
+
+    const closeReviewsPopup = () => setReviewsPopupVisible(false);
+
+    const imageSrc = product.images?.[0]?.url || product.image?.url || '/placeholder.png';
 
     return (
         <>
             <div className="background-layer"></div>
-            {loading ? (
+            {productLoading ? (
                 <Loader />
             ) : (
                 <div className="product-details">
@@ -126,10 +115,12 @@ const ProductDetails = () => {
 
                         <div className="product-rating">
                             <span className="star-rating">
-                                <span className="rating-num">{product.ratings}</span>
-                                {renderStarRating(product.ratings)}
+                                <span className="rating-num">{product.ratings?.toFixed(1)}</span>
+                                {renderStarRating(Math.round(product.ratings))}
                             </span>
-                            <span className="reviews-details">({product.numReviews} Reviews)</span>
+                            <span className="reviews-details" id="reviews-product" onClick={showReviewsPopup}>
+                                ({product.numReviews} Reviews)
+                            </span>
                         </div>
                         <div className="product-quantity">
                             <p>Quantity:</p>
@@ -140,7 +131,12 @@ const ProductDetails = () => {
                             </div>
                         </div>
                         <div className="product-buy">
-                            <button disabled={product.stock === 0 || isDropdownVisible} onClick={addToCart}><b>Add to Cart</b></button>
+                            <button
+                                disabled={product.stock === 0 || isDropdownVisible}
+                                onClick={addToCart}
+                            >
+                                <b>Add to Cart</b>
+                            </button>
                         </div>
                         <div className="product-description">
                             <div className="description-header" onClick={toggleDescription}>
@@ -155,9 +151,12 @@ const ProductDetails = () => {
                 </div>
             )}
 
-            {/* Render Cart Dropdown if visible */}
             {isDropdownVisible && recentCartItem && (
                 <CartDropdown cartItems={[recentCartItem]} />
+            )}
+
+            {isReviewsPopupVisible && (
+                <ReviewListPopup reviews={reviews} onClose={closeReviewsPopup} />
             )}
         </>
     );

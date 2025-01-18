@@ -20,6 +20,9 @@ import { ALL_PRODUCTS_REQUEST, ALL_PRODUCTS_SUCCESS, ALL_PRODUCTS_FAIL, CLEAR_ER
     UPDATE_PRODUCT_SUCCESS,
     UPDATE_PRODUCT_FAIL,
     UPDATE_PRODUCT_RESET,
+    FETCH_REVIEWS_REQUEST,
+    FETCH_REVIEWS_SUCCESS,
+    FETCH_REVIEWS_FAIL
  } from "../constants/productConstants";
 
 export const productsReducer = (state = { products: [], featuredProducts: [] }, action) => {
@@ -291,6 +294,25 @@ export const updateProductReducer = (state = {}, action) => {
                 ...state,
                 error: null,
                 success: true,
+            };
+        default:
+            return state;
+    }
+};
+
+export const reviewsReducer = (state = { reviews: [] }, action) => {
+    switch (action.type) {
+        case FETCH_REVIEWS_REQUEST:
+            return { 
+                loading: true, reviews: [] 
+            };
+        case FETCH_REVIEWS_SUCCESS:
+            return { 
+                loading: false, reviews: action.payload 
+            };
+        case FETCH_REVIEWS_FAIL:
+            return { 
+                loading: false, error: action.payload 
             };
         default:
             return state;

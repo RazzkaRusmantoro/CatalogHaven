@@ -20,12 +20,12 @@ function UserInfo() {
     const [newPassword, setNewPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
     const [profilePicture, setProfilePicture] = useState(null);
-    const [preview, setPreview] = useState(user?.avatar?.url || "https://fakeimg.pl/600x400");
+    const [preview, setPreview] = useState(user?.avatar?.url || "/assets/default-avatar.jpg");
 
     useEffect(() => {
         if (user) {
             setUserData(user);
-            setPreview(user.avatar?.url || "https://fakeimg.pl/600x400");
+            setPreview(user.avatar?.url || "/assets/default-avatar.jpg");
         }
     }, [user]);
 
