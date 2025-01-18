@@ -12,8 +12,11 @@ import './Payment.css';
 import { useNavigate } from 'react-router-dom';
 import { createOrder } from '../../actions/orderActions';
 import catGif from "/assets/shocked-surprised.gif";
+import { toast } from 'react-hot-toast';
+import { useLocation } from 'react-router-dom';
 
 const Payment = () => {
+  const location = useLocation();
   const stripe = useStripe();
   const elements = useElements();
   const [loading, setLoading] = useState(false);
@@ -108,8 +111,12 @@ const Payment = () => {
                       paymentInfo: result.paymentIntent,
                   };
 
-                  dispatch(createOrder(orderData)); // Dispatch action to create the order
-                  navigate("/checkout/success");
+                  dispatch(createOrder(orderData));
+                  toast.success("Order placed successfully!");
+                  setTimeout(() => {
+                    window.location.href = '/orders';
+                  }, 2000);
+
               }
           } catch (error) {
               setMessage(`Error: ${error.response?.data?.message || error.message}`);
