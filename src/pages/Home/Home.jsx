@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import "./home.css";
 
+import { Link } from 'react-router-dom';
 import sunglasses from "/assets/sunglasses.png";
 import bg from "/assets/bg.png";
 import bag from "/assets/bag.png";
@@ -78,7 +79,7 @@ function Home() {
                     <img src={pattern} id="pattern7" alt="pattern" />
 
                     <h6 className="subtext">With sales starting at 20% off...</h6>
-                    <button className="button-56">SHOP NOW</button>
+                    <Link to = "/search"><button className="button-56">SHOP NOW</button></Link>
                 </div>
 
                 <div className="container-under-box"></div>
