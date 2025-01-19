@@ -12,7 +12,8 @@
     "start": "serve -s dist",
     "seeder": "node server/utils/seeder.js",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d dist"
+    "deploy": "gh-pages -d dist",
+    "server2": "node ./server/app.js"
   },
   "dependencies": {
     "@redux-devtools/extension": "^3.3.0",
