@@ -7,6 +7,11 @@ const app = express();
 const cloudinary = require('cloudinary').v2;
 const errorMiddleware = require('./middlewares/errors');
 const fileupload = require('express-fileupload');
+const path = require('path');
+const { fileURLToPath } = require('url');
+
+
+console.log('__dirname:',__dirname); 
 
 // Database connection
 mongoose.connect(process.env.MONGO_URL)
@@ -35,12 +40,11 @@ app.use('/', require('./routes/productRoutes'));
 app.use('/', require('./routes/orderRoutes'));
 app.use('/', require('./routes/paymentRoutes'));
 
-if (process.env.NODE_ENV === 'production') {
-    app.use(express.static(path.join(__dirname, '../dist/')));
-    app.get('*', (req, res) => {
-        res.sendFile(path.join(__dirname, '../dist/index.html'));
-    });
-}
+app.use(express.static(path.join(__dirname, '../dist')))
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '../dist/index.html'))
+})
+
 // Middleware to handle errors
 app.use(errorMiddleware);
 
