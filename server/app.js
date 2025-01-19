@@ -49,5 +49,5 @@ app.get('*', (req, res) => {
 // Middleware to handle errors
 app.use(errorMiddleware);
 
-const port = process.env.PORT || 8000;
+const port = process.env.PORT || 8001;
 app.listen(port, () => console.log(`Server is running on port ${port}.`));
