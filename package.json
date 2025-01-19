@@ -2,14 +2,14 @@
   "name": "cataloghaven",
   "private": true,
   "version": "0.0.0",
-  "type": "commonjs",
+  "type": "module",
   "homepage": "https://razzkarusmantoro.github.io/cataloghaven",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview --port 5173",
-    "start": "node app.js",
+    "start": "serve -s dist",
     "seeder": "node server/utils/seeder.js",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d dist"
