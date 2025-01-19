@@ -14,9 +14,6 @@ cloudinary.config({
 });
 
 
-const testHandler = (req, res) => {
-    res.json('Test is working.');
-}
 const registerUser = async (req, res) => {
     try {
         const { fname, lname, email, username, password } = req.body;
@@ -481,7 +478,6 @@ const deleteUser = async (req, res, next) => {
 
 
 module.exports = {
-    testHandler,
     registerUser,
     loginUser,
     forgotPassword,

@@ -1,7 +1,7 @@
 const express2 = require('express');
 const router = express2.Router();
 const cors2 = require("cors");   
-const { testHandler, registerUser, loginUser, forgotPassword, resetPassword, getProfile, updatePassword, updateProfile, updateProfilePicture, logoutUser, getAllUsers,
+const { registerUser, loginUser, forgotPassword, resetPassword, getProfile, updatePassword, updateProfile, updateProfilePicture, logoutUser, getAllUsers,
     getUser, deleteUser
  } = require('../controllers/authController');
 
@@ -15,7 +15,6 @@ router.use(
     })
 )
 
-router.route('/').get(testHandler);
 
 // User registration
 router.route('/register').post(registerUser);
