@@ -7,14 +7,6 @@ const { registerUser, loginUser, forgotPassword, resetPassword, getProfile, upda
 
 const { isAuthenticatedUser } = require('../middlewares/auth');
 
-// Middleware
-router.use(
-    cors2({ 
-        credentials: true,
-        origin: 'http://localhost:5173'
-    })
-)
-
 
 // User registration
 router.route('/register').post(registerUser);

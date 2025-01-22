@@ -53,31 +53,29 @@ Make sure you have the following installed on your system:
    Create a `.env` file in the root directory of the project and add the following environment variables:
 
    ```
-   PORT = 8000
+    PORT = <your-port-number>
 
-   MONGO_URL = mongodb+srv://razzkarusmantoro:AxsMeA2y7RyMGOwR@mongocluster.wu9lwij.mongodb.net/CH_Database?retryWrites=true&w=majority&appName=MongoCluster
-   DB_URI = mongodb+srv://razzkarusmantoro:AxsMeA2y7RyMGOwR@mongocluster.wu9lwij.mongodb.net/CH_Database?retryWrites=true&w=majority&appName=MongoCluster
+    MONGO_URL = <your-mongo-db-url>
+    DB_URI = <your-mongo-db-uri>
 
-   NODE_ENV = DEVELOPMENT
+    NODE_ENV = DEVELOPMENT
 
-   JWT_SECRET = 1122334455jwt
-   JWT_EXPIRES_TIME = 7d
+    JWT_SECRET = <your-jwt-secret>
+    JWT_EXPIRES_TIME = <your-jwt-expiration-time>
 
-   CLOUDINARY_CLOUD_NAME = djxbnrppx
-   CLOUDINARY_API_KEY = 671588138561373
-   CLOUDINARY_API_SECRET = sZfmTM1wWgHLXTNLGl9WcV5p3Ss
+    CLOUDINARY_CLOUD_NAME = <your-cloudinary-cloud-name>
+    CLOUDINARY_API_KEY = <your-cloudinary-api-key>
+    CLOUDINARY_API_SECRET = <your-cloudinary-api-secret>
 
-   STRIPE_API_KEY = pk_test_51Pf50dRxCns0JWUNHEicsRNxOtipIjtsYo57iL8g45rj1xtCGjTHvhawFDXv14husEhsSQzNDjksXn8QggqF4ah600rXpd3kP4
-   STRIPE_SECRET_KEY = sk_test_51Pf50dRxCns0JWUNBhLhSM9ZKiX9QVnqOiYzFUU0llx9aKvTpiyYO0hUZsfpaNMjqTqI8fCjJcs1iWA6UM5lyM9h00CYTOdplf
+    STRIPE_API_KEY = <your-stripe-api-key>
+    STRIPE_SECRET_KEY = <your-stripe-secret-key>
 
-   NODE_ENV = DEVELOPMENT
-
-   SMTP_HOST = sandbox.smtp.mailtrap.io
-   SMTP_PORT = 2525
-   SMTP_EMAIL = eb9c412f366e2d
-   SMTP_PASSWORD = 4b20f841d77b6f
-   SMTP_FROM_EMAIL = noreply@cataloghaven.com
-   SMTP_FROM_NAME = CatalogHaven
+    SMTP_HOST = <your-smtp-host>
+    SMTP_PORT = <your-smtp-port>
+    SMTP_EMAIL = <your-smtp-email>
+    SMTP_PASSWORD = <your-smtp-password>
+    SMTP_FROM_EMAIL = <your-smtp-from-email>
+    SMTP_FROM_NAME = <your-smtp-from-name>
    ```
 
 4. **Start the development server**:

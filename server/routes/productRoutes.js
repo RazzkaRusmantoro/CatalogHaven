@@ -1,6 +1,5 @@
 const express = require('express');
 const router = express.Router();
-const cors = require("cors");   
 const { newProduct, getProducts, getFeaturedProducts, getSingleProduct, updateProduct, deleteProduct, createProductReview, calculateAverageRating, getProductReviews, deleteReview, addToCart,getUserProducts, getProductRevenue } = require('../controllers/productController');
 
 const cloudinary = require('cloudinary');
@@ -31,8 +30,5 @@ router.route('/product/new').post(isAuthenticatedUser, newProduct);
 router.route('/products/user/:id').get(isAuthenticatedUser, getUserProducts);
 
 router.route('/revenue/product/:productId').get(getProductRevenue);
-
-
-
 
 module.exports = router;

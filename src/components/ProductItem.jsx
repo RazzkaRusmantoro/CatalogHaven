@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import RatingPopup from './Review/RatingPopup';
+import { useNavigate } from 'react-router-dom';  // Import the useNavigate hook
 
 import './ProductItem.css';
 
@@ -9,6 +10,7 @@ const ProductItem = ({ product }) => {
     const [isBottom, setIsBottom] = useState(false);
     const productItemRef = useRef(null);
     const ratingsRef = useRef(null);
+    const navigate = useNavigate();  // Initialize the navigate function
 
     const calculateStarDistribution = (reviews) => {
         const distribution = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
@@ -41,37 +43,40 @@ const ProductItem = ({ product }) => {
         ? product.image.url
         : '/placeholder.png';
 
+    // Navigate to the product page on click
+    const handleClick = () => {
+        navigate(`/product/${product._id}`);
+    };
+
     return (
-        <a href={`/product/${product._id}`}>
-            <div className="product-item" ref={productItemRef}>
-                <img
-                    src={imageSrc}
-                    alt={product.name}
-                />
-                <h6>{product.name}</h6>
-                <div
-                    className="ratings"
-                    ref={ratingsRef}
-                    onMouseEnter={() => setShowPopup(true)}
-                    onMouseLeave={() => setShowPopup(false)}
-                >
-                    <span className="star-rating">
-                        <span className="rating-card">{product.ratings.toFixed(1)}</span>
-                        {renderStarRating(Math.round(product.ratings))}
-                        <span className="reviews-card">({product.numReviews})</span>
-                    </span>
-                    {showPopup && (
-                        <RatingPopup
-                            ratings={product.ratings}
-                            numReviews={product.numReviews}
-                            starDistribution={starDistribution}
-                            isBottom={isBottom}
-                        />
-                    )}
-                </div>
-                <p id="price">USD ${product.price}</p>
+        <div className="product-item" ref={productItemRef} onClick={handleClick}>
+            <img
+                src={imageSrc}
+                alt={product.name}
+            />
+            <h6>{product.name}</h6>
+            <div
+                className="ratings"
+                ref={ratingsRef}
+                onMouseEnter={() => setShowPopup(true)}
+                onMouseLeave={() => setShowPopup(false)}
+            >
+                <span className="star-rating">
+                    <span className="rating-card">{product.ratings.toFixed(1)}</span>
+                    {renderStarRating(Math.round(product.ratings))}
+                    <span className="reviews-card">({product.numReviews})</span>
+                </span>
+                {showPopup && (
+                    <RatingPopup
+                        ratings={product.ratings}
+                        numReviews={product.numReviews}
+                        starDistribution={starDistribution}
+                        isBottom={isBottom}
+                    />
+                )}
             </div>
-        </a>
+            <p id="price">USD ${product.price}</p>
+        </div>
     );
 };
 

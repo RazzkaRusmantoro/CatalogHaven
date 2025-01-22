@@ -10,16 +10,27 @@ const path = require('path');
 
 const app = express();
 
+// CORS configuration
+const corsOptions = {
+  origin: ['http://localhost:3000', 'http://localhost:5173'], // Allowed origins
+  methods: 'GET,POST,PUT,DELETE', // Allowed HTTP methods
+  allowedHeaders: 'Content-Type,Authorization', // Allowed headers
+  credentials: true,  // Allow credentials (cookies, HTTP authentication)
+};
+
+app.use(cors(corsOptions)); // Apply CORS middleware
+
+
 // Database connection
 mongoose.connect(process.env.MONGO_URL)
-.then(() => console.log('MongoDB Database connected.'))
-.catch((err) => console.log('Database connection failed', err));
+  .then(() => console.log('MongoDB Database connected.'))
+  .catch((err) => console.log('Database connection failed', err));
 
 // Cloudinary configuration
 cloudinary.config({
-    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-    api_key: process.env.CLOUDINARY_API_KEY,
-    api_secret: process.env.CLOUDINARY_API_SECRET,
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
 // Middleware
@@ -39,12 +50,9 @@ app.use('/', require('./routes/paymentRoutes'));
 // Serve static files from React's build (dist)
 app.use(express.static(path.join(__dirname, '..', 'dist')));
 
-
-// Serve the React app (index.html) for any other routes
 app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '..', 'dist', 'index.html'));
+  res.sendFile(path.join(__dirname, '..', 'dist', 'index.html'));
 });
-
 
 // Middleware to handle errors
 app.use(errorMiddleware);
