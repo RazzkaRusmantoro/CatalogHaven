@@ -108,7 +108,7 @@ To prepare for deployment, you need to build the React app and start the product
    npm start
    ```
 
-   This will run the backend on the specified port (default: 8000) and serve the static files from the `build` directory.
+   This will run the backend on the specified port (default: 8000) and serve the static files from the `build` directory (or dist).
 
 ### Accessing the Application
 
